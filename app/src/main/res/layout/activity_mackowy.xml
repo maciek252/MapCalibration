@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="vm" type="com.leopold.mvvm.ui.mackowaActivity.MackowaViewModel"/>
+    </data>
+
+<LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonAddPoint"
+            android:layout_width="137dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="+
+" />
+
+        <Button
+            android:id="@+id/buttonV"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="V" />
+
+        <Button
+            android:id="@+id/buttonSettings"
+            android:layout_width="138dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="*" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"></LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="580dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/viewForHolder"
+            android:layout_width="match_parent"
+            android:layout_height="121dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/points_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:punkty="@{vm.points}"
+                app:viewModel="@{vm}" />
+
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonShowAllMarkers"
+            android:layout_width="248dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" />
+
+        <LinearLayout
+            android:layout_width="238dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewMapScale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
+</layout>
+

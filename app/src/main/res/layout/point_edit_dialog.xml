@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="point" type="com.leopold.mvvm.data.db.entity.Point"/>
+        <variable name="vm" type="com.leopold.mvvm.ui.mackowaActivity.MackowaViewModel"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textViewPointName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00BCD4"
+            android:editable="true"
+            android:enabled="true"
+            android:focusable="auto"
+            android:focusableInTouchMode="true"
+            android:text="TextView" />
+
+
+        <LinearLayout
+            android:layout_width="234dp"
+            android:layout_height="107dp">
+
+
+            <Button
+                android:id="@+id/buttonSavePoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SavePoint" />
+
+            <Spinner
+                android:id="@+id/spinnerPointType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/country_arrays" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/indicatorLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="79dp">
+
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pagerView"
+            android:layout_width="match_parent"
+            android:layout_height="459dp" />
+
+
+
+
+
+    </LinearLayout>
+
+
+</layout>
+
+<!--
+<android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="271dp"
+                app:tabMode="fixed" />
+<android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            style="@style/TabLayout"
+            />
+-->
