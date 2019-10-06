@@ -7,17 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 
-import com.leopold.mvvm.R
 import com.leopold.mvvm.data.db.entity.Point
 import com.leopold.mvvm.databinding.PointEditDialogBinding
 import kotlinx.android.synthetic.main.point_edit_dialog.*
+import com.google.android.material.tabs.TabLayout
+import com.leopold.mvvm.R
+
 
 class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  AdapterView.OnItemSelectedListener,
     AdapterView.OnItemClickListener {
@@ -52,7 +53,7 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.point_edit_dialog, container, false)
+        val v = inflater.inflate(com.leopold.mvvm.R.layout.point_edit_dialog, container, false)
         binding =  DataBindingUtil.bind(v)!!
 
         var wasEmpty = false
@@ -60,6 +61,8 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
             wasEmpty = true
             p = Point()
         }
+
+
 
         binding?.textViewPointName?.setText(p?.name)
 
@@ -70,13 +73,14 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 
 
 
-            when(spinnerPointType.selectedItemId){
-                0L -> p!!.pointType = Point.PointType.OSNOWA_COORDINATES
-                1L -> p!!.pointType = Point.PointType.OSNOWA_MARKER
-                2L -> p!!.pointType = Point.PointType.ZWYKLY_DWIE_LINIE
-                else  -> p!!.pointType = Point.PointType.ZWYKLY_XY
 
-            }
+//            when(spinnerPointType.selectedItemId){
+//                0L -> p!!.pointType = Point.PointType.OSNOWA_COORDINATES
+//                1L -> p!!.pointType = Point.PointType.OSNOWA_MARKER_XY
+//                2L -> p!!.pointType = Point.PointType.ZWYKLY_DWIE_LINIE
+//                else  -> p!!.pointType = Point.PointType.ZWYKLY_XY
+//
+//            }
 
             p?.name = binding?.textViewPointName?.text.toString()
 
@@ -93,6 +97,12 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
         initializePageViewer(v)
         initializeIndicator()
 
+
+        val tab = binding?.indicatorLayout2?.getTabAt(p?.pointType?.ordinal!!)
+        tab?.select()
+
+
+
         val listaTypow = Point.PointType.values().toList()
         var list_of_items = arrayOf("Item 1", "Item 2", "Item 3")
         val aa = ArrayAdapter(
@@ -106,6 +116,8 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         // Set Adapter to Spinner
         binding?.spinnerPointType?.setAdapter(aa)
+
+
 
 
         return v
@@ -155,9 +167,13 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 //            return ColorFragmentMackowy.putExtraMackowy(position).setModel(colorViewModel)
             //return ColorFragment.putExtra(position).setModel(colorViewModel)
             //return ColorFragmentMackowy.putExtraMackowy(position).setModel(colorViewModel)
+            if(position == 0)
+                return PointDialogFragmentOsnowaCoordinates.putExtra(position).setModel(pointDialogModelView).setPoint(p!!)
             if(position == 1)
-                return PointDialogFragmentOsnowaXY.putExtra(position).setModel(pointDialogModelView)
-            return PointDialogFragment.putExtra(position).setModel(pointDialogModelView)
+                return PointDialogFragmentOsnowaXY.putExtra(position).setModel(pointDialogModelView).setPoint(p!!)
+            if(position == 2)
+                return PointDialogFragmentTargetXY.putExtra(position).setModel(pointDialogModelView).setPoint(p!!)
+            return PointDialogFragment.putExtra(position).setModel(pointDialogModelView).setPoint(p!!)
             //(colorViewModel)
 
         }

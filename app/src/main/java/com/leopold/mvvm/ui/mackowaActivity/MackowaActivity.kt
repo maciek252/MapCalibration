@@ -25,15 +25,19 @@ import com.leopold.mvvm.data.db.entity.Point
 import com.leopold.mvvm.util.Utils
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.ui.IconGenerator
-import com.google.maps.android.ui.IconGenerator.STYLE_BLUE
+import com.jakewharton.rxbinding2.view.selected
 
 
 class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,
-    GoogleMap.OnMarkerClickListener {
+    GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener {
+
+
     @LayoutRes
     override fun getLayoutResId() = R.layout.activity_mackowy
 
     var markerAddedByClick : Marker? = null
+
+    val mapMarkerPoint: MutableMap<Marker,Point> = mutableMapOf()
 
     val TAG = "MackowyActivity"
 
@@ -70,7 +74,14 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
             showMarkers((binding.vm?.points)?.value!!)
         }
 
+        binding.vm?.currentPoint?.observeForever {
+            //binding.vm?.currentPoint?.value
+            binding.textView7.setText("" + binding.vm?.currentPoint?.value)
+        }
+
     }
+
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         Log.d(TAG, "onMapReady")
@@ -102,6 +113,9 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
             // Placing a marker on the touched position
             markerAddedByClick = googleMap.addMarker(markerOptions)
+
+            binding?.vm?.latLngMarker?.value = markerAddedByClick?.position
+
         }
 
     }
@@ -141,10 +155,10 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         val point = LatLng(p.latitude, p.longitude)
 
         val icon2 = when(p.pointType){
-            Point.PointType.OSNOWA_COORDINATES -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)
-            Point.PointType.OSNOWA_MARKER -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+            Point.PointType.OSNOWA_COORDINATES -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+            Point.PointType.OSNOWA_MARKER_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
             Point.PointType.ZWYKLY_DWIE_LINIE -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
-            Point.PointType.ZWYKLY_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
+            Point.PointType.ZWYKLY_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
             else -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
         }
 
@@ -182,14 +196,25 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         if(points.isEmpty())
             return
 
-
+        mapMarkerPoint.clear()
 
         googleMap.clear()
         val builder = LatLngBounds.Builder()
         points.map {
             val marker =googleMap.addMarker(constructMarkerOptions(it))
+
+            mapMarkerPoint[marker] = it
+
+            val iconColor = when(it.pointType){
+                Point.PointType.OSNOWA_COORDINATES -> IconGenerator.STYLE_GREEN
+                Point.PointType.OSNOWA_MARKER_XY -> IconGenerator.STYLE_PURPLE
+                Point.PointType.ZWYKLY_DWIE_LINIE -> IconGenerator.STYLE_BLUE
+                Point.PointType.ZWYKLY_XY -> IconGenerator.STYLE_ORANGE
+                else -> IconGenerator.STYLE_WHITE
+            }
+
             val iconFactory = IconGenerator(this) //.setColor(STYLE_BLUE)
-            iconFactory.setStyle(IconGenerator.STYLE_RED)
+            iconFactory.setStyle(iconColor)
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(it.name)))
             //marker.showInfoWindow()
 
@@ -206,11 +231,34 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
 
 
+
+    override fun onMarkerDrag(p0: Marker?) {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onMarkerDragEnd(p0: Marker?) {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onMarkerDragStart(p0: Marker?) {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
     override fun onMarkerClick(marker: Marker): Boolean {
+
+        val pos = mapMarkerPoint.get(marker)?.id
+        pos?.let {
+            points_recycler_view?.scrollToPosition(pos!!)
+            Log.d("T", "skroluje do pkt: ${pos}")
+        }
 
         binding?.vm?.latLngMarker?.value = marker.position
 
         zoomToMarker(marker)
+
+
+
         return true
     }
 

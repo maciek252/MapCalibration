@@ -12,9 +12,10 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.leopold.mvvm.R
 import com.leopold.mvvm.data.db.entity.Point
-import com.leopold.mvvm.databinding.DialogFragmentOsnowaXyBinding
 
-open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.OnItemSelectedListener,
+import com.leopold.mvvm.databinding.DialogFragmentTargetXyBinding
+
+open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.OnItemSelectedListener,
     AdapterView.OnItemClickListener{
 
 
@@ -23,10 +24,10 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
 
     }
 
-    public var binding : DialogFragmentOsnowaXyBinding? = null
+    public var binding : DialogFragmentTargetXyBinding? = null
 
     companion object {
-        fun putExtra(colorNo: Int) = PointDialogFragmentOsnowaXY().apply {
+        fun putExtra(colorNo: Int) = PointDialogFragmentTargetXY().apply {
             arguments = Bundle().apply {
                 putInt("colorNo", colorNo)
             }
@@ -54,7 +55,7 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
         //DialogFragment1Binding.inflate(inflater, R.layout.dialog_fragment1, container, false)
         //DialogFragment1Binding
 
-        val v = inflater.inflate(R.layout.dialog_fragment_osnowa_xy, null)
+        val v = inflater.inflate(R.layout.dialog_fragment_target_xy, null)
         binding = DataBindingUtil.bind(v)!!
         //binding.pointDialogModelView
         //DataBindingUtil.setContentView<>()
@@ -88,13 +89,8 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
             punk.x = binding?.textViewX?.text.toString().toDouble()
             punk.y = binding?.textViewY?.text.toString().toDouble()
 
-            punk.latitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.latitude!!
-            punk.longitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.longitude!!
-
-            punk.pointType = Point.PointType.OSNOWA_MARKER_XY
+            punk.pointType = Point.PointType.ZWYKLY_XY
         }
-
-
 
         return v.rootView
     }
@@ -116,7 +112,7 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
     //
     // setups
     //
-    override open fun  setModel(model: PointDialogModelView): PointDialogFragmentOsnowaXY {
+    override open fun  setModel(model: PointDialogModelView): PointDialogFragmentTargetXY {
         Log.d("ColorFragment", "setModel called")
         this.pointDialogModelView = model
 

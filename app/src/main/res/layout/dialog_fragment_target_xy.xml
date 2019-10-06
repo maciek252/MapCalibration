@@ -14,7 +14,7 @@
         android:id="@+id/contraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#9C27B0"
+        android:background="#FF9800"
         android:orientation="vertical">
 
         <LinearLayout

@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.leopold.mvvm.R
+import com.leopold.mvvm.data.db.entity.Point
 import com.leopold.mvvm.databinding.DialogFragment1Binding
 import com.leopold.mvvm.databinding.PointEditDialogBinding
 import kotlinx.android.synthetic.main.dialog_fragment1.*
@@ -24,6 +25,8 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
 
     }
 
+    open lateinit var  punk : Point
+
     private var binding : DialogFragment1Binding? = null
 
     var colorNo: Int = -1
@@ -32,7 +35,7 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
 
     var list_of_items = arrayOf("Item 1", "Item 2", "Item 3")
 
-    lateinit var pointDialogModelView: PointDialogModelView
+    open lateinit var pointDialogModelView: PointDialogModelView
 
     companion object {
         fun putExtra(colorNo: Int) = PointDialogFragment().apply {
@@ -105,6 +108,12 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
     //
     // setups
     //
+
+    open fun setPoint(p: Point) : PointDialogFragment{
+        punk = p
+        return this
+    }
+
     open fun  setModel(model: PointDialogModelView): PointDialogFragment {
         Log.d("ColorFragment", "setModel called")
         this.pointDialogModelView = model

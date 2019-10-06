@@ -20,7 +20,6 @@ class PointDialogModelView(val mackowaViewModel: MackowaViewModel) : ViewModel()
             _punkt = value
         }
 
-
     init{
         punktyOsnowy.value = mackowaViewModel.points.value
     }
