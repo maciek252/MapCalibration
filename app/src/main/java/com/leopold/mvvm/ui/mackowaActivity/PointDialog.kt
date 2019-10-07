@@ -69,7 +69,6 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 
         binding?.buttonRemovePoint?.setOnClickListener {
             vm.removePoint(p)
-            vm.refreshPoints()
             this.dismiss()
         }
 
@@ -79,21 +78,23 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 
 
 
-//            when(spinnerPointType.selectedItemId){
-//                0L -> p!!.pointType = Point.PointType.OSNOWA_COORDINATES
-//                1L -> p!!.pointType = Point.PointType.OSNOWA_MARKER_XY
-//                2L -> p!!.pointType = Point.PointType.ZWYKLY_DWIE_LINIE
-//                else  -> p!!.pointType = Point.PointType.ZWYKLY_XY
-//
-//            }
-
             p?.name = binding?.textViewPointName?.text.toString()
 
             if(wasEmpty)
                 addPoint()
 
+    // to nie wystarcza - adapter nie wykonuje odswiezenia
+            //binding?.vm?.points = binding?.vm?.points!!
+            // DO POPRAWKI!!!! PASKUDNE!
+            val m = vm.points.value
+            vm.points.value += p!!
+            vm.points.value = m
 
-            vm.refreshPoints()
+            //vm?.points?.value -= p!!
+
+
+
+
             this.dismiss()
         }
 

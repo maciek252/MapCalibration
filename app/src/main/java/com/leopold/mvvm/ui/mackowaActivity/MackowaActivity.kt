@@ -66,6 +66,8 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         binding.vm = getViewModel()
         binding.setLifecycleOwner(this)
 
+
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -95,6 +97,10 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
             mapMarkerPoint.filter{ (key,value) ->value.id == p?.id}.map{(key,value)-> zoomToMarker(key)}
 
+        }
+
+        binding.vm?.points?.observeForever {
+            binding.pointsRecyclerView.adapter?.notifyDataSetChanged()
         }
 
 

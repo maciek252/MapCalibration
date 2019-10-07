@@ -28,6 +28,7 @@ fun setPoints(view: RecyclerView, points: List<Point>, vm: MackowaViewModel) {
             this.notifyDataSetChanged()
             this.notifyItemChanged(0)
             Log.d("MackowaBindingAdapter", "dane zmienione, punkty.size=" + points.size)
+            //vm.points.observeForever { notifyDataSetChanged() }
         }
 
     } ?: run {

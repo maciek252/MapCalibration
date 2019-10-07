@@ -30,6 +30,10 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 //    RecyclerView.Adapter<PointsAdapter.PointViewHolder>()
     RecyclerView.Adapter<RecyclerView.ViewHolder>()
     {
+        init{
+            //vm?.points.observeForever { notifyDataSetChanged() }
+        }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):// PointsAdapter.PointViewHolder
             RecyclerView.ViewHolder {
@@ -45,9 +49,11 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
         //setNestedScrollingEnabled(v, false);
 
 
+
+
         val viewHolder = when (viewType) {
                 CellType.OSNOWA_COORDINATES.ordinal -> OsnowaCoordinatesListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_osnowa_coordinates, parent, false), vm)
-                CellType.OSNOWA_XY.ordinal -> OsnowaXYListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_osnowa_xy, parent, false), vm)
+                CellType.OSNOWA_XY.ordinal -> OsnowaXYListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_osnowa_xy, parent, false), vm, this)
                 //CellType.MARKER_XY.ordinal
                 else -> MarkerXYListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_marker_xy, parent, false), vm)
 
@@ -67,6 +73,8 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
             d?.show(activity?.supportFragmentManager, s)
 
         };
+
+        //vm?.points.observeForever { notifyDataSetChanged() }
 
 
 
@@ -98,21 +106,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
         }
 
 
-
-
-        //holder.binding. = punkty[position]
         Log.d("PointsAdapter", "binding position:${position}")
-
-//        holder.binding.textViewId.setText("n=" + punkty[position].id)
-//        holder.binding.textViewType.setText("lat" + punkty[position].pointType)
-//        holder.binding.textViewName.setText("name=" + punkty[position].name)
-//        holder.binding.textView8.setText("x=" + punkty[position].x)
-
-
-
-
-        //holder.binding.vm = vm
-
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -128,11 +122,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 
     override fun getItemCount() = punkty.size
 
-    //class PointViewHolder(view: View) : BindingViewHolder<ItemPointBinding>(view)
-
-
-
-    class OsnowaXYListViewHolder(itemView: View, val vm: MackowaViewModel) : RecyclerView.ViewHolder(itemView) {
+    class OsnowaXYListViewHolder(itemView: View, val vm: MackowaViewModel, val pa: PointsAdapter) : RecyclerView.ViewHolder(itemView) {
 
         fun bindView(p: Point) {
 //            itemView.textMovieTitle.text = movieModel.movieTitle
@@ -146,7 +136,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
             itemView.buttonSelectOXY.setOnClickListener {
 
                 vm.currentPoint.value = p
-
+                pa.notifyDataSetChanged()
             }
 
 
@@ -167,7 +157,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
                 itemView.buttonSelectOC.setOnClickListener {
 
                     vm.currentPoint.value = p
-
+                    itemView.invalidate()
                 }
 
             }

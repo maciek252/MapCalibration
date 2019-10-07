@@ -115,16 +115,9 @@ class MackowaViewModel() : BaseViewModel() {
 
     }
 
-    fun refreshPoints(){
-        val m = points.value
-        val l = points.value
 
 
-    }
 
-    fun doSearchS(s: String) {
-
-    }
 
 
 
