@@ -46,8 +46,8 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 
 
         val viewHolder = when (viewType) {
-                CellType.OSNOWA_COORDINATES.ordinal -> OsnowaCoordinatesListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_osnowa_coordinates, parent, false))
-                CellType.OSNOWA_XY.ordinal -> OsnowaXYListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_osnowa_xy, parent, false))
+                CellType.OSNOWA_COORDINATES.ordinal -> OsnowaCoordinatesListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_osnowa_coordinates, parent, false), vm)
+                CellType.OSNOWA_XY.ordinal -> OsnowaXYListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_osnowa_xy, parent, false), vm)
                 //CellType.MARKER_XY.ordinal
                 else -> MarkerXYListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_marker_xy, parent, false), vm)
 
@@ -132,7 +132,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 
 
 
-    class OsnowaXYListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class OsnowaXYListViewHolder(itemView: View, val vm: MackowaViewModel) : RecyclerView.ViewHolder(itemView) {
 
         fun bindView(p: Point) {
 //            itemView.textMovieTitle.text = movieModel.movieTitle
@@ -143,13 +143,18 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
             itemView.textViewPointName_OXY.text = p.name
             itemView?.textViewXX.text = p.x.toString()
 
+            itemView.buttonSelectOXY.setOnClickListener {
+
+                vm.currentPoint.value = p
+
+            }
 
 
         }
 
     }
 
-        class    OsnowaCoordinatesListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        class    OsnowaCoordinatesListViewHolder(itemView: View, val vm: MackowaViewModel) : RecyclerView.ViewHolder(itemView) {
             fun bindView(p: Point) {
 //            itemView.textMovieTitle.text = movieModel.movieTitle
 //            itemView.textMovieViews.text = "Views: " + movieModel.movieViews
@@ -158,6 +163,12 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 //            Glide.with(itemView.context).load(movieModel.moviePicture!!).into(itemView.imageMovie)
                 itemView.textViewPointName_OC.text = p.name
                 itemView.textView8.text = p.pointType.toString()
+
+                itemView.buttonSelectOC.setOnClickListener {
+
+                    vm.currentPoint.value = p
+
+                }
 
             }
         }

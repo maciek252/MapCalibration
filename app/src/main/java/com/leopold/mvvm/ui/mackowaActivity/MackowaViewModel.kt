@@ -18,6 +18,7 @@ import com.leopold.mvvm.data.remote.domain.Repository
 import com.leopold.mvvm.extension.with
 
 import com.leopold.mvvm.util.*
+import com.patloew.rxlocation.RxLocation
 
 /**
  * @author Leopold
@@ -26,6 +27,8 @@ class MackowaViewModel() : BaseViewModel() {
     private var query: String = ""
         get() = if (field.isEmpty()) "MVVM" else field
 
+
+    val currentGpsPosition : MutableLiveData<Location> = MutableLiveData()
 
     val currentPoint: MutableLiveData<Point?> = MutableLiveData()
 
@@ -104,9 +107,18 @@ class MackowaViewModel() : BaseViewModel() {
 
     }
 
+    fun removePoint(p: Point?){
+
+        p?.let {
+            points.value -= p
+        }
+
+    }
+
     fun refreshPoints(){
         val m = points.value
-        points.value = m
+        val l = points.value
+
 
     }
 

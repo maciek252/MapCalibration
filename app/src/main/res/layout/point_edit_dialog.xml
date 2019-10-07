@@ -39,19 +39,12 @@
                 android:layout_weight="1"
                 android:text="SavePoint" />
 
-            <Spinner
-                android:id="@+id/spinnerPointType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/country_arrays" />
-
-            <TextView
-                android:id="@+id/textView"
+            <Button
+                android:id="@+id/buttonRemovePoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Remove" />
 
         </LinearLayout>
 

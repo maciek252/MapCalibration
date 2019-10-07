@@ -67,6 +67,11 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
         binding?.textViewPointName?.setText(p?.name)
 
 
+        binding?.buttonRemovePoint?.setOnClickListener {
+            vm.removePoint(p)
+            vm.refreshPoints()
+            this.dismiss()
+        }
 
         //binding?.textView?.setText()
         binding?.buttonSavePoint?.setOnClickListener {
@@ -98,24 +103,40 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
         initializeIndicator()
 
 
-        val tab = binding?.indicatorLayout2?.getTabAt(p?.pointType?.ordinal!!)
-        tab?.select()
+        if(wasEmpty){
+            if(vm.points.value.isEmpty()){
+
+            } else
+            if(vm.points.value.filter{it.pointType == Point.PointType.OSNOWA_MARKER_XY}.isEmpty()) {
+                val tab =
+                    binding?.indicatorLayout2?.getTabAt(Point.PointType.OSNOWA_MARKER_XY?.ordinal!!)
+                tab?.select()
+            } else  {
+                val tab =
+                    binding?.indicatorLayout2?.getTabAt(Point.PointType.ZWYKLY_XY?.ordinal!!)
+                tab?.select()
+            }
+        } else {
+            val tab = binding?.indicatorLayout2?.getTabAt(p?.pointType?.ordinal!!)
+            tab?.select()
+        }
+
 
 
 
         val listaTypow = Point.PointType.values().toList()
         var list_of_items = arrayOf("Item 1", "Item 2", "Item 3")
-        val aa = ArrayAdapter(
-            activity,
-            R.layout.support_simple_spinner_dropdown_item,
-            listaTypow
-        )
-
-        //val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, list_of_items)
-        // Set layout to use when the list of choices appear
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        // Set Adapter to Spinner
-        binding?.spinnerPointType?.setAdapter(aa)
+//        val aa = ArrayAdapter(
+//            activity,
+//            R.layout.support_simple_spinner_dropdown_item,
+//            listaTypow
+//        )
+//
+//        //val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, list_of_items)
+//        // Set layout to use when the list of choices appear
+//        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        // Set Adapter to Spinner
+//        binding?.spinnerPointType?.setAdapter(aa)
 
 
 

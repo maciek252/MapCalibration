@@ -26,11 +26,22 @@ import com.leopold.mvvm.util.Utils
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.ui.IconGenerator
 import com.jakewharton.rxbinding2.view.selected
+import io.reactivex.internal.operators.single.SingleInternalHelper.toObservable
+import com.google.android.gms.location.LocationRequest
+import com.patloew.rxlocation.RxLocation
+
+
+
+
+
+
 
 
 class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,
     GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener {
 
+    var centeredOnInit: Boolean = false
+    var mapLoaded: Boolean = false
 
     @LayoutRes
     override fun getLayoutResId() = R.layout.activity_mackowy
@@ -73,11 +84,48 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         buttonShowAllMarkers.setOnClickListener {
             showMarkers((binding.vm?.points)?.value!!)
         }
+        buttonSettings.setOnClickListener {
+            centerMapOnGpsLocation()
+        }
 
         binding.vm?.currentPoint?.observeForever {
+            val p = it
             //binding.vm?.currentPoint?.value
             binding.textView7.setText("" + binding.vm?.currentPoint?.value)
+
+            mapMarkerPoint.filter{ (key,value) ->value.id == p?.id}.map{(key,value)-> zoomToMarker(key)}
+
         }
+
+
+        // Create one instance and share it
+        val rxLocation = RxLocation(this.applicationContext)
+
+        val locationRequest = LocationRequest.create()
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .setInterval(1000)
+
+        rxLocation.location().updates(locationRequest)
+            .map{rxLocation -> textViewGps.setText("" + rxLocation.latitude);
+
+                binding?.vm?.currentGpsPosition?.value = rxLocation
+
+
+                //if(rxLocation.hasAccuracy() && rxLocation.accuracy < 2) {//&& !centeredOnInit){
+                    centeredOnInit = true
+                    centerMapOnGpsLocation()
+                //}
+                //rxLocation
+            }
+            .subscribe{rxLocation->
+                ;
+            }
+//            .flatMap<Address> { location ->
+//                rxLocation.geocoding().fromLocation(location).toObservable()
+//            }
+//            .subscribe { address ->
+//                /* do something */
+//            }
 
     }
 
@@ -116,13 +164,29 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
             binding?.vm?.latLngMarker?.value = markerAddedByClick?.position
 
+
         }
 
-    }
 
-    fun none(){
 
     }
+
+    fun centerMapOnGpsLocation(){
+
+
+        val center = CameraUpdateFactory.newLatLng(
+            LatLng(
+                binding.vm?.currentGpsPosition?.value?.latitude!!,
+                binding.vm?.currentGpsPosition?.value?.longitude!!
+
+            )
+        )
+        val zoom = CameraUpdateFactory.zoomTo(15f)
+
+        googleMap.moveCamera(center)
+        googleMap.animateCamera(zoom)
+    }
+
 
     override fun onMapLoaded() {
         Log.d(TAG, "onMapLoadedCallback")
@@ -154,12 +218,13 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
     private fun constructMarkerOptions(p: Point): MarkerOptions {
         val point = LatLng(p.latitude, p.longitude)
 
+        // to niewazne! nie wykorzystane
         val icon2 = when(p.pointType){
             Point.PointType.OSNOWA_COORDINATES -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
             Point.PointType.OSNOWA_MARKER_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
             Point.PointType.ZWYKLY_DWIE_LINIE -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
             Point.PointType.ZWYKLY_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
-            else -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            else -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)
         }
 
         val icon = when (p.len1Ref) {
@@ -193,12 +258,15 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
     }
 
     private fun showMarkers(points: List<Point>) {
+
+        mapMarkerPoint.clear()
+        googleMap.clear()
         if(points.isEmpty())
             return
 
-        mapMarkerPoint.clear()
 
-        googleMap.clear()
+
+
         val builder = LatLngBounds.Builder()
         points.map {
             val marker =googleMap.addMarker(constructMarkerOptions(it))
@@ -206,10 +274,10 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
             mapMarkerPoint[marker] = it
 
             val iconColor = when(it.pointType){
-                Point.PointType.OSNOWA_COORDINATES -> IconGenerator.STYLE_GREEN
-                Point.PointType.OSNOWA_MARKER_XY -> IconGenerator.STYLE_PURPLE
+                Point.PointType.OSNOWA_COORDINATES -> IconGenerator.STYLE_RED
+                Point.PointType.OSNOWA_MARKER_XY -> IconGenerator.STYLE_ORANGE
                 Point.PointType.ZWYKLY_DWIE_LINIE -> IconGenerator.STYLE_BLUE
-                Point.PointType.ZWYKLY_XY -> IconGenerator.STYLE_ORANGE
+                Point.PointType.ZWYKLY_XY -> IconGenerator.STYLE_GREEN
                 else -> IconGenerator.STYLE_WHITE
             }
 
