@@ -7,7 +7,7 @@
 
         <variable
             name="pointDialogModelView"
-            type="com.leopold.mvvm.ui.mackowaActivity.PointDialogModelView" />
+            type="com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.PointDialogModelView" />
     </data>
 
     <LinearLayout
@@ -43,7 +43,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textViewPointName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(pointDialogModelView.punkt.id)}" />
@@ -74,20 +74,20 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/distanceToMarker1" />
+                android:text="Ref. mrk" />
 
             <TextView
                 android:id="@+id/textViewXlabel"
-                android:layout_width="88dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#3F51B5"
                 android:editable="true"
                 android:enabled="true"
                 android:focusable="auto"
                 android:focusableInTouchMode="true"
-                android:text="TextView" />
+                android:text="X=" />
 
             <TextView
                 android:id="@+id/textViewX"
@@ -97,14 +97,15 @@
                 android:editable="true"
                 android:enabled="true"
                 android:focusableInTouchMode="true"
-                android:text="TextView" />
+                android:numeric="signed"
+                android:text="0" />
 
             <TextView
                 android:id="@+id/textViewYLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Y=" />
 
             <TextView
                 android:id="@+id/textViewY"
@@ -113,7 +114,8 @@
                 android:layout_weight="1"
                 android:editable="true"
                 android:focusableInTouchMode="true"
-                android:text="TextView" />
+                android:numeric="signed"
+                android:text="0" />
 
         </LinearLayout>
 

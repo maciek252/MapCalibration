@@ -7,7 +7,7 @@
 
         <variable
             name="pointDialogModelView"
-            type="com.leopold.mvvm.ui.mackowaActivity.PointDialogModelView" />
+            type="com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.PointDialogModelView" />
     </data>
 
     <LinearLayout
@@ -43,7 +43,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textViewPointName"
                 android:layout_width="253dp"
                 android:layout_height="match_parent"
                 android:text="@{String.valueOf(pointDialogModelView.mackowaViewModel.latLngMarker.latitude)}" />

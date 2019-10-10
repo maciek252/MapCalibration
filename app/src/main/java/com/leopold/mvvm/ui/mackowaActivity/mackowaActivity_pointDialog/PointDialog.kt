@@ -1,4 +1,4 @@
-package com.leopold.mvvm.ui.mackowaActivity
+package com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -15,9 +14,7 @@ import androidx.viewpager.widget.ViewPager
 
 import com.leopold.mvvm.data.db.entity.Point
 import com.leopold.mvvm.databinding.PointEditDialogBinding
-import kotlinx.android.synthetic.main.point_edit_dialog.*
-import com.google.android.material.tabs.TabLayout
-import com.leopold.mvvm.R
+import com.leopold.mvvm.ui.mackowaActivity.MackowaViewModel
 
 
 class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  AdapterView.OnItemSelectedListener,
@@ -35,7 +32,8 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
     }
 
 
-    private var pointDialogModelView = PointDialogModelView(vm)
+    private var pointDialogModelView =
+        PointDialogModelView(vm)
 
 
     public var binding : PointEditDialogBinding? = null
@@ -190,12 +188,20 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
             //return ColorFragment.putExtra(position).setModel(colorViewModel)
             //return ColorFragmentMackowy.putExtraMackowy(position).setModel(colorViewModel)
             if(position == 0)
-                return PointDialogFragmentOsnowaCoordinates.putExtra(position).setModel(pointDialogModelView).setPoint(p!!)
+                return PointDialogFragmentOsnowaCoordinates.putExtra(
+                    position
+                ).setModel(pointDialogModelView).setPoint(p!!)
             if(position == 1)
-                return PointDialogFragmentOsnowaXY.putExtra(position).setModel(pointDialogModelView).setPoint(p!!)
+                return PointDialogFragmentOsnowaXY.putExtra(
+                    position
+                ).setModel(pointDialogModelView).setPoint(p!!)
             if(position == 2)
-                return PointDialogFragmentTargetXY.putExtra(position).setModel(pointDialogModelView).setPoint(p!!)
-            return PointDialogFragment.putExtra(position).setModel(pointDialogModelView).setPoint(p!!)
+                return PointDialogFragmentTargetXY.putExtra(
+                    position
+                ).setModel(pointDialogModelView).setPoint(p!!)
+            return PointDialogFragment.putExtra(
+                position
+            ).setModel(pointDialogModelView).setPoint(p!!)
             //(colorViewModel)
 
         }

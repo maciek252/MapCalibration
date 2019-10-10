@@ -1,4 +1,4 @@
-package com.leopold.mvvm.ui.mackowaActivity
+package com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog
 
 
 
@@ -10,35 +10,23 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.leopold.mvvm.R
 import com.leopold.mvvm.data.db.entity.Point
-import com.leopold.mvvm.databinding.DialogFragment1Binding
-import com.leopold.mvvm.databinding.PointEditDialogBinding
-import kotlinx.android.synthetic.main.dialog_fragment1.*
+import com.leopold.mvvm.databinding.DialogFragmentOsnowaXyBinding
 
-open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedListener,
+open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.OnItemSelectedListener,
     AdapterView.OnItemClickListener{
+
+
+
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
     }
 
-    open lateinit var  punk : Point
-
-    private var binding : DialogFragment1Binding? = null
-
-    var colorNo: Int = -1
-
-
-
-    var list_of_items = arrayOf("Item 1", "Item 2", "Item 3")
-
-    open lateinit var pointDialogModelView: PointDialogModelView
+    public var binding : DialogFragmentOsnowaXyBinding? = null
 
     companion object {
-        fun putExtra(colorNo: Int) = PointDialogFragment().apply {
+        fun putExtra(colorNo: Int) = PointDialogFragmentOsnowaXY().apply {
             arguments = Bundle().apply {
                 putInt("colorNo", colorNo)
             }
@@ -66,7 +54,7 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
         //DialogFragment1Binding.inflate(inflater, R.layout.dialog_fragment1, container, false)
         //DialogFragment1Binding
 
-        val v = inflater.inflate(R.layout.dialog_fragment1, null)
+        val v = inflater.inflate(R.layout.dialog_fragment_osnowa_xy, null)
         binding = DataBindingUtil.bind(v)!!
         //binding.pointDialogModelView
         //DataBindingUtil.setContentView<>()
@@ -76,10 +64,18 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
 
         binding?.spinner!!.onItemSelectedListener = this
 
+
+
+        binding?.textViewX?.text = "" + punk.x
+        binding?.textViewY?.text = "" + punk.y
+
+        val lista = pointDialogModelView.mackowaViewModel.points.value.filter{it.pointType == Point.PointType.OSNOWA_COORDINATES || it.pointType == Point.PointType.OSNOWA_MARKER_XY}.map{ it -> it.name}.toList()
+
         val aa = ArrayAdapter(
             activity,
             R.layout.support_simple_spinner_dropdown_item,
-            list_of_items
+            //list_of_items
+            lista
         )
 
             //val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, list_of_items)
@@ -87,6 +83,18 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         // Set Adapter to Spinner
         binding?.spinner?.setAdapter(aa)
+
+        binding?.button?.setOnClickListener {
+            punk.x = binding?.textViewX?.text.toString().toDouble()
+            punk.y = binding?.textViewY?.text.toString().toDouble()
+
+            punk.latitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.latitude!!
+            punk.longitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.longitude!!
+
+            punk.pointType = Point.PointType.OSNOWA_MARKER_XY
+        }
+
+
 
         return v.rootView
     }
@@ -108,23 +116,13 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
     //
     // setups
     //
-
-    open fun setPoint(p: Point) : PointDialogFragment{
-        punk = p
-        return this
-    }
-
-    open fun  setModel(model: PointDialogModelView): PointDialogFragment {
+    override open fun  setModel(model: PointDialogModelView): PointDialogFragmentOsnowaXY {
         Log.d("ColorFragment", "setModel called")
         this.pointDialogModelView = model
-        return this
-    }
-
-    open fun setModel(): PointDialogFragment {
-        Log.d("ColorFragment", "setModel called")
 
         return this
     }
+
 
 //    fun bindColorId(colorId: RColor?) {
 //        colorId ?: return

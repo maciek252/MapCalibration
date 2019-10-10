@@ -1,10 +1,11 @@
-package com.leopold.mvvm.ui.mackowaActivity
+package com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog
 
 //import androidx.lifecycle.MutableLiveData
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.leopold.mvvm.data.db.entity.Point
+import com.leopold.mvvm.ui.mackowaActivity.MackowaViewModel
 
 
 class PointDialogModelView(val mackowaViewModel: MackowaViewModel) : ViewModel() {

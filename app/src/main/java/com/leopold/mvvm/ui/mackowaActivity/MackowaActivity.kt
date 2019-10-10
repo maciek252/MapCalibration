@@ -1,5 +1,6 @@
 package com.leopold.mvvm.ui.MackowaActivity
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,7 +14,7 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 
 import com.leopold.mvvm.databinding.ActivityMackowyBinding
-import com.leopold.mvvm.ui.mackowaActivity.PointDialog
+import com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.PointDialog
 import kotlinx.android.synthetic.main.activity_mackowy.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,20 +26,20 @@ import com.leopold.mvvm.data.db.entity.Point
 import com.leopold.mvvm.util.Utils
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.ui.IconGenerator
-import com.jakewharton.rxbinding2.view.selected
-import io.reactivex.internal.operators.single.SingleInternalHelper.toObservable
 import com.google.android.gms.location.LocationRequest
+import com.jakewharton.rxbinding2.view.clicks
+import com.leopold.mvvm.ui.mackowaActivity.ConfigurationDialog
+import com.leopold.mvvm.util.Configuration
 import com.patloew.rxlocation.RxLocation
-
-
-
-
-
-
+import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.*
+import java.util.concurrent.TimeUnit
 
 
 class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,
     GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener {
+
+
 
     var centeredOnInit: Boolean = false
     var mapLoaded: Boolean = false
@@ -57,6 +58,17 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
     lateinit var utils: Utils
     //lateinit var utils: Utils
 
+    var job : Job? = null
+
+    fun startTimeout() {
+        val uiScope = CoroutineScope(Dispatchers.Main)
+        job = uiScope.launch{
+            delay(2000)
+            binding.textViewHeadingToCurrent.setText("---")
+            binding.textViewMapDistanceToCurrent.setText("---")
+
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +78,7 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         binding.vm = getViewModel()
         binding.setLifecycleOwner(this)
 
-
+        (binding.vm?.centerMapOnGps)?.value = Configuration.isMapCentered
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -86,16 +98,74 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         buttonShowAllMarkers.setOnClickListener {
             showMarkers((binding.vm?.points)?.value!!)
         }
-        buttonSettings.setOnClickListener {
-            centerMapOnGpsLocation()
+        //.
+        val clickStream = buttonSettings
+            .clicks().share()
+
+        //    .debounce(300, TimeUnit.MILLISECONDS)
+//            .observeOn(AndroidSchedulers.mainThread())
+            //.buffer(1000, TimeUnit.MILLISECONDS)
+            //.filter(clicks -> clicks.size() == 4)
+    //        .count()
+//            .filter{count -> count >= 1}
+            //.map{count -> count >= 1}
+  //          .observeOn(AndroidSchedulers.mainThread())
+            clickStream.buffer(clickStream.debounce(250, TimeUnit.MILLISECONDS))
+            .map { it.size }
+            .filter { it == 2 }
+                .observeOn(AndroidSchedulers.mainThread())
+            .subscribe{ Log.d(TAG, "double click!")
+            buttonSettings.isPressed = !buttonSettings.isPressed
+                        centerMapOnGpsLocation()
+        }
+
+
+
+//        buttonSettings.setOnClickListener {
+//            //binding.vm?.saveAllPoints("aktualna")
+//            centerMapOnGpsLocation()
+//        }
+        buttonMenu.setOnClickListener {
+            showConfigurationDialog()
+            //binding.vm?.readAllPoints()
+//            applicationContext.deleteDatabase("mvvm_demo.db")
+        }
+
+
+
+        binding.vm?.currentGpsPosition?.observeForever {
+
+            job?.cancel("ee")
+            startTimeout()
+            if(binding.vm?.currentPoint?.value == null) {
+                binding.textViewHeadingToCurrent.setText("====")
+                binding.textViewMapDistanceToCurrent.setText("====")
+            }
+            else {
+                val h = String.format("%.2f", binding.vm?.heading?.value)
+                binding.textViewHeadingToCurrent.setText("" + h)
+                val d = String.format("%.2f", binding.vm?.distance?.value)
+                binding.textViewMapDistanceToCurrent.setText("" + d)
+            }
+        }
+
+        binding.vm?.scaleTerrainMetersToMapCm?.observeForever {
+            binding.textViewMapScaleCmToMeters.setText(String.format("%.0f", it))
+            binding.textViewMapScaleMetersToCm.setText(String.format("%.3f", 100/it))
+
+
         }
 
         binding.vm?.currentPoint?.observeForever {
+
+
             val p = it
             //binding.vm?.currentPoint?.value
-            binding.textView7.setText("" + binding.vm?.currentPoint?.value)
+            binding.textViewCurrentPoint.setText("" + binding.vm?.currentPoint?.value)
 
             mapMarkerPoint.filter{ (key,value) ->value.id == p?.id}.map{(key,value)-> zoomToMarker(key)}
+
+
 
         }
 
@@ -111,17 +181,21 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
             .setInterval(1000)
 
+
+
+
         rxLocation.location().updates(locationRequest)
             .map{rxLocation -> textViewGps.setText("" + rxLocation.latitude);
+
 
                 binding?.vm?.currentGpsPosition?.value = rxLocation
 
 
                 //if(rxLocation.hasAccuracy() && rxLocation.accuracy < 2) {//&& !centeredOnInit){
                     centeredOnInit = true
-                    centerMapOnGpsLocation()
-                //}
-                //rxLocation
+
+                    if(binding?.vm?.centerMapOnGps?.value!!)
+                        centerMapOnGpsLocation()
             }
             .subscribe{rxLocation->
                 ;
@@ -172,8 +246,8 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
 
         }
-
-
+        //googleMap.setMyLocationEnabled(true);
+        googleMap.isMyLocationEnabled = true
 
     }
 
@@ -337,11 +411,19 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
     }
 
 
+    fun showConfigurationDialog(){
+
+        val d = ConfigurationDialog(binding.vm!!)
+        //d.binding?.item
+        val s: String = "configuration"
+        d?.show(supportFragmentManager, s)
+    }
 
     fun showAddPointDialog(){
         val vm = (binding.vm)
-        val d = PointDialog(vm!!, null)
-        //d.binding?.item
+        val d =
+            PointDialog(vm!!, null)
+
         val s: String = "dialog"
         d?.show(supportFragmentManager, s)
     }

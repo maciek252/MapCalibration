@@ -3,20 +3,15 @@ package com.leopold.mvvm.ui.mackowaActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.leopold.mvvm.R
 
 
-import com.leopold.mvvm.ui.BindingViewHolder
 import android.util.Log
-import android.widget.TextView
-import androidx.core.view.ViewCompat.setNestedScrollingEnabled
 import com.leopold.mvvm.data.db.entity.Point
 
 import com.leopold.mvvm.ui.MackowaActivity.MackowaActivity
-import com.leopold.mvvm.ui.search.SearchActivity
-import kotlinx.android.synthetic.main.dialog_fragment_osnowa_xy.view.*
+import com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.PointDialog
 import kotlinx.android.synthetic.main.item_point_marker_xy.view.*
 import kotlinx.android.synthetic.main.item_point_osnowa_coordinates.view.*
 import kotlinx.android.synthetic.main.item_point_osnowa_xy.view.*
@@ -66,7 +61,8 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
             )
 
             val p = punkty[viewHolder.getAdapterPosition()]
-            val d = PointDialog(vm!!, p)
+            val d =
+                PointDialog(vm!!, p)
             //d.binding?.item
             val s: String = "dialog"
             val activity =  parent?.context as? MackowaActivity
@@ -152,7 +148,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 //
 //            Glide.with(itemView.context).load(movieModel.moviePicture!!).into(itemView.imageMovie)
                 itemView.textViewPointName_OC.text = p.name
-                itemView.textView8.text = p.pointType.toString()
+
 
                 itemView.buttonSelectOC.setOnClickListener {
 

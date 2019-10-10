@@ -81,3 +81,19 @@ fun computeTarget(p: Point, refOsnowa: Point, metersPerCm: Double){
 
 
 }
+
+fun PointToLocation(p: Point) : Location  {
+    val l1: Location = Location("p1")
+    l1.latitude = p.latitude
+    l1.longitude = p.longitude
+    return l1
+}
+
+fun computeDistanceAndHeadingToCurrentPoint(target: Location, current: Location): Pair<Double, Double>{
+
+    val dist = current.distanceTo(target);
+    val dir = current.bearingTo(target);
+
+    return Pair(dist.toDouble(), dir.toDouble())
+
+}
