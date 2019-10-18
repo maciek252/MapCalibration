@@ -24,7 +24,7 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
 
     }
 
-    public var binding : DialogFragmentTargetXyBinding? = null
+    var binding : DialogFragmentTargetXyBinding? = null
 
     companion object {
         fun putExtra(colorNo: Int) = PointDialogFragmentTargetXY().apply {
@@ -52,8 +52,6 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
 
 
 
-        //DialogFragment1Binding.inflate(inflater, R.layout.dialog_fragment1, container, false)
-        //DialogFragment1Binding
 
         val v = inflater.inflate(R.layout.dialog_fragment_target_xy, null)
         binding = DataBindingUtil.bind(v)!!
@@ -85,18 +83,20 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
         // Set Adapter to Spinner
         binding?.spinner?.setAdapter(aa)
 
-        binding?.button?.setOnClickListener {
-            punk.x = binding?.textViewX?.text.toString().toDouble()
-            punk.y = binding?.textViewY?.text.toString().toDouble()
-
-            val selectedReferenceName = binding?.spinner?.selectedItem.toString()
-            val refId = pointDialogModelView.mackowaViewModel.points.value.filter{ it.name== selectedReferenceName}.first().id
-            punk.referenceId = refId
-
-            punk.pointType = Point.PointType.ZWYKLY_XY
-        }
 
         return v.rootView
+    }
+
+    override open fun savePoint(){
+        Log.d("savePoint", "txy")
+        punk.x = binding?.textViewX?.text.toString().toDouble()
+        punk.y = binding?.textViewY?.text.toString().toDouble()
+
+        val selectedReferenceName = binding?.spinner?.selectedItem.toString()
+        val refId = pointDialogModelView.mackowaViewModel.points.value.filter{ it.name== selectedReferenceName}.first().id
+        punk.referenceId = refId
+
+        punk.pointType = Point.PointType.TARGET_XY
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

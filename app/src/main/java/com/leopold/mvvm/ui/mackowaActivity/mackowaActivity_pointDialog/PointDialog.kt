@@ -70,16 +70,26 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
             this.dismiss()
         }
 
-        //binding?.textView?.setText()
         binding?.buttonSavePoint?.setOnClickListener {
-
-
-
 
             p?.name = binding?.textViewPointName?.text.toString()
 
+
+            val a = binding?.pagerView?.adapter as ColorPagerAdapter
+            //val oo = a.getItem(binding?.pagerView?.currentItem!!)
+
+            a.m.get(binding?.pagerView?.currentItem!!)?.savePoint()
+            //oo.savePoint()
+
+
+
+//            val fm = activity?.supportFragmentManager
+//            val fr = binding?.pagerView?.adapter
+
             if(wasEmpty)
                 addPoint()
+
+
 
     // to nie wystarcza - adapter nie wykonuje odswiezenia
             //binding?.vm?.points = binding?.vm?.points!!
@@ -87,11 +97,6 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
             val m = vm.points.value
             vm.points.value += p!!
             vm.points.value = m
-
-            //vm?.points?.value -= p!!
-
-
-
 
             this.dismiss()
         }
@@ -112,7 +117,7 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
                 tab?.select()
             } else  {
                 val tab =
-                    binding?.indicatorLayout2?.getTabAt(Point.PointType.ZWYKLY_XY?.ordinal!!)
+                    binding?.indicatorLayout2?.getTabAt(Point.PointType.TARGET_XY?.ordinal!!)
                 tab?.select()
             }
         } else {
@@ -122,26 +127,9 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 
 
 
-
-        val listaTypow = Point.PointType.values().toList()
-        var list_of_items = arrayOf("Item 1", "Item 2", "Item 3")
-//        val aa = ArrayAdapter(
-//            activity,
-//            R.layout.support_simple_spinner_dropdown_item,
-//            listaTypow
-//        )
-//
-//        //val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, list_of_items)
-//        // Set layout to use when the list of choices appear
-//        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        // Set Adapter to Spinner
-//        binding?.spinnerPointType?.setAdapter(aa)
-
-
-
-
         return v
     }
+
 
     private fun initializePageViewer(v : View) {
 
@@ -153,20 +141,23 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
             Log.d("WW", "pagerView != null")
         }
         binding?.pagerView?.adapter = ColorPagerAdapter(s!!)
+        //binding?.pagerView?.adapter?.get
         binding?.pagerView?.offscreenPageLimit = 2
         binding?.pagerView?.addOnPageChangeListener(pageChangeListener)
+
+
     }
 
     private fun initializeIndicator() {
 
         val listaTypow = Point.PointType.values().toList()
         binding?.indicatorLayout2?.setupWithViewPager(binding?.pagerView, true)
-        for (tabNo in 0..listaTypow.size-1) {
+        for (tabNo in 0..listaTypow.size) {
             //indicatorLayout.getTabAt(tabNo)?.icon = ContextCompat.getDrawable(this, R.drawable
             //    .serduszko)
             //indicatorLayout2.getTabAt(tabNo)?.icon = ContextCompat.getDrawable(this, R.drawable
               //  .selector_indicator2)
-            binding?.indicatorLayout2?.getTabAt(tabNo)?.text = "zolw"+listaTypow.get(tabNo)
+            binding?.indicatorLayout2?.getTabAt(tabNo)?.text = ""+listaTypow.get(tabNo)
         }
     }
 
@@ -179,6 +170,8 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 
     private inner class ColorPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
+        val m = HashMap<Int,PointDialogFragment>()
+
         override fun getItem(position: Int) : PointDialogFragment {
             //if(position == 1)
                 //return ColorFragment.putExtra(position).setModel(colorViewModel)
@@ -187,18 +180,42 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 //            return ColorFragmentMackowy.putExtraMackowy(position).setModel(colorViewModel)
             //return ColorFragment.putExtra(position).setModel(colorViewModel)
             //return ColorFragmentMackowy.putExtraMackowy(position).setModel(colorViewModel)
-            if(position == 0)
-                return PointDialogFragmentOsnowaCoordinates.putExtra(
+            if(position == 0) {
+                val f =  PointDialogFragmentOsnowaCoordinates.putExtra(
                     position
-                ).setModel(pointDialogModelView).setPoint(p!!)
-            if(position == 1)
-                return PointDialogFragmentOsnowaXY.putExtra(
+                ).setModel(pointDialogModelView)
+                f.setPoint(p!!)
+                m[0] = f
+                return f
+            } else
+            if(position == 1) {
+                val f = PointDialogFragmentOsnowaXY.putExtra(
                     position
-                ).setModel(pointDialogModelView).setPoint(p!!)
-            if(position == 2)
-                return PointDialogFragmentTargetXY.putExtra(
+                ).setModel(pointDialogModelView)
+
+                f.setPoint(p!!)
+                m[1] = f
+                return f
+            } else
+            if(position == 2) {
+                val f =
+                 PointDialogFragmentTargetXY.putExtra(
                     position
-                ).setModel(pointDialogModelView).setPoint(p!!)
+                ).setModel(pointDialogModelView)
+
+                f.setPoint(p!!)
+                m[2] = f
+                return f
+            } else
+                if(position == 3) {
+                    val f =
+                        PointDialogFragmentTargetTwoDistances.putExtra(
+                            position
+                        ).setModel(pointDialogModelView)
+                    f.setPoint(p!!)
+                    m[3] = f
+                    return f
+                } else
             return PointDialogFragment.putExtra(
                 position
             ).setModel(pointDialogModelView).setPoint(p!!)
@@ -207,7 +224,7 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
         }
 
 
-        override fun getCount() = 3
+        override fun getCount() = Point.PointType.values().size
     }
 
 }

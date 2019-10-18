@@ -3,26 +3,17 @@ package com.leopold.mvvm.ui.mackowaActivity
 
 import android.location.Location
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
-import com.google.android.gms.common.util.MapUtils
 
 import com.google.android.gms.maps.model.LatLng
 import com.leopold.mvvm.core.BaseViewModel
 import com.leopold.mvvm.data.db.dao.PointDao
 
 
-import com.leopold.mvvm.data.db.entity.Bookmark
 import com.leopold.mvvm.data.db.entity.Point
-import com.leopold.mvvm.data.remote.api.SearchAPI
 import com.leopold.mvvm.data.remote.domain.Repository
-import com.leopold.mvvm.extension.with
 
 import com.leopold.mvvm.util.*
-import com.patloew.rxlocation.RxLocation
 import kotlinx.coroutines.*
 import android.widget.CompoundButton
 
@@ -48,11 +39,12 @@ class MackowaViewModel(
     val currentGpsPosition : MutableLiveData<Location> = MutableLiveData()
 
     val currentPoint: MutableLiveData<Point?> = MutableLiveData()
+    val focusMapOnPoint: MutableLiveData<Point?> = MutableLiveData()
 
     val scaleTerrainMetersToMapCm: MutableLiveData<Double> = MutableLiveData()
 
 
-    val latLngMarker: MutableLiveData<LatLng> = MutableLiveData()
+    var latLngMarker: MutableLiveData<LatLng> = MutableLiveData()
 
     val liczba: NotNullMutableLiveData<Int> = NotNullMutableLiveData(1)
 
@@ -165,12 +157,33 @@ class MackowaViewModel(
     fun computeTargets(){
 
 
-        points.value.filter{it.pointType == Point.PointType.ZWYKLY_XY}.map {
-
+        points.value.filter{it.pointType == Point.PointType.TARGET_XY}.map {
+            it.isValid = true
             //val p0 = points.value.get(0)
             val id = it.referenceId
             val p0 = points.value.filter{it.id == id}.get(0)
-            computeTarget(it, p0, scaleTerrainMetersToMapCm.value!!)
+            computeTargetXY(it, p0, scaleTerrainMetersToMapCm.value!!)
+            if(it.latitude.isNaN() || it.longitude.isNaN()) {
+                it.isValid = false
+                it.longitude = NOT_VALID_LATLON
+                it.latitude = NOT_VALID_LATLON
+            }
+        }
+
+        points.value.filter{it.pointType == Point.PointType.TARGET_TWO_DISTANCES}.map {
+            it.isValid = true
+            //val p0 = points.value.get(0)
+            val id = it.referenceId
+            val id2 = it.referenceId2
+
+            val p0 = points.value.filter{it.id == id}.get(0)
+            val p1 = points.value.filter{it.id == id2}.get(0)
+            computeTarget2Distances(it, p1, p0, scaleTerrainMetersToMapCm.value!!)
+            if(it.latitude.isNaN() || it.longitude.isNaN()) {
+                it.isValid = false
+                it.longitude = NOT_VALID_LATLON
+                it.latitude = NOT_VALID_LATLON
+            }
         }
     }
 
@@ -186,7 +199,7 @@ class MackowaViewModel(
             val l2: Location = Location("p2")
             l2.latitude = p2.latitude
             l2.longitude = p2.longitude
-            scaleTerrainMetersToMapCm.value = computeDistance(l1,l2, p2.x, p2.y )}}
+            scaleTerrainMetersToMapCm.value = computeDistance(l1,l2, p2.len1, 0.0 )}}
 
     }
 

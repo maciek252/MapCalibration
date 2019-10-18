@@ -17,54 +17,54 @@
         android:background="#03A9F4"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="89dp"
-                android:layout_height="51dp"
-                android:text="Button" />
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="214dp"
-                android:layout_height="52dp"
-                android:text="CheckBox" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewPointName_OC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(pointDialogModelView.punkt.id)}" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="147dp"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(pointDialogModelView.punktyOsnowy.size())}" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{pointDialogModelView.punkt.name}" />
-        </LinearLayout>
+            android:orientation="horizontal"/>
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textViewDistanceToMarker2Label"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/distanceToMarker1" />
+
+            <TextView
+                android:id="@+id/textViewDistanceToMarker1"
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+                android:background="#3F51B5"
+                android:editable="true"
+                android:enabled="true"
+                android:focusable="auto"
+                android:focusableInTouchMode="true"
+                android:text="TextView" />
+
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Left From Line 1->2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Spinner
@@ -76,10 +76,10 @@
                 android:id="@+id/textView6"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/distanceToMarker1" />
+                android:text="@string/distanceToMarker2" />
 
             <TextView
-                android:id="@+id/textViewXlabel"
+                android:id="@+id/textViewDistanceToMarker2"
                 android:layout_width="88dp"
                 android:layout_height="wrap_content"
                 android:background="#3F51B5"
@@ -89,33 +89,8 @@
                 android:focusableInTouchMode="true"
                 android:text="TextView" />
 
-            <TextView
-                android:id="@+id/textViewX"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:editable="true"
-                android:enabled="true"
-                android:focusableInTouchMode="true"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/textViewYLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/textViewY"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:editable="true"
-                android:focusableInTouchMode="true"
-                android:text="TextView" />
-
         </LinearLayout>
+
 
     </LinearLayout>
 </layout>

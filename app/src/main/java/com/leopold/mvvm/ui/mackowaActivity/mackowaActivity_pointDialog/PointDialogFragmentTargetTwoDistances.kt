@@ -10,12 +10,14 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
-import com.google.android.gms.maps.model.LatLng
 import com.leopold.mvvm.R
 import com.leopold.mvvm.data.db.entity.Point
-import com.leopold.mvvm.databinding.DialogFragmentOsnowaXyBinding
+import com.leopold.mvvm.databinding.DialogFragmentTargetTwoLinesBinding
+import com.leopold.mvvm.databinding.DialogFragmentTargetTwoLinesBindingImpl
 
-open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.OnItemSelectedListener,
+import com.leopold.mvvm.databinding.DialogFragmentTargetXyBinding
+
+open class PointDialogFragmentTargetTwoDistances() : PointDialogFragment(), AdapterView.OnItemSelectedListener,
     AdapterView.OnItemClickListener{
 
 
@@ -24,10 +26,10 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
 
     }
 
-    var binding : DialogFragmentOsnowaXyBinding? = null
+    var binding : DialogFragmentTargetTwoLinesBinding? = null
 
     companion object {
-        fun putExtra(colorNo: Int) = PointDialogFragmentOsnowaXY().apply {
+        fun putExtra(colorNo: Int) = PointDialogFragmentTargetTwoDistances().apply {
             arguments = Bundle().apply {
                 putInt("colorNo", colorNo)
             }
@@ -49,7 +51,7 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val v = inflater.inflate(R.layout.dialog_fragment_osnowa_xy, null)
+        val v = inflater.inflate(R.layout.dialog_fragment_target_two_lines, null)
         binding = DataBindingUtil.bind(v)!!
         //binding.pointDialogModelView
         //DataBindingUtil.setContentView<>()
@@ -57,14 +59,15 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
         //binding.setLifecycleOwner { this }
         binding?.pointDialogModelView = this.pointDialogModelView
 
-        binding?.spinner!!.onItemSelectedListener = this
+//        binding?.spinner!!.onItemSelectedListener = this
+//        binding?.spinner2!!.onItemSelectedListener = this
 
 
-        val l = LatLng(punk.latitude, punk.longitude)
-        pointDialogModelView?.mackowaViewModel?.latLngMarker.value = l
 
 
-        binding?.textViewX?.text = "" + punk.len1
+        binding?.textViewDistanceToMarker1?.text = "" + punk.len1
+        binding?.textViewDistanceToMarker2?.text = "" + punk.len2
+        binding?.checkBox2?.isChecked = punk.rightFromLine
 
         val lista = pointDialogModelView.mackowaViewModel.points.value.filter{it.pointType == Point.PointType.OSNOWA_COORDINATES || it.pointType == Point.PointType.OSNOWA_MARKER_XY}.map{ it -> it.name}.toList()
 
@@ -74,46 +77,58 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
             //list_of_items
             lista
         )
-
             //val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, list_of_items)
         // Set layout to use when the list of choices appear
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         // Set Adapter to Spinner
         binding?.spinner?.setAdapter(aa)
+        binding?.spinner2?.setAdapter(aa)
 
+        val name1 = pointDialogModelView.mackowaViewModel.points.value.find{it.id == punk.referenceId}?.name
+        val i1 = lista.indexOfFirst{it == name1}
+        i1.let{binding?.spinner?.setSelection(i1)}
 
+        val name2 = pointDialogModelView.mackowaViewModel.points.value.find{it.id == punk.referenceId2}?.name
+        val i2 = lista.indexOfFirst{it == name2}
+        i2.let{binding?.spinner2?.setSelection(i2)}
 
 
         return v.rootView
+    }
+
+    override fun savePoint(){
+        Log.d("savePoint", "txy")
+        punk.len1 = binding?.textViewDistanceToMarker1?.text.toString().toDouble()
+        punk.len2 = binding?.textViewDistanceToMarker2?.text.toString().toDouble()
+        punk.rightFromLine = binding?.checkBox2?.isChecked!!
+
+
+        val selectedReferenceName = binding?.spinner?.selectedItem.toString()
+        val refId = pointDialogModelView.mackowaViewModel.points.value.filter{ it.name== selectedReferenceName}.first().id
+        punk.referenceId = refId
+
+        val selectedReferenceName2 = binding?.spinner2?.selectedItem.toString()
+        val refId2 = pointDialogModelView.mackowaViewModel.points.value.filter{ it.name== selectedReferenceName2}.first().id
+        punk.referenceId2 = refId2
+
+        punk.pointType = Point.PointType.TARGET_TWO_DISTANCES
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
     }
 
-    override fun savePoint(){
-        Log.d("savePoint", "osx")
-        punk.len1 = binding?.textViewX?.text.toString().toDouble()
-
-        punk.latitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.latitude!!
-        punk.longitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.longitude!!
-
-        punk.pointType = Point.PointType.OSNOWA_MARKER_XY
-    }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
-    //
-    // setups
-    //
-    override open fun  setModel(model: PointDialogModelView): PointDialogFragmentOsnowaXY {
+
+    override fun  setModel(model: PointDialogModelView): PointDialogFragmentTargetTwoDistances {
         Log.d("ColorFragment", "setModel called")
         this.pointDialogModelView = model
 
         return this
     }
+
+
 }

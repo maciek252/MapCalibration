@@ -8,6 +8,8 @@ import com.leopold.mvvm.data.db.entity.Point
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+val NOT_VALID_LATLON : Double = 400.0
+
 fun computeDistance(l1 : Location, l2: Location?, offsetX: Double, offsetY: Double) : Double {
 
     ;
@@ -34,7 +36,7 @@ fun computeDistance(l1 : Location, l2: Location?, offsetX: Double, offsetY: Doub
 
 }
 
-fun computeTarget(p: Point, refOsnowa: Point, metersPerCm: Double){
+fun computeTargetXY(p: Point, refOsnowa: Point, metersPerCm: Double){
 
 
 
@@ -95,5 +97,80 @@ fun computeDistanceAndHeadingToCurrentPoint(target: Location, current: Location)
     val dir = current.bearingTo(target);
 
     return Pair(dist.toDouble(), dir.toDouble())
+
+}
+
+fun computeAngle(a : Double, b : Double, c: Double) : Double {
+    val m = (c*c - a*a - b*b)/(-2.0*a*b);
+    val mm = Math.acos(m) * 180/Math.PI;
+    return mm;
+}
+
+/*
+fun addNewOsnowaPointWithValidPosFromMarker(relativeToNr1: Int, len1: Double, relativeToNr2: Int, len2: Double, odl: Double, leftUpper: Boolean = false) : Unit{
+
+    val l1: GeoLocation? = Repozytorium.locationPositions[relativeToNr1];
+    val l2: GeoLocation? = Repozytorium.locationPositions[relativeToNr2];
+
+    val dist = l1!!.location!!.distanceTo(l2!!.location);
+    val dir = l1!!.location!!.bearingTo(l2!!.location);
+
+
+    println("odl=" + odl);
+    val odlNaMapie = odl * dist;
+    println("dist=" + dist + " odlNaMapie=" + odlNaMapie);
+
+    val angle = computeAngle(len1, odlNaMapie, len2)
+    println("angle=" + angle);
+
+
+    var angleResult = dir + angle;
+    if(leftUpper)
+        angleResult = dir - angle;
+    val l: LatLng = SphericalUtil.computeOffset(LatLng(l1!!.location!!.latitude, l1!!.location!!.longitude), len1*1000.0/(odl*1000.0), angleResult);
+    println("computed location = " + l.toString());
+    //val l: Location = l1.location.
+
+    var lok = Location("")
+
+    lok.longitude = l.longitude;
+    lok.latitude = l.latitude;
+
+    val nowa = GeoLocation(lok, 0.0, 0.0, true, 0, relativeToNr1, PointType.LAMPION_OFF);
+    addNewPointToRepo(nowa)
+
+    //val nowa = GeoLocation(loc, offsetX, offsetY, true, 0, relativeToNr, PointType.OSNOWA_MARKER);
+    //return addNewPointToRepo(nowa)
+}
+*/
+
+fun computeTarget2Distances(p: Point, p1: Point,  p2: Point, metersPerCm: Double) {
+
+    val leftUpper = p.rightFromLine
+    val odl = 1.0/metersPerCm
+
+    val l1 = PointToLocation(p1)
+    val l2 = PointToLocation(p2)
+
+    val dist = l1.distanceTo(l2)
+    val dir = l1.bearingTo(l2)
+
+    val odlNaMapie = odl * dist;
+
+
+    val angle = computeAngle(p.len1, odlNaMapie, p.len2)
+    println("angle=" + angle);
+
+    var angleResult = dir + angle;
+    if(leftUpper)
+        angleResult = dir - angle;
+
+    val l: LatLng = SphericalUtil.computeOffset(LatLng(l1.latitude, l1.longitude), p.len1*1000.0/(odl*1000.0), angleResult);
+
+    p.longitude = l.longitude
+    p.latitude = l.latitude
+
+
+
 
 }

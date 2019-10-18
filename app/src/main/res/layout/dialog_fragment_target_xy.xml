@@ -18,59 +18,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="89dp"
-                android:layout_height="51dp"
-                android:text="Button" />
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="214dp"
-                android:layout_height="52dp"
-                android:text="CheckBox" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewPointName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(pointDialogModelView.punkt.id)}" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="147dp"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(pointDialogModelView.punktyOsnowy.size())}" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{pointDialogModelView.punkt.name}" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -78,8 +29,13 @@
                 android:layout_height="wrap_content"
                 android:text="Ref. mrk" />
 
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <TextView
-                android:id="@+id/textViewXlabel"
+                android:id="@+id/textViewDistanceToMarker1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#3F51B5"
@@ -97,7 +53,7 @@
                 android:editable="true"
                 android:enabled="true"
                 android:focusableInTouchMode="true"
-                android:numeric="signed"
+                android:numeric="signed|decimal"
                 android:text="0" />
 
             <TextView
@@ -114,7 +70,7 @@
                 android:layout_weight="1"
                 android:editable="true"
                 android:focusableInTouchMode="true"
-                android:numeric="signed"
+                android:numeric="signed|decimal"
                 android:text="0" />
 
         </LinearLayout>

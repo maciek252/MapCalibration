@@ -46,12 +46,6 @@ open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), Adapt
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-
-
-
-        //DialogFragment1Binding.inflate(inflater, R.layout.dialog_fragment1, container, false)
-        //DialogFragment1Binding
-
         val v = inflater.inflate(R.layout.dialog_fragment_osnowa_coordinates, null)
         binding = DataBindingUtil.bind(v)!!
         //binding.pointDialogModelView
@@ -61,14 +55,6 @@ open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), Adapt
         binding?.pointDialogModelView = this.pointDialogModelView
 
 
-        binding?.button?.setOnClickListener {
-
-            punk.latitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.latitude!!
-            punk.longitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.longitude!!
-
-            punk.pointType = Point.PointType.OSNOWA_COORDINATES
-        }
-
 
         return v.rootView
     }
@@ -77,14 +63,17 @@ open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), Adapt
 
     }
 
+    override fun savePoint(){
+        Log.d("savePoint", "oc")
+        punk.latitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.latitude!!
+        punk.longitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.longitude!!
+
+        punk.pointType = Point.PointType.OSNOWA_COORDINATES
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        colorNameView.text = activity.getString(R.string.color_primary)
-//        backgroundLayout.background = activity.getDrawable(R.color.colorPrimary)
-//
-//        colorViewModel.colorIdData.observe(this, Observer { bindColorId(it) })
-//        colorViewModel.colorNameId.observe(this, Observer { bindColorNameId(it) })
     }
 
     //
@@ -96,16 +85,4 @@ open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), Adapt
         return this
     }
 
-
-//    fun bindColorId(colorId: RColor?) {
-//        colorId ?: return
-//
-//        backgroundLayout.background = activity.getDrawable(colorId)
-//    }
-//
-//    fun bindColorNameId(colorNameId: RString?) {
-//        colorNameId ?: return
-//
-//        colorNameView.text = activity.getString(colorNameId)
-//    }
 }

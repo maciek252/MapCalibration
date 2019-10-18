@@ -1,6 +1,7 @@
 package com.leopold.mvvm.ui.MackowaActivity
 
-import android.content.SharedPreferences
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.ui.IconGenerator
 import com.google.android.gms.location.LocationRequest
 import com.jakewharton.rxbinding2.view.clicks
+import com.leopold.mvvm.MVVMApp
 import com.leopold.mvvm.ui.mackowaActivity.ConfigurationDialog
 import com.leopold.mvvm.util.Configuration
 import com.patloew.rxlocation.RxLocation
@@ -36,10 +38,14 @@ import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
 
+
 class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,
     GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener {
 
-
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(MVVMApp.localeManager?.setLocale(base))
+        Log.d(TAG, "attachBaseContext")
+    }
 
     var centeredOnInit: Boolean = false
     var mapLoaded: Boolean = false
@@ -70,6 +76,10 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         }
     }
 
+    fun refreshViewHolder(){
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -85,6 +95,9 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         mapFragment.getMapAsync(this)
 
         buttonV.setOnClickListener {
+
+            //setNewLocale(LANGUAGE_POLISH, false)
+
             Log.d(TAG, "wcisniety")
             if(viewForHolder.visibility == View.VISIBLE){
                 viewForHolder.visibility = View.GONE
@@ -96,6 +109,8 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
             showAddPointDialog()
         }
         buttonShowAllMarkers.setOnClickListener {
+            //applyLanguage(this, "en")
+            //setNewLocale(LANGUAGE_ENGLISH, false)
             showMarkers((binding.vm?.points)?.value!!)
         }
         //.
@@ -150,18 +165,33 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         }
 
         binding.vm?.scaleTerrainMetersToMapCm?.observeForever {
-            binding.textViewMapScaleCmToMeters.setText(String.format("%.0f", it))
-            binding.textViewMapScaleMetersToCm.setText(String.format("%.3f", 100/it))
+            if(it == -1.0){
+                binding.textViewMapScaleCmToMeters.setText("---")
+                binding.textViewMapScaleMetersToCm.setText("---")
+            } else {
+                binding.textViewMapScaleCmToMeters.setText(String.format("%.0f", it))
+                binding.textViewMapScaleMetersToCm.setText(String.format("%.3f", 100 / it))
+            }
 
 
         }
 
-        binding.vm?.currentPoint?.observeForever {
+        binding.vm?.focusMapOnPoint?.observeForever {
+            val p = it
+            p?.let{
+                mapMarkerPoint.filter { (key, value) -> value.id == p?.id }
+                    .map { (key, value) -> zoomToMarker(key) }
+            }
+        }
 
+        binding.vm?.currentPoint?.observeForever {
 
             val p = it
             //binding.vm?.currentPoint?.value
-            binding.textViewCurrentPoint.setText("" + binding.vm?.currentPoint?.value)
+            if(binding.textViewCurrentPoint == null)
+                binding.textViewCurrentPoint.setText("---")
+            else
+                binding.textViewCurrentPoint.setText("" + binding.vm?.currentPoint?.value?.name)
 
             mapMarkerPoint.filter{ (key,value) ->value.id == p?.id}.map{(key,value)-> zoomToMarker(key)}
 
@@ -170,6 +200,8 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         }
 
         binding.vm?.points?.observeForever {
+
+
             binding.pointsRecyclerView.adapter?.notifyDataSetChanged()
         }
 
@@ -284,7 +316,10 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
 
         binding.vm?.points?.observe(this, Observer{
-                //points_recycler_view.notify
+                //points_recycler_view?.invalidate()
+            //points_recycler_view?.setOffs
+              //  points_recycler_view?.adapter?.setOffsetOffscreenPageLimi
+                points_recycler_view?.adapter?.notifyDataSetChanged()
                 showMarkers((binding.vm?.points)?.value!!)
             }
         )
@@ -302,8 +337,8 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         val icon2 = when(p.pointType){
             Point.PointType.OSNOWA_COORDINATES -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
             Point.PointType.OSNOWA_MARKER_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
-            Point.PointType.ZWYKLY_DWIE_LINIE -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
-            Point.PointType.ZWYKLY_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            Point.PointType.TARGET_TWO_DISTANCES -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
+            Point.PointType.TARGET_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
             else -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)
         }
 
@@ -348,7 +383,8 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
 
         val builder = LatLngBounds.Builder()
-        points.map {
+        points.filter{it.isValid}.map {
+
             val marker =googleMap.addMarker(constructMarkerOptions(it))
 
             mapMarkerPoint[marker] = it
@@ -356,8 +392,8 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
             val iconColor = when(it.pointType){
                 Point.PointType.OSNOWA_COORDINATES -> IconGenerator.STYLE_RED
                 Point.PointType.OSNOWA_MARKER_XY -> IconGenerator.STYLE_ORANGE
-                Point.PointType.ZWYKLY_DWIE_LINIE -> IconGenerator.STYLE_BLUE
-                Point.PointType.ZWYKLY_XY -> IconGenerator.STYLE_GREEN
+                Point.PointType.TARGET_TWO_DISTANCES -> IconGenerator.STYLE_BLUE
+                Point.PointType.TARGET_XY -> IconGenerator.STYLE_GREEN
                 else -> IconGenerator.STYLE_WHITE
             }
 
@@ -395,9 +431,38 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
     override fun onMarkerClick(marker: Marker): Boolean {
 
+        //binding.pointsRecyclerView?.
         val pos = mapMarkerPoint.get(marker)?.id
+
         pos?.let {
-            points_recycler_view?.scrollToPosition(pos!!)
+
+//            for(i in 0..binding?.vm?.points?.value?.size!!){
+//                if(binding?.vm?.points?.value?.get(i)?.id == pos){
+//                    points_recycler_view?.scrollToPosition(i)
+//                    break
+//                }
+//            }
+            val i = binding?.vm?.points?.value?.indexOfFirst { it.id == pos }
+            i.let{
+                //points_recycler_view?.scrollToPosition(i!!)
+                points_recycler_view?.smoothScrollToPosition(i!!)
+                //points_recycler_view?.invalidate()
+                //points_recycler_view?.invalidateOutline()
+
+            }
+            Log.d("T", "skroluje do i: ${i}")
+
+
+
+//
+//            for( i in 0..points_recycler_view?.childCount!!){
+//                val v = points_recycler_view?.getChildAt(i)
+//                val vh = points_recycler_view?.getChildViewHolder(v!!)
+//
+//                //vh?.itemView?.text
+//            }
+            //
+            //points_recycler_view?.scrollToPosition(pos!!)
             Log.d("T", "skroluje do pkt: ${pos}")
         }
 
@@ -427,4 +492,21 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         val s: String = "dialog"
         d?.show(supportFragmentManager, s)
     }
+
+
+
+    fun setNewLocale(language: String, restartProcess: Boolean): Boolean {
+        MVVMApp.localeManager?.setNewLocale(this, language)
+
+        val i = Intent(this, MackowaActivity::class.java)
+        startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
+
+        if (restartProcess) {
+            System.exit(0)
+        } else {
+            Toast.makeText(this, "Activity restarted", Toast.LENGTH_SHORT).show()
+        }
+        return true
+    }
+
 }

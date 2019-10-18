@@ -4,18 +4,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.leopold.mvvm.R
 
 
 import android.util.Log
+import com.leopold.mvvm.R
 import com.leopold.mvvm.data.db.entity.Point
 
 import com.leopold.mvvm.ui.MackowaActivity.MackowaActivity
 import com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.PointDialog
-import kotlinx.android.synthetic.main.item_point_marker_xy.view.*
+import kotlinx.android.synthetic.main.item_point_marker_two_distances.view.*
+import kotlinx.android.synthetic.main.item_point_marker_xy.view.buttonSelectMXY
+import kotlinx.android.synthetic.main.item_point_marker_xy.view.textViewPointName_MXY
 import kotlinx.android.synthetic.main.item_point_osnowa_coordinates.view.*
 import kotlinx.android.synthetic.main.item_point_osnowa_xy.view.*
 import kotlinx.android.synthetic.main.item_point_osnowa_xy.view.textViewXX
+
+
 
 
 /**
@@ -29,6 +33,10 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
             //vm?.points.observeForever { notifyDataSetChanged() }
         }
 
+
+        fun selectItem(p: Point){
+
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):// PointsAdapter.PointViewHolder
             RecyclerView.ViewHolder {
@@ -47,12 +55,36 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 
 
         val viewHolder = when (viewType) {
-                CellType.OSNOWA_COORDINATES.ordinal -> OsnowaCoordinatesListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_osnowa_coordinates, parent, false), vm)
-                CellType.OSNOWA_XY.ordinal -> OsnowaXYListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_osnowa_xy, parent, false), vm, this)
+                CellType.OSNOWA_COORDINATES.ordinal -> {
+                    val l = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_point_osnowa_coordinates, parent, false)
+                    l.layoutParams.width = parent.width
+                    OsnowaCoordinatesListViewHolder(l, vm)
+                }
+                CellType.OSNOWA_XY.ordinal -> {
+                    val l = LayoutInflater.from(parent.context).inflate(
+                        R.layout.item_point_osnowa_xy, parent, false
+                    )
+                    l.layoutParams.width = parent.width
+                    OsnowaXYListViewHolder(
+                        l, vm, this
+                    )
+                }
+                CellType.MARKER_DISTANCES.ordinal -> {
+                    val l = LayoutInflater.from(parent.context).inflate(R.layout.item_point_marker_two_distances, parent, false)
+                    l.layoutParams.width = parent.width
+                    MarkerDistancesListViewHolder(l, vm)
+                }
                 //CellType.MARKER_XY.ordinal
-                else -> MarkerXYListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_point_marker_xy, parent, false), vm)
+                else -> {
+                    val l = LayoutInflater.from(parent.context).inflate(R.layout.item_point_marker_xy, parent, false)
+                    l.layoutParams.width = parent.width
+                    MarkerXYListViewHolder(l, vm)
+                }
 
             }
+
+
 
         viewHolder.itemView.setOnClickListener {
             Log.d(
@@ -86,6 +118,20 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
                                    , position: Int) {
 
 
+//        holder.itemView.visibility =  View.GONE
+//        holder.itemView.visibility =  View.VISIBLE
+//
+//        holder.setIsRecyclable(false);
+
+
+        //.getRecycledViewPool().clear();
+
+
+
+
+        Log.d("PointsAdapter", "binding position:${position}")
+
+
         when (getItemViewType(position)) {
             CellType.OSNOWA_COORDINATES.ordinal -> {
                 val headerViewHolder = holder as OsnowaCoordinatesListViewHolder
@@ -99,17 +145,26 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
                 val footerViewHolder = holder as MarkerXYListViewHolder
                 footerViewHolder.bindView(punkty[position])
             }
+            CellType.MARKER_DISTANCES.ordinal -> {
+                val footerViewHolder = holder as MarkerDistancesListViewHolder
+                footerViewHolder.bindView(punkty[position])
+            }
         }
 
 
-        Log.d("PointsAdapter", "binding position:${position}")
+
     }
 
     override fun getItemViewType(position: Int): Int {
         if(punkty[position].pointType == Point.PointType.OSNOWA_COORDINATES)
             return  CellType.OSNOWA_COORDINATES.ordinal
+        else
         if(punkty[position].pointType == Point.PointType.OSNOWA_MARKER_XY)
             return  CellType.OSNOWA_XY.ordinal
+        else
+        if(punkty[position].pointType == Point.PointType.TARGET_TWO_DISTANCES)
+            return  CellType.MARKER_DISTANCES.ordinal
+
         return  CellType.MARKER_XY.ordinal
 
     }
@@ -118,9 +173,14 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 
     override fun getItemCount() = punkty.size
 
+
+
     class OsnowaXYListViewHolder(itemView: View, val vm: MackowaViewModel, val pa: PointsAdapter) : RecyclerView.ViewHolder(itemView) {
 
         fun bindView(p: Point) {
+
+            Log.d("PointsAdapter", "binding OsnowaXY")
+
 //            itemView.textMovieTitle.text = movieModel.movieTitle
 //            itemView.textMovieViews.text = "Views: " + movieModel.movieViews
 //            itemView.textReleaseDate.text = "Release Date: " + movieModel.releaseDate
@@ -129,12 +189,23 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
             itemView.textViewPointName_OXY.text = p.name
             itemView?.textViewXX.text = p.x.toString()
 
-            itemView.buttonSelectOXY.setOnClickListener {
-
+            itemView.buttonSet_OSX.setOnClickListener{
                 vm.currentPoint.value = p
-                pa.notifyDataSetChanged()
+                itemView.invalidate()
             }
 
+            itemView.buttonMap_OXY.setOnClickListener {
+                vm.focusMapOnPoint.value = p
+                itemView.invalidate()
+
+            }
+
+//            itemView.buttonSelectOXY.setOnClickListener {
+//                vm.currentPoint.value = p
+//                pa.notifyDataSetChanged()
+//            }
+
+            itemView.textViewXX.text = "" + p.len1
 
         }
 
@@ -142,6 +213,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 
         class    OsnowaCoordinatesListViewHolder(itemView: View, val vm: MackowaViewModel) : RecyclerView.ViewHolder(itemView) {
             fun bindView(p: Point) {
+                Log.d("PointsAdapter", "binding OsnowaCoo")
 //            itemView.textMovieTitle.text = movieModel.movieTitle
 //            itemView.textMovieViews.text = "Views: " + movieModel.movieViews
 //            itemView.textReleaseDate.text = "Release Date: " + movieModel.releaseDate
@@ -150,24 +222,26 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
                 itemView.textViewPointName_OC.text = p.name
 
 
-                itemView.buttonSelectOC.setOnClickListener {
-
+                itemView.buttonSet_OC.setOnClickListener {
                     vm.currentPoint.value = p
                     itemView.invalidate()
                 }
+                itemView.buttonMap_OC.setOnClickListener {
+                    vm.focusMapOnPoint.value = p
+                    itemView.invalidate()
+                }
+
 
             }
         }
 
         class    MarkerXYListViewHolder(itemView: View, val vm: MackowaViewModel) : RecyclerView.ViewHolder(itemView) {
             fun bindView(p: Point) {
-//            itemView.textMovieTitle.text = movieModel.movieTitle
-//            itemView.textMovieViews.text = "Views: " + movieModel.movieViews
-//            itemView.textReleaseDate.text = "Release Date: " + movieModel.releaseDate
-//
-//            Glide.with(itemView.context).load(movieModel.moviePicture!!).into(itemView.imageMovie)
+                Log.d("PointsAdapter", "binding MarkerXY")
                 itemView.textViewPointName_MXY.text = p.name
                 itemView.textViewXX.text = p.x.toString()
+
+
 
                 itemView.buttonSelectMXY.setOnClickListener {
 
@@ -178,13 +252,39 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
             }
         }
 
+        class    MarkerDistancesListViewHolder(itemView: View, val vm: MackowaViewModel) : RecyclerView.ViewHolder(itemView) {
+            fun bindView(p: Point) {
+                Log.d("PointsAdapter", "binding Marker2Dist!")
+
+                itemView.textViewMarker1Dist.text = "" + p.len1
+                itemView.textViewMarker1Name.text = "" + p.referenceId
+
+                itemView.textViewMarker2Dist.text = "" + p.len2
+                itemView.textViewMarker2Name.text = "" + p.referenceId2
+
+                itemView.textViewPointName.text = "" + p.name
+
+                itemView.buttonMap_2Dist.setOnClickListener {
+                    vm.focusMapOnPoint.value = p
+                }
+
+                itemView.buttonSet_2Dist.setOnClickListener {
+                    vm.currentPoint.value = p
+                }
+
+
+            }
+        }
 
 
 
-    enum class CellType(viewType: Int) {
+
+
+        enum class CellType(viewType: Int) {
         MARKER_XY(0),
         OSNOWA_COORDINATES(1),
-        OSNOWA_XY(2)
+        MARKER_DISTANCES(2),
+        OSNOWA_XY(3)
     }
 
 

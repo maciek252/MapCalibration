@@ -15,11 +15,12 @@ import com.leopold.mvvm.R
 import com.leopold.mvvm.data.db.entity.Point
 import com.leopold.mvvm.databinding.DialogFragment1Binding
 
-open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedListener,
+open  class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedListener,
     AdapterView.OnItemClickListener{
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
     }
+
 
     open lateinit var  punk : Point
 
@@ -59,8 +60,6 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
 
 
 
-        //DialogFragment1Binding.inflate(inflater, R.layout.dialog_fragment1, container, false)
-        //DialogFragment1Binding
 
         val v = inflater.inflate(R.layout.dialog_fragment1, null)
         binding = DataBindingUtil.bind(v)!!
@@ -105,6 +104,10 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
     // setups
     //
 
+    open fun savePoint(){
+        Log.d("savePoint", "abstract")
+    }
+
     open fun setPoint(p: Point) : PointDialogFragment {
         punk = p
         return this
@@ -133,4 +136,7 @@ open class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelectedL
 //
 //        colorNameView.text = activity.getString(colorNameId)
 //    }
+
+
+
 }

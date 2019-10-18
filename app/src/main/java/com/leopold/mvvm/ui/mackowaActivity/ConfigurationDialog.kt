@@ -17,8 +17,11 @@ import androidx.viewpager.widget.ViewPager
 import com.leopold.mvvm.data.db.entity.Point
 import com.leopold.mvvm.databinding.ConfigurationDialogBinding
 import com.leopold.mvvm.databinding.PointEditDialogBinding
+import com.leopold.mvvm.ui.MackowaActivity.MackowaActivity
 import com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.*
 import com.leopold.mvvm.util.Configuration
+import com.leopold.mvvm.util.LocaleManager.Companion.LANGUAGE_ENGLISH
+import com.leopold.mvvm.util.LocaleManager.Companion.LANGUAGE_POLISH
 import kotlinx.android.synthetic.main.configuration_dialog.*
 
 
@@ -28,8 +31,6 @@ class ConfigurationDialog(val vm: MackowaViewModel) : DialogFragment(),  Adapter
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-
 
         super.onViewCreated(view, savedInstanceState)
 
@@ -48,7 +49,14 @@ class ConfigurationDialog(val vm: MackowaViewModel) : DialogFragment(),  Adapter
             binding?.checkBoxCenterMapOnCurrentPosition?.isChecked =
                 vm?.centerMapOnGps?.value!!
 
-
+        binding?.radioButton?.setOnClickListener {
+            val myActivity = context as MackowaActivity?
+            myActivity?.setNewLocale(LANGUAGE_POLISH, false)
+        }
+        binding?.radioButton2?.setOnClickListener {
+            val myActivity = context as MackowaActivity?
+            myActivity?.setNewLocale(LANGUAGE_ENGLISH, false)
+        }
 
     }
 
