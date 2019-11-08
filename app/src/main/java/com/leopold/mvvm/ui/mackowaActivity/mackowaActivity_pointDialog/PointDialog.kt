@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.leopold.mvvm.R
 
 import com.leopold.mvvm.data.db.entity.Point
 import com.leopold.mvvm.databinding.PointEditDialogBinding
@@ -40,6 +42,7 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 
     fun addPoint(){
         vm.points.value += p!!
+        //vm.addPoint(p!!)
 
     }
 
@@ -72,7 +75,16 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 
         binding?.buttonSavePoint?.setOnClickListener {
 
+            if(p?.pointType == Point.PointType.OSNOWA_COORDINATES || p?.pointType == Point.PointType.OSNOWA_MARKER_XY)
+                if(vm?.latLngMarker.value == null){
+                    Toast.makeText(dialog.context, getString(R.string.english3), Toast.LENGTH_LONG).show()
+                    //Toast.makeText(dialog.context,"DD", Toast.LENGTH_LONG).show()
+                    dismiss()
+                    return@setOnClickListener
+                }
+
             p?.name = binding?.textViewPointName?.text.toString()
+
 
 
             val a = binding?.pagerView?.adapter as ColorPagerAdapter
@@ -94,9 +106,11 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
     // to nie wystarcza - adapter nie wykonuje odswiezenia
             //binding?.vm?.points = binding?.vm?.points!!
             // DO POPRAWKI!!!! PASKUDNE!
-            val m = vm.points.value
-            vm.points.value += p!!
-            vm.points.value = m
+//            val m = vm.points.value
+//            vm.points.value += p!!
+//            vm.points.value = m
+
+            vm.addPoint(p!!)
 
             this.dismiss()
         }

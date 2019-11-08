@@ -9,6 +9,7 @@ object Configuration{
     private val PREF_NAME = "mindorks-welcome"
 
     private val IS_MAP_CENTERED = Pair("is_map_centered", false)
+    private val LAST_NAME = Pair("last_name", "pt1")
 
     private lateinit var preferences: SharedPreferences
 
@@ -28,4 +29,10 @@ object Configuration{
             it.putBoolean(IS_MAP_CENTERED.first, value)
         }
 
+    var lastName: String
+        get() = preferences.getString(LAST_NAME.first, LAST_NAME.second)
+
+        set(value) = preferences.edit{
+            it.putString(LAST_NAME.first, value)
+        }
 }

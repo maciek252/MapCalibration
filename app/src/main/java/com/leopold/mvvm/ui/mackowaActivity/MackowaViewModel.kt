@@ -56,9 +56,15 @@ class MackowaViewModel(
     val items: NotNullMutableLiveData<List<Repository>>
         get() = _itemsRyba
 
+    fun removeAllPointsFromCollectionAndCollectionIfIsNotTheLastOne(){
+        ioThread {
+            dao.removeAllPointsFromCollection(Configuration.lastName)
+        }
+    }
+
     fun getAllSavedCollections(): List<String> {
         val defScope = CoroutineScope(Dispatchers.Default)
-        var result = setOf("")
+        var result : Set<String> = emptySet()
         runBlocking(defScope.coroutineContext) {
             val m= dao.findAllPoints()
             m.toList().map{result += it.collection}
@@ -74,11 +80,16 @@ class MackowaViewModel(
     }
 
     fun saveAllPoints(collectioName: String) : Job {
+        ioThread {
+            dao.removeAllPointsFromCollection(collectioName)
+        }
         val defScope = CoroutineScope(Dispatchers.Default)
         return defScope.launch {
           points.value.map {
               it.collection = collectioName
-              dao.insert(it)
+              ioThread {
+                  dao.insert(it)
+              }
           }
         }
     }
@@ -119,6 +130,17 @@ class MackowaViewModel(
         Log.d("Z1D1", "onCheckedChange: $check")
     }
 
+    fun addPoint(p: Point){
+        //points.value += p!!
+
+        val m = points.value
+        points.value += p!!
+        points.value = m
+
+
+        val colName = Configuration.lastName
+        saveAllPoints(colName)
+    }
 
     init{
 
@@ -147,6 +169,9 @@ class MackowaViewModel(
         radio_checked.observeForever {
             Log.d("mackowaVM", "radio")
         }
+
+        val colName = Configuration.lastName
+        readAllPoints(colName)
 
     }
 
@@ -216,6 +241,8 @@ class MackowaViewModel(
         p?.let {
             points.value -= p
         }
+        val colName = Configuration.lastName
+        saveAllPoints(colName)
 
     }
 

@@ -16,6 +16,9 @@ interface PointDao {
     fun findAllPoints(): Array<Point>
     //fun findAllPoints(): DataSource.Factory<Int, Point>
 
+    @Query("DELETE FROM Point WHERE Point.Collection == :c")
+    fun removeAllPointsFromCollection(c: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(point: Point)
 

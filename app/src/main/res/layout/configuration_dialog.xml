@@ -20,6 +20,12 @@
             android:layout_height="wrap_content"
             android:text="TextView" />
 
+        <CheckBox
+            android:id="@+id/checkBoxSwitchOffScreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Don't switch off screen" />
+
         <TextView
             android:id="@+id/textViewCollectionName"
             android:layout_width="match_parent"
@@ -40,6 +46,12 @@
             android:layout_height="wrap_content"
             android:text="Read" />
 
+        <Button
+            android:id="@+id/buttonRemove"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remove" />
+
         <TextView
             android:id="@+id/textViewCollections"
             android:layout_width="match_parent"
@@ -55,8 +67,7 @@
             android:id="@+id/checkBoxCenterMapOnCurrentPosition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CheckBox"
-/>
+            android:text="center map on current pos" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -67,13 +78,13 @@
                 android:id="@+id/radioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RadioButton" />
+                android:text="@string/polish" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RadioButton" />
+                android:text="@string/english" />
         </RadioGroup>
     </LinearLayout>
 

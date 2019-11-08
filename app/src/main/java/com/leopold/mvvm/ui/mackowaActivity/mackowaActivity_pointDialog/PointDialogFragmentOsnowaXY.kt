@@ -61,7 +61,7 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
 
 
         val l = LatLng(punk.latitude, punk.longitude)
-        pointDialogModelView?.mackowaViewModel?.latLngMarker.value = l
+        //pointDialogModelView?.mackowaViewModel?.latLngMarker.value = l // po co to ustawiac?
 
 
         binding?.textViewX?.text = "" + punk.len1

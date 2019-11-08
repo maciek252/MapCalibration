@@ -276,10 +276,6 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
             }
         }
 
-
-
-
-
         enum class CellType(viewType: Int) {
         MARKER_XY(0),
         OSNOWA_COORDINATES(1),

@@ -30,7 +30,7 @@ import com.google.maps.android.ui.IconGenerator
 import com.google.android.gms.location.LocationRequest
 import com.jakewharton.rxbinding2.view.clicks
 import com.leopold.mvvm.MVVMApp
-import com.leopold.mvvm.ui.mackowaActivity.ConfigurationDialog
+import com.leopold.mvvm.ui.configurationDialog.ConfigurationDialog
 import com.leopold.mvvm.util.Configuration
 import com.patloew.rxlocation.RxLocation
 import io.reactivex.android.schedulers.AndroidSchedulers
