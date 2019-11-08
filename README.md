@@ -94,8 +94,8 @@ points.
 3. Reference scale marker
 
 Now we add a GPS point for establishing the map scale. We choose a
-corner of a pond by setting a marker and measuring the distance to QQQ
-on the map:
+corner of a pond by setting a marker and measuring on the map the
+distance from the reference point defined previously:
 
 <p align="center">
 <img src="./doc/img/map1.png" width="800" /><img
