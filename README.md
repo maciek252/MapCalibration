@@ -141,13 +141,14 @@ A target point is defined with respect to this data:
 <img src="./doc/img/slup_dialog.png" width="400"  />
 </p>
 
-As we can see, the point is found with the accuracy of just few meters.
+As we can see, the point is found with the accuracy of just few meters:
 
 <p align="center">
 <img src="./doc/img/slup_punkt.png" width="400"  />
 </p>
 
-5. Selecting the target point
+5. Selecting the target point - now the distance and heading to the
+   currently selected point is displayed at the bottom of the screen:
 
 <p align="center">
 <img src="./doc/img/slup_wybrany.png" width="400"  />
