@@ -60,6 +60,8 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
         binding?.spinner!!.onItemSelectedListener = this
 
 
+
+
         val l = LatLng(punk.latitude, punk.longitude)
         //pointDialogModelView?.mackowaViewModel?.latLngMarker.value = l // po co to ustawiac?
 
@@ -67,6 +69,10 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
         binding?.textViewX?.text = "" + punk.len1
 
         val lista = pointDialogModelView.mackowaViewModel.points.value.filter{it.pointType == Point.PointType.OSNOWA_COORDINATES || it.pointType == Point.PointType.OSNOWA_MARKER_XY}.map{ it -> it.name}.toList()
+        val refPunkt = pointDialogModelView.mackowaViewModel.points.value.filter{it.id == punk.referenceId}
+
+
+
 
         val aa = ArrayAdapter(
             activity,
@@ -80,7 +86,10 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         // Set Adapter to Spinner
         binding?.spinner?.setAdapter(aa)
-
+        if(punk.pointType == Point.PointType.OSNOWA_MARKER_XY && !lista.isEmpty()) {
+            val refIdOnList = lista.indexOf(refPunkt.first().name)
+            binding?.spinner?.setSelection(refIdOnList)
+        }
 
 
 
@@ -95,6 +104,8 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
         Log.d("savePoint", "osx")
         punk.len1 = binding?.textViewX?.text.toString().toDouble()
 
+        val refName = binding?.spinner?.selectedItem.toString()
+        punk.referenceId = pointDialogModelView.mackowaViewModel.points.value.filter{it.name == refName}.first().id
         punk.latitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.latitude!!
         punk.longitude = pointDialogModelView?.mackowaViewModel?.latLngMarker.value?.longitude!!
 

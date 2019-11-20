@@ -236,11 +236,32 @@ class MackowaViewModel(
 
     }
 
+//    fun findPointByName(name: String) : Point? {
+//    }
+//
     fun removePoint(p: Point?){
 
+        var kopia = points.value
+
         p?.let {
-            points.value -= p
+            kopia -= p
         }
+        var listToRemove = emptyList<Point?>()
+        listToRemove += p
+
+        while(!listToRemove.isEmpty()) {
+            val pp = listToRemove.first()
+            listToRemove -= pp
+            Log.d("REMOVE", "want to remove p.id=" + pp?.id + "name=" +pp?.name)
+            listToRemove += kopia.filter{it.len1Ref == pp?.id || it.len2Ref == pp?.id || it.referenceId == pp?.id || it.referenceId2 == pp?.id }
+            Log.d("REMOVE", "listToRemove=" + listToRemove.toString())
+            kopia -= pp!!
+
+
+        } //while (!listToRemove.isEmpty())
+
+        points.value = kopia
+
         val colName = Configuration.lastName
         saveAllPoints(colName)
 

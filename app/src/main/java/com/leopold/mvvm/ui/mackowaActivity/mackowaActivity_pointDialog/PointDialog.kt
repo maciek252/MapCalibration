@@ -76,7 +76,7 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
         binding?.buttonSavePoint?.setOnClickListener {
 
             if(p?.pointType == Point.PointType.OSNOWA_COORDINATES || p?.pointType == Point.PointType.OSNOWA_MARKER_XY)
-                if(vm?.latLngMarker.value == null){
+                if(wasEmpty && vm?.latLngMarker.value == null){
                     Toast.makeText(dialog.context, getString(R.string.english3), Toast.LENGTH_LONG).show()
                     //Toast.makeText(dialog.context,"DD", Toast.LENGTH_LONG).show()
                     dismiss()
@@ -85,18 +85,11 @@ class PointDialog(val vm: MackowaViewModel, var p: Point?) : DialogFragment(),  
 
             p?.name = binding?.textViewPointName?.text.toString()
 
-
-
             val a = binding?.pagerView?.adapter as ColorPagerAdapter
             //val oo = a.getItem(binding?.pagerView?.currentItem!!)
 
             a.m.get(binding?.pagerView?.currentItem!!)?.savePoint()
             //oo.savePoint()
-
-
-
-//            val fm = activity?.supportFragmentManager
-//            val fr = binding?.pagerView?.adapter
 
             if(wasEmpty)
                 addPoint()

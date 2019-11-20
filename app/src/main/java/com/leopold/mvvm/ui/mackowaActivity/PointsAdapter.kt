@@ -12,14 +12,14 @@ import com.leopold.mvvm.data.db.entity.Point
 
 import com.leopold.mvvm.ui.MackowaActivity.MackowaActivity
 import com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.PointDialog
+import kotlinx.android.synthetic.main.dialog_fragment_osnowa_xy.view.*
 import kotlinx.android.synthetic.main.item_point_marker_two_distances.view.*
+import kotlinx.android.synthetic.main.item_point_marker_xy.view.*
 import kotlinx.android.synthetic.main.item_point_marker_xy.view.buttonSelectMXY
-import kotlinx.android.synthetic.main.item_point_marker_xy.view.textViewPointName_MXY
 import kotlinx.android.synthetic.main.item_point_osnowa_coordinates.view.*
 import kotlinx.android.synthetic.main.item_point_osnowa_xy.view.*
-import kotlinx.android.synthetic.main.item_point_osnowa_xy.view.textViewXX
-
-
+import kotlinx.android.synthetic.main.item_point_osnowa_xy.view.textViewRefMarker
+import kotlinx.android.synthetic.main.item_point_osnowa_xy.view.textViewYY
 
 
 /**
@@ -27,8 +27,14 @@ import kotlinx.android.synthetic.main.item_point_osnowa_xy.view.textViewXX
  */
 class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel) :
 //    RecyclerView.Adapter<PointsAdapter.PointViewHolder>()
+
+
     RecyclerView.Adapter<RecyclerView.ViewHolder>()
     {
+
+        var viewHolderek : RecyclerView.ViewHolder? = null
+        var parencik :  ViewGroup? = null
+
         init{
             //vm?.points.observeForever { notifyDataSetChanged() }
         }
@@ -59,7 +65,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
                     val l = LayoutInflater.from(parent.context)
                         .inflate(R.layout.item_point_osnowa_coordinates, parent, false)
                     l.layoutParams.width = parent.width
-                    OsnowaCoordinatesListViewHolder(l, vm)
+                    OsnowaCoordinatesListViewHolder(l, vm, this)
                 }
                 CellType.OSNOWA_XY.ordinal -> {
                     val l = LayoutInflater.from(parent.context).inflate(
@@ -73,58 +79,53 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
                 CellType.MARKER_DISTANCES.ordinal -> {
                     val l = LayoutInflater.from(parent.context).inflate(R.layout.item_point_marker_two_distances, parent, false)
                     l.layoutParams.width = parent.width
-                    MarkerDistancesListViewHolder(l, vm)
+                    MarkerDistancesListViewHolder(l, vm, this)
                 }
                 //CellType.MARKER_XY.ordinal
                 else -> {
                     val l = LayoutInflater.from(parent.context).inflate(R.layout.item_point_marker_xy, parent, false)
                     l.layoutParams.width = parent.width
-                    MarkerXYListViewHolder(l, vm)
+                    MarkerXYListViewHolder(l, vm, this)
                 }
 
             }
 
 
 
+
+
         viewHolder.itemView.setOnClickListener {
-            Log.d(
-                "koko",
-                "position = " + viewHolder.getAdapterPosition()
-            )
-
-            val p = punkty[viewHolder.getAdapterPosition()]
-            val d =
-                PointDialog(vm!!, p)
-            //d.binding?.item
-            val s: String = "dialog"
-            val activity =  parent?.context as? MackowaActivity
-            d?.show(activity?.supportFragmentManager, s)
-
+            //showPointEditDialog()
         };
 
         //vm?.points.observeForever { notifyDataSetChanged() }
 
-
-
+        parencik = parent
+        viewHolderek = viewHolder
 
         return viewHolder
 
     }
 
+    fun showPointEditDialog(p: Point){
+        Log.d(
+            "koko",
+            "position = " + viewHolderek?.getAdapterPosition()
+        )
+
+        //val p = punkty[viewHolderek?.getAdapterPosition()!!]
+        val d =
+            PointDialog(vm!!, p)
+        val s: String = "dialog"
+        val activity =  parencik?.context as? MackowaActivity
+        d?.show(activity?.supportFragmentManager, s)
+
+    }
 
 
     override fun onBindViewHolder(holder: //PointViewHolder
                                   RecyclerView.ViewHolder
                                    , position: Int) {
-
-
-//        holder.itemView.visibility =  View.GONE
-//        holder.itemView.visibility =  View.VISIBLE
-//
-//        holder.setIsRecyclable(false);
-
-
-        //.getRecycledViewPool().clear();
 
 
 
@@ -187,17 +188,24 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 //
 //            Glide.with(itemView.context).load(movieModel.moviePicture!!).into(itemView.imageMovie)
             itemView.textViewPointName_OXY.text = p.name
-            itemView?.textViewXX.text = p.x.toString()
+            itemView?.textViewYY.text = p.x.toString()
 
             itemView.buttonSet_OSX.setOnClickListener{
                 vm.currentPoint.value = p
                 itemView.invalidate()
+
             }
+
+            itemView.textViewRefMarker.text = vm?.points.value.filter { it.id == p.referenceId }.first().name
+
 
             itemView.buttonMap_OXY.setOnClickListener {
                 vm.focusMapOnPoint.value = p
                 itemView.invalidate()
+            }
 
+            itemView.button_O_XY_Edit.setOnClickListener {
+                pa.showPointEditDialog(p)
             }
 
 //            itemView.buttonSelectOXY.setOnClickListener {
@@ -205,13 +213,13 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
 //                pa.notifyDataSetChanged()
 //            }
 
-            itemView.textViewXX.text = "" + p.len1
+
 
         }
 
     }
 
-        class    OsnowaCoordinatesListViewHolder(itemView: View, val vm: MackowaViewModel) : RecyclerView.ViewHolder(itemView) {
+        class    OsnowaCoordinatesListViewHolder(itemView: View, val vm: MackowaViewModel, val pa: PointsAdapter) : RecyclerView.ViewHolder(itemView) {
             fun bindView(p: Point) {
                 Log.d("PointsAdapter", "binding OsnowaCoo")
 //            itemView.textMovieTitle.text = movieModel.movieTitle
@@ -231,38 +239,54 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MackowaViewModel
                     itemView.invalidate()
                 }
 
-
-            }
-        }
-
-        class    MarkerXYListViewHolder(itemView: View, val vm: MackowaViewModel) : RecyclerView.ViewHolder(itemView) {
-            fun bindView(p: Point) {
-                Log.d("PointsAdapter", "binding MarkerXY")
-                itemView.textViewPointName_MXY.text = p.name
-                itemView.textViewXX.text = p.x.toString()
-
-
-
-                itemView.buttonSelectMXY.setOnClickListener {
-
-                    vm.currentPoint.value = p
-
+                itemView.buttonEdit_OC.setOnClickListener {
+                    pa.showPointEditDialog(p)
                 }
 
             }
         }
 
-        class    MarkerDistancesListViewHolder(itemView: View, val vm: MackowaViewModel) : RecyclerView.ViewHolder(itemView) {
+        class    MarkerXYListViewHolder(itemView: View, val vm: MackowaViewModel, val pa: PointsAdapter) : RecyclerView.ViewHolder(itemView) {
+            fun bindView(p: Point) {
+                Log.d("PointsAdapter", "binding MarkerXY")
+                itemView.textViewPointName_MXY.text = p.name
+                itemView.textViewXX.text = p.x.toString()
+                itemView.textViewYY.text = p.y.toString()
+
+                itemView.textViewRefMarker.text = vm?.points.value.filter { it.id == p.referenceId }.first().name
+
+
+                itemView.button_M_XY_Edit.setOnClickListener {
+                    pa.showPointEditDialog(p)
+                }
+
+                itemView.buttonSelectMXY.setOnClickListener {
+                    vm.currentPoint.value = p
+                }
+
+                itemView.button_M_XY_MAP.setOnClickListener {
+                    vm.focusMapOnPoint.value = p
+                    itemView.invalidate()
+                }
+
+            }
+        }
+
+        class    MarkerDistancesListViewHolder(itemView: View, val vm: MackowaViewModel, val pa: PointsAdapter) : RecyclerView.ViewHolder(itemView) {
             fun bindView(p: Point) {
                 Log.d("PointsAdapter", "binding Marker2Dist!")
 
                 itemView.textViewMarker1Dist.text = "" + p.len1
-                itemView.textViewMarker1Name.text = "" + p.referenceId
+                itemView.textViewMarker1Name.text = "" + vm?.points.value.filter { it.id == p.referenceId }.first().name
 
                 itemView.textViewMarker2Dist.text = "" + p.len2
-                itemView.textViewMarker2Name.text = "" + p.referenceId2
+                itemView.textViewMarker2Name.text = "" + vm?.points.value.filter { it.id == p.referenceId2 }.first().name
 
                 itemView.textViewPointName.text = "" + p.name
+
+                itemView.button_marker_twodist_edit.setOnClickListener{
+                    pa.showPointEditDialog(p)
+                }
 
                 itemView.buttonMap_2Dist.setOnClickListener {
                     vm.focusMapOnPoint.value = p

@@ -10,111 +10,62 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout9"
+        android:id="@+id/constraintLayout9"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#03A9F4">
 
+
+        <TextView
+            android:id="@+id/textViewPointName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#03A9F4"
+            android:text="TextView"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/constraintLayout10"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout12"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textViewPointName"
             app:layout_constraintTop_toTopOf="parent">
-
-            <Space
-                android:id="@+id/space"
-                android:layout_width="37dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSet_2Dist"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewPointName"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textViewPointName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#03A9F4"
-                android:text="TextView"
-                app:layout_constraintEnd_toStartOf="@+id/space"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/buttonMap_2Dist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="30dip"
-                android:text="MAP"
-                android:textSize="8sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/buttonSelectMXY"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/buttonSet_2Dist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="30dip"
-                android:text="SET"
-                android:textSize="8sp"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSelectMXY"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/space"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/buttonSelectMXY"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="30dip"
-                android:text="EDIT"
-                android:textSize="8sp"
-                app:layout_constraintEnd_toStartOf="@+id/buttonMap_2Dist"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/buttonSet_2Dist"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
             <TextView
                 android:id="@+id/textView9"
+                android:layout_width="84dp"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Marker 1:"
-                app:layout_constraintEnd_toStartOf="@+id/textViewMarker1Name"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="TextView"
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                tools:layout_editor_absoluteX="12dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout11"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout12">
 
             <TextView
                 android:id="@+id/textViewMarker1Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name1"
-                app:layout_constraintEnd_toStartOf="@+id/textViewMarker1DistLabel"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView9"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textViewMarker1DistLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="dist="
-                app:layout_constraintEnd_toStartOf="@+id/textViewRefMarker2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewMarker1Name"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -122,39 +73,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                app:layout_constraintEnd_toStartOf="@+id/textView10"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewMarker2Name"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewMarker1Name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Marker 2:"
-                app:layout_constraintEnd_toStartOf="@+id/textViewMarker2Dist"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewMarker1Dist"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout12"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout11"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout10">
 
             <TextView
                 android:id="@+id/textViewMarker2Name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="93dp"
+                android:layout_height="20dp"
                 android:text="Name2"
-                app:layout_constraintEnd_toStartOf="@+id/textViewMarker1Dist"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewRefMarker2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textViewRefMarker2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="dist="
-                app:layout_constraintEnd_toStartOf="@+id/textViewMarker2Name"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewMarker1DistLabel"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -162,9 +98,52 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewMarker2Name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout11"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/buttonMap_2Dist"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:includeFontPadding="false"
+                android:minWidth="0dp"
+                android:minHeight="30dip"
+                android:text="MAP"
+                android:textSize="8sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/buttonSet_2Dist"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="SET"
+                android:textSize="8sp"
+                app:layout_constraintStart_toEndOf="@+id/buttonMap_2Dist"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_marker_twodist_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:minWidth="0dp"
+                android:minHeight="30dip"
+                android:text="EDIT"
+                android:textSize="8sp"
+                app:layout_constraintStart_toEndOf="@+id/buttonSet_2Dist"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

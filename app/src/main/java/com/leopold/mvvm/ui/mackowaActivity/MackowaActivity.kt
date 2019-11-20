@@ -1,5 +1,6 @@
 package com.leopold.mvvm.ui.MackowaActivity
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +9,7 @@ import android.view.View
 
 import androidx.annotation.LayoutRes
 
-import com.leopold.mvvm.R
+
 import com.leopold.mvvm.ui.BindingActivity
 
 import com.google.android.gms.maps.*
@@ -36,11 +37,33 @@ import com.patloew.rxlocation.RxLocation
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
+import android.Manifest.permission
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.READ_CONTACTS
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.R.attr.data
+import androidx.core.app.ActivityCompat
+import com.leopold.mvvm.R
+
+
+
+
 
 
 
 class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,
     GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener {
+
+
+    private val INITIAL_PERMS =
+        arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS)
+    private val CAMERA_PERMS = arrayOf<String>(Manifest.permission.CAMERA)
+    private val CONTACTS_PERMS = arrayOf<String>(Manifest.permission.READ_CONTACTS)
+    private val LOCATION_PERMS = arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION)
+    private val INITIAL_REQUEST = 1337
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(MVVMApp.localeManager?.setLocale(base))
@@ -52,6 +75,7 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
     @LayoutRes
     override fun getLayoutResId() = R.layout.activity_mackowy
+
 
     var markerAddedByClick : Marker? = null
 
@@ -83,6 +107,14 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+        //ActivityCompat.requestPermissions(INITIAL_PERMS, INITIAL_REQUEST)
+        //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+       val RECORD_REQUEST_CODE = 101
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            RECORD_REQUEST_CODE)
+
         utils = Utils(applicationContext)
 
         binding.vm = getViewModel()
@@ -112,6 +144,7 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
             //applyLanguage(this, "en")
             //setNewLocale(LANGUAGE_ENGLISH, false)
             showMarkers((binding.vm?.points)?.value!!)
+            addMarkerPin(binding?.vm?.latLngMarker?.value!!, false)
         }
         //.
         val clickStream = buttonSettings
@@ -239,7 +272,14 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 //                /* do something */
 //            }
 
+        binding?.vm?.latLngMarker?.observeForever {
+
+            showMarkerPin()
+
+        }
+
     }
+
 
 
 
@@ -254,28 +294,8 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         this.googleMap.setOnMapClickListener { latLng ->
             // Creating a marker
 
-            markerAddedByClick?.remove()
 
-            val markerOptions = MarkerOptions()
-
-            // Setting the position for the marker
-            markerOptions.position(latLng)
-
-            // Setting the title for the marker.
-            // This will be displayed on taping the marker
-            markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
-
-            // Clears the previously touched position
-            //googleMap.clear()
-
-            // Animating to the touched position
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-
-            // Placing a marker on the touched position
-            markerAddedByClick = googleMap.addMarker(markerOptions)
-
-            binding?.vm?.latLngMarker?.value = markerAddedByClick?.position
-
+            addMarkerPin(latLng)
 
         }
         //googleMap.setMyLocationEnabled(true);
@@ -283,7 +303,42 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
     }
 
-    fun centerMapOnGpsLocation(){
+    fun showMarkerPin(){
+
+        if(markerAddedByClick == null || !markerAddedByClick?.isVisible!!){
+            addMarkerPin(binding?.vm?.latLngMarker?.value!!)
+        }
+    }
+
+    private fun addMarkerPin(latLng: LatLng, center: Boolean = true){
+        Log.d(TAG, "setting Marker Pin")
+
+        markerAddedByClick?.remove()
+
+        val markerOptions = MarkerOptions()
+
+        // Setting the position for the marker
+        markerOptions.position(latLng)
+
+        // Setting the title for the marker.
+        // This will be displayed on taping the marker
+        markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
+
+        // Clears the previously touched position
+        //googleMap.clear()
+
+        // Animating to the touched position
+        if(center)
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+
+        // Placing a marker on the touched position
+        markerAddedByClick = googleMap.addMarker(markerOptions)
+
+        this.binding.vm?.latLngMarker?.value = markerAddedByClick?.position
+
+    }
+
+    private fun centerMapOnGpsLocation(){
 
 
         val center = CameraUpdateFactory.newLatLng(
@@ -302,7 +357,7 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
 
     override fun onMapLoaded() {
         Log.d(TAG, "onMapLoadedCallback")
-        val mapSettings = googleMap?.uiSettings
+        val mapSettings = googleMap.uiSettings
         mapSettings?.isZoomControlsEnabled = true
         googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
 
@@ -339,7 +394,6 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
             Point.PointType.OSNOWA_MARKER_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
             Point.PointType.TARGET_TWO_DISTANCES -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
             Point.PointType.TARGET_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
-            else -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)
         }
 
         val icon = when (p.len1Ref) {
@@ -354,10 +408,6 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
             //.icon(icon)
     }
 
-
-    private fun showErrorMessage(error: String) {
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_LONG).show()
-    }
 
     private fun zoomToMarker(marker: Marker){
 
@@ -394,7 +444,6 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
                 Point.PointType.OSNOWA_MARKER_XY -> IconGenerator.STYLE_ORANGE
                 Point.PointType.TARGET_TWO_DISTANCES -> IconGenerator.STYLE_BLUE
                 Point.PointType.TARGET_XY -> IconGenerator.STYLE_GREEN
-                else -> IconGenerator.STYLE_WHITE
             }
 
             val iconFactory = IconGenerator(this) //.setColor(STYLE_BLUE)
@@ -410,6 +459,14 @@ class MackowaActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCal
         }.map {
             builder.include(it.position)
         }
+//qqq
+        markerAddedByClick?.isVisible?.let{
+            markerAddedByClick?.position?.let {
+                builder.include(markerAddedByClick?.position)
+            }
+        }
+
+
         googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 45))
     }
 

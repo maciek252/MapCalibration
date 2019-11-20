@@ -83,6 +83,9 @@
                     android:id="@+id/points_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:scrollbarSize="8dp"
+                    android:scrollbars="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:punkty="@{vm.points}"
                     app:viewModel="@{vm}" />

@@ -103,15 +103,6 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-//        colorNameView.text = activity.getString(R.string.color_primary)
-//        backgroundLayout.background = activity.getDrawable(R.color.colorPrimary)
-//
-//        colorViewModel.colorIdData.observe(this, Observer { bindColorId(it) })
-//        colorViewModel.colorNameId.observe(this, Observer { bindColorNameId(it) })
-    }
 
     //
     // setups
@@ -124,15 +115,5 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
     }
 
 
-//    fun bindColorId(colorId: RColor?) {
-//        colorId ?: return
-//
-//        backgroundLayout.background = activity.getDrawable(colorId)
-//    }
-//
-//    fun bindColorNameId(colorNameId: RString?) {
-//        colorNameId ?: return
-//
-//        colorNameView.text = activity.getString(colorNameId)
-//    }
+
 }
