@@ -7,7 +7,7 @@
 
         <variable
             name="pointDialogModelView"
-            type="com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.PointDialogModelView" />
+            type="com.mapcalibration.mvvm.ui.mapActivity.pointDialog.PointDialogModelView" />
     </data>
 
     <LinearLayout

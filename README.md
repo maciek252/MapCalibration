@@ -190,7 +190,7 @@ In fact, the Architecture Components of its Data Binding Library are modeled on 
 ### Activity Layout File
 ```xml
     <data>
-        <variable name="vm" type="com.leopold.mvvm.viewmodel.search.SearchViewModel"/>
+        <variable name="vm" type="com.mapcalibration.mvvm.viewmodel.search.SearchViewModel"/>
     </data>
     
     <androidx.appcompat.widget.AppCompatImageButton
@@ -219,8 +219,8 @@ In fact, the Architecture Components of its Data Binding Library are modeled on 
 ### RecyclerView Adapter Item Layout File
 ```xml
     <data>
-        <variable name="item" type="com.leopold.mvvm.data.remote.domain.Repository"/>
-        <variable name="vm" type="com.leopold.mvvm.viewmodel.search.SearchViewModel"/>
+        <variable name="item" type="com.mapcalibration.mvvm.data.remote.domain.Repository"/>
+        <variable name="vm" type="com.mapcalibration.mvvm.viewmodel.search.SearchViewModel"/>
     </data>
     
     <androidx.appcompat.widget.AppCompatTextView

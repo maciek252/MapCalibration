@@ -4,8 +4,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="item" type="com.leopold.mvvm.data.remote.domain.Repository"/>
-        <variable name="vm" type="com.leopold.mvvm.ui.search.SearchViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,28 +31,35 @@
         <Button
             android:id="@+id/buttonMap_OC"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:includeFontPadding="false"
             android:minWidth="0dp"
+            android:minHeight="30dip"
             android:text="MAP"
+            android:textSize="8sp"
             app:layout_constraintEnd_toStartOf="@+id/buttonSet_OC"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/buttonSet_OC"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:includeFontPadding="false"
             android:minWidth="0dp"
+            android:minHeight="30dip"
             android:text="SET"
+            android:textSize="8sp"
             app:layout_constraintEnd_toStartOf="@+id/buttonEdit_OC" />
 
         <Button
             android:id="@+id/buttonEdit_OC"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:includeFontPadding="false"
             android:minWidth="0dp"
+            android:minHeight="30dip"
             android:text="EDIT"
+            android:textSize="8sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

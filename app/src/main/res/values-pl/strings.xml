@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Map Calibration</string>
+    <string name="distanceToMarker1">Odległość do markera 1</string>
+    <string name="distanceToMarker2">Odległość do markera 2</string>
+    <string name="menu_bookmark">Zakładka</string>
+    <string name="show_all_markers">wszystkie mrk</string>
+    <string name="polish">polski</string>
+    <string name="english">angielski</string>
+    <string name="english3" tools:ignore="ExtraTranslation">Brak markera na mapie</string>
+    <string name="marker1">Ref. point 1</string>
+    <string name="marker2">Ref. point 2</string>
+    <string name="position1_2">Poz. 1->2</string>
+    <string name="left">Lewo</string>
+    <string name="right">Prawo</string>
+
+
+</resources>

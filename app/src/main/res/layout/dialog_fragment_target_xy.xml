@@ -7,7 +7,7 @@
 
         <variable
             name="pointDialogModelView"
-            type="com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.PointDialogModelView" />
+            type="com.mapcalibration.mvvm.ui.mapActivity.pointDialog.PointDialogModelView" />
     </data>
 
     <LinearLayout
@@ -53,8 +53,8 @@
                 android:editable="true"
                 android:enabled="true"
                 android:focusableInTouchMode="true"
-                android:numeric="signed|decimal"
-                android:text="0" />
+                android:hint="0.0"
+                android:numeric="signed|decimal" />
 
             <TextView
                 android:id="@+id/textViewYLabel"

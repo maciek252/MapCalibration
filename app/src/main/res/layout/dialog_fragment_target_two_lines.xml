@@ -7,7 +7,7 @@
 
         <variable
             name="pointDialogModelView"
-            type="com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.PointDialogModelView" />
+            type="com.mapcalibration.mvvm.ui.mapActivity.pointDialog.PointDialogModelView" />
     </data>
 
     <LinearLayout
@@ -43,14 +43,15 @@
 
             <TextView
                 android:id="@+id/textViewDistanceToMarker1"
-                android:layout_width="88dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#3F51B5"
                 android:editable="true"
                 android:enabled="true"
                 android:focusable="auto"
                 android:focusableInTouchMode="true"
-                android:text="TextView" />
+                android:hint="0.0"
+                android:numeric="signed|decimal" />
 
             <CheckBox
                 android:id="@+id/checkBox2"
@@ -80,14 +81,15 @@
 
             <TextView
                 android:id="@+id/textViewDistanceToMarker2"
-                android:layout_width="88dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#3F51B5"
                 android:editable="true"
                 android:enabled="true"
                 android:focusable="auto"
                 android:focusableInTouchMode="true"
-                android:text="TextView" />
+                android:hint="0.0"
+                android:numeric="signed|decimal" />
 
         </LinearLayout>
 

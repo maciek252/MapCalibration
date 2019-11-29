@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="item" type="com.leopold.mvvm.data.remote.domain.Repository"/>
-        <variable name="vm" type="com.leopold.mvvm.ui.search.SearchViewModel"/>
     </data>
 
     <LinearLayout

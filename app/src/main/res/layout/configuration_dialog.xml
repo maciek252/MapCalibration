@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="vm" type="com.leopold.mvvm.ui.mackowaActivity.MackowaViewModel"/>
+        <variable name="vm" type="com.mapcalibration.mvvm.ui.mapActivity.MapViewModel"/>
         <variable name="centerMapOnGps" type="androidx.lifecycle.MutableLiveData&lt;Boolean&gt;"/>
     </data>
 

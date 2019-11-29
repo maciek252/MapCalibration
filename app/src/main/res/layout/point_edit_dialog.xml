@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="point" type="com.leopold.mvvm.data.db.entity.Point"/>
-        <variable name="vm" type="com.leopold.mvvm.ui.mackowaActivity.MackowaViewModel"/>
+        <variable name="point" type="com.mapcalibration.mvvm.data.db.entity.Point"/>
+        <variable name="vm" type="com.mapcalibration.mvvm.ui.mapActivity.MapViewModel"/>
 
     </data>
 
@@ -60,7 +60,7 @@
             android:fillViewport="true"
             >
 
-            <com.leopold.mvvm.ui.mackowaActivity.mackowaActivity_pointDialog.WrapContentViewPager
+            <com.mapcalibration.mvvm.ui.mapActivity.pointDialog.WrapContentViewPager
                 android:id="@+id/pagerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
