@@ -129,12 +129,22 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
             showAddPointDialog()
         }
         buttonShowAllMarkers.setOnClickListener {
-            //applyLanguage(this, "en")
-            //setNewLocale(LANGUAGE_ENGLISH, false)
-            showMarkers((binding.vm?.points)?.value!!)
-            addMarkerPin(binding?.vm?.latLngMarker?.value!!, false)
+
+            if(!(binding?.vm?.points?.value)?.isEmpty()!!) {
+
+                //applyLanguage(this, "en")
+                //setNewLocale(LANGUAGE_ENGLISH, false)
+                showMarkers((binding.vm?.points)?.value!!)
+                if (binding?.vm?.latLngMarker?.value != null) {
+                    addMarkerPin(binding?.vm?.latLngMarker?.value!!, false)
+                }
+
+
+            }
         }
         //.
+
+/*
         val clickStream = buttonSettings
             .clicks().share()
 
@@ -154,6 +164,7 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
             buttonSettings.isPressed = !buttonSettings.isPressed
                         centerMapOnGpsLocation()
         }
+*/
 
 
 
@@ -246,7 +257,7 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
 
         rxLocation.location().updates(locationRequest)
-            .map{rxLocation -> textViewGps.setText("" + rxLocation.latitude);
+            .map{rxLocation -> // textViewGps.setText("" + rxLocation.latitude);
 
 
                 binding?.vm?.currentGpsPosition?.value = rxLocation

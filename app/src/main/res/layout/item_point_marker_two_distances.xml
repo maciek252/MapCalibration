@@ -11,15 +11,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout9"
-        android:layout_width="396dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="1dp"
         android:background="#03A9F4">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="154dp"
-            android:layout_height="436dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout5"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout12"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -45,6 +46,7 @@
             android:id="@+id/constraintLayout11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout10"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -58,8 +60,8 @@
 
             <TextView
                 android:id="@+id/textViewMarker2Name"
-                android:layout_width="93dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Name2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewMarker1Name" />
@@ -121,6 +123,7 @@
             android:id="@+id/constraintLayout12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout11"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -146,6 +149,7 @@
             android:id="@+id/constraintLayout10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toEndOf="@+id/textViewPointName"
             app:layout_constraintTop_toTopOf="parent">
 

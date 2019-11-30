@@ -100,8 +100,21 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
 
     }
 
-    override fun savePoint(){
+    override fun savePoint(): Boolean {
         Log.d("savePoint", "osx")
+
+        if(pointDialogModelView.mapViewModel.points.value.isEmpty())
+            return false
+
+        if(binding?.textViewX?.text.isNullOrBlank())
+            return false
+
+        if(binding?.spinner?.selectedItem == null)
+            return false
+
+        if(pointDialogModelView?.mapViewModel?.latLngMarker.value?.latitude == null || pointDialogModelView?.mapViewModel?.latLngMarker.value?.longitude == null)
+            return false
+
         punk.len1 = binding?.textViewX?.text.toString().toDouble()
 
         val refName = binding?.spinner?.selectedItem.toString()
@@ -110,6 +123,7 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
         punk.longitude = pointDialogModelView?.mapViewModel?.latLngMarker.value?.longitude!!
 
         punk.pointType = Point.PointType.OSNOWA_MARKER_XY
+        return true
     }
 
 

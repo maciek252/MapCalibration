@@ -31,26 +31,12 @@
                     android:layout_weight="1"
                     android:text="V" />
 
-                <TextView
-                    android:id="@+id/textViewGps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="TextView" />
-
                 <Button
                     android:id="@+id/buttonMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="MENU" />
-
-                <Button
-                    android:id="@+id/buttonSettings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="*" />
 
                 <Button
                     android:id="@+id/buttonAddPoint"

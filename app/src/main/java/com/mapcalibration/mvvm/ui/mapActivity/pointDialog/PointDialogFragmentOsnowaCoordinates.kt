@@ -63,12 +63,14 @@ open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), Adapt
 
     }
 
-    override fun savePoint(){
+    override fun savePoint(): Boolean {
         Log.d("savePoint", "oc")
         punk.latitude = pointDialogModelView?.mapViewModel?.latLngMarker.value?.latitude!!
         punk.longitude = pointDialogModelView?.mapViewModel?.latLngMarker.value?.longitude!!
 
         punk.pointType = Point.PointType.OSNOWA_COORDINATES
+
+        return true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

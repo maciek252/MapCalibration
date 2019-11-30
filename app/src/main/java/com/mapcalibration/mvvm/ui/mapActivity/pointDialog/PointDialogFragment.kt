@@ -104,8 +104,9 @@ open  class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelected
     // setups
     //
 
-    open fun savePoint(){
+    open fun savePoint(): Boolean {
         Log.d("savePoint", "abstract")
+        return true
     }
 
     open fun setPoint(p: Point) : PointDialogFragment {

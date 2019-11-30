@@ -112,8 +112,18 @@ open class PointDialogFragmentTargetTwoDistances() : PointDialogFragment(), Adap
 
     //override fun on
 
-    override fun savePoint(){
+    override fun savePoint(): Boolean {
         Log.d("savePoint", "txy")
+
+        if(pointDialogModelView.mapViewModel.points.value.isEmpty() )
+            return false
+
+        if(binding?.textViewDistanceToMarker1?.text.isNullOrBlank() || binding?.textViewDistanceToMarker2?.text.isNullOrBlank())
+            return false
+
+        if(binding?.spinner?.selectedItem == null || binding?.spinner2?.selectedItem == null)
+            return false
+
         punk.len1 = binding?.textViewDistanceToMarker1?.text.toString().toDouble()
         punk.len2 = binding?.textViewDistanceToMarker2?.text.toString().toDouble()
         punk.rightFromLine = binding?.checkBox2?.isChecked!!
@@ -128,6 +138,7 @@ open class PointDialogFragmentTargetTwoDistances() : PointDialogFragment(), Adap
         punk.referenceId2 = refId2
 
         punk.pointType = Point.PointType.TARGET_TWO_DISTANCES
+        return true
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

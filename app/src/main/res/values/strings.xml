@@ -13,6 +13,10 @@
     <string name="position1_2">Pos. 1->2</string>
     <string name="left">Left</string>
     <string name="right">Right</string>
+    <string name="marker">Marker</string>
+    <string name="markerScale">Scale Marker</string>
+    <string name="target_xy">Target XY</string>
+    <string name="target_2lines">Target 2 Distances</string>
 
 
 </resources>

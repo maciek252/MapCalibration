@@ -87,8 +87,18 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
         return v.rootView
     }
 
-    override open fun savePoint(){
+    override open fun savePoint(): Boolean {
         Log.d("savePoint", "txy")
+
+        if(pointDialogModelView.mapViewModel.points.value.isEmpty())
+            return false
+
+        if(binding?.textViewX?.text.isNullOrBlank() || binding?.textViewY?.text.isNullOrBlank())
+            return false
+
+        if(binding?.spinner?.selectedItem == null)
+            return false
+
         punk.x = binding?.textViewX?.text.toString().toDouble()
         punk.y = binding?.textViewY?.text.toString().toDouble()
 
@@ -97,6 +107,8 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
         punk.referenceId = refId
 
         punk.pointType = Point.PointType.TARGET_XY
+
+        return true
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

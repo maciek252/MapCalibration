@@ -12,6 +12,10 @@
     <string name="position1_2">Poz. 1->2</string>
     <string name="left">Lewo</string>
     <string name="right">Prawo</string>
+    <string name="target_xy">Cel XY</string>
+    <string name="target_2lines">Cel 2 Odległości</string>
+    <string name="marker">Marker</string>
+    <string name="markerScale">Marker Skali</string>
 
 
 </resources>

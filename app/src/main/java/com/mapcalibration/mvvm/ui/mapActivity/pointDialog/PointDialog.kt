@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -17,6 +18,7 @@ import com.mapcalibration.mvvm.R
 import com.mapcalibration.mvvm.data.db.entity.Point
 import com.mapcalibration.mvvm.databinding.PointEditDialogBinding
 import com.mapcalibration.mvvm.ui.mapActivity.MapViewModel
+import com.mapcalibration.mvvm.util.Utility
 
 
 class PointDialog(val vm: MapViewModel, var p: Point?) : DialogFragment(),  AdapterView.OnItemSelectedListener,
@@ -88,22 +90,27 @@ class PointDialog(val vm: MapViewModel, var p: Point?) : DialogFragment(),  Adap
             val a = binding?.pagerView?.adapter as ColorPagerAdapter
             //val oo = a.getItem(binding?.pagerView?.currentItem!!)
 
-            a.m.get(binding?.pagerView?.currentItem!!)?.savePoint()
+            val isValid = a.m.get(binding?.pagerView?.currentItem!!)?.savePoint()
             //oo.savePoint()
 
-            if(wasEmpty)
-                addPoint()
 
 
+            if(isValid!!) {
 
-    // to nie wystarcza - adapter nie wykonuje odswiezenia
-            //binding?.vm?.points = binding?.vm?.points!!
-            // DO POPRAWKI!!!! PASKUDNE!
+
+                if (wasEmpty)
+                    addPoint()
+
+
+                // to nie wystarcza - adapter nie wykonuje odswiezenia
+                //binding?.vm?.points = binding?.vm?.points!!
+                // DO POPRAWKI!!!! PASKUDNE!
 //            val m = vm.points.value
 //            vm.points.value += p!!
 //            vm.points.value = m
 
-            vm.addPoint(p!!)
+                vm.addPoint(p!!)
+            }
 
             this.dismiss()
         }
@@ -114,7 +121,11 @@ class PointDialog(val vm: MapViewModel, var p: Point?) : DialogFragment(),  Adap
         initializeIndicator()
 
 
+
         if(wasEmpty){
+            binding?.buttonRemovePoint?.isClickable = false
+            binding?.buttonRemovePoint?.isEnabled = false
+
             if(vm.points.value.isEmpty()){
 
             } else
@@ -160,11 +171,16 @@ class PointDialog(val vm: MapViewModel, var p: Point?) : DialogFragment(),  Adap
         val listaTypow = Point.PointType.values().toList()
         binding?.indicatorLayout2?.setupWithViewPager(binding?.pagerView, true)
         for (tabNo in 0..listaTypow.size) {
-            //indicatorLayout.getTabAt(tabNo)?.icon = ContextCompat.getDrawable(this, R.drawable
-            //    .serduszko)
-            //indicatorLayout2.getTabAt(tabNo)?.icon = ContextCompat.getDrawable(this, R.drawable
-              //  .selector_indicator2)
-            binding?.indicatorLayout2?.getTabAt(tabNo)?.text = ""+listaTypow.get(tabNo)
+            val a = binding?.indicatorLayout2?.getTabAt(tabNo)
+
+            when(tabNo){
+                0 -> a?.text = ""+ Utility.getStringFromResources(activity as AppCompatActivity, "marker")
+                1 -> a?.text = ""+ Utility.getStringFromResources(activity as AppCompatActivity, "markerScale")
+                2 -> a?.text = ""+ Utility.getStringFromResources(activity as AppCompatActivity, "target_xy")
+                3 -> a?.text = ""+ Utility.getStringFromResources(activity as AppCompatActivity, "target_2lines")
+            }
+
+            //binding?.indicatorLayout2?.getTabAt(tabNo)?.text = ""+listaTypow.get(tabNo)
         }
     }
 
