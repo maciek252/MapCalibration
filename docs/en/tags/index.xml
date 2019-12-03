@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Example site multi-language</title>
-    <link>/en/tags/</link>
+    <link>https://maciek252.github.io/MapCalibration/en/tags/</link>
     <description>Recent content in Tags on Example site multi-language</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="/en/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://maciek252.github.io/MapCalibration/en/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
