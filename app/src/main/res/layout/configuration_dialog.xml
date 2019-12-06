@@ -24,7 +24,7 @@
             android:id="@+id/checkBoxSwitchOffScreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Don't switch off screen" />
+            android:text="@string/dontSwitchOffScreen" />
 
         <TextView
             android:id="@+id/textViewCollectionName"
@@ -50,7 +50,7 @@
             android:id="@+id/buttonRemove"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Remove" />
+            android:text="@string/remove" />
 
         <TextView
             android:id="@+id/textViewCollections"

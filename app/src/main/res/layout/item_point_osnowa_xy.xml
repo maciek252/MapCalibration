@@ -91,8 +91,9 @@
             android:includeFontPadding="false"
             android:minWidth="0dp"
             android:minHeight="30dip"
-            android:text="SET"
+            android:text="@string/set"
             android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_O_XY_Edit"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -103,8 +104,9 @@
             android:includeFontPadding="false"
             android:minWidth="0dp"
             android:minHeight="30dip"
-            android:text="EDIT"
+            android:text="@string/edit"
             android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,8 +117,9 @@
             android:includeFontPadding="false"
             android:minWidth="0dp"
             android:minHeight="30dip"
-            android:text="MAP"
+            android:text="@string/map"
             android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonSet_OSX"
             app:layout_constraintTop_toTopOf="parent" />
 

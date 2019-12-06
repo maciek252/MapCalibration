@@ -16,6 +16,13 @@
     <string name="target_2lines">Cel 2 Odległości</string>
     <string name="marker">Marker</string>
     <string name="markerScale">Marker Skali</string>
+    <string name="edit">EDYTUJ</string>
+    <string name="map">MAPA</string>
+    <string name="set">USTAW</string>
+    <string name="dontSwitchOffScreen">Nie wygaszaj ekranu</string>
+    <string name="remove">Usuń</string>
+    <string name="savepoint">Zapisz punkt</string>
+    <string name="removepoint">Usuń punkt</string>
 
 
 </resources>

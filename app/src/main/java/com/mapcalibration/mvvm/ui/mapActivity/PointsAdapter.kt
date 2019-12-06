@@ -194,7 +194,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MapViewModel) :
 //
 //            Glide.with(itemView.context).load(movieModel.moviePicture!!).into(itemView.imageMovie)
             itemView.textViewPointName_OXY.text = p.name
-            itemView?.textViewYY.text = p.x.toString()
+            itemView?.textViewYY.text = p.len1.toString()
 
             itemView?.textViewYY.requestFocus()
 

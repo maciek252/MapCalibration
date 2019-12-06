@@ -37,14 +37,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="SavePoint" />
+                android:text="@string/savepoint" />
 
             <Button
                 android:id="@+id/buttonRemovePoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Remove" />
+                android:text="@string/removepoint" />
 
         </LinearLayout>
 

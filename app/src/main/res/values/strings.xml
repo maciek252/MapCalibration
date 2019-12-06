@@ -17,6 +17,13 @@
     <string name="markerScale">Scale Marker</string>
     <string name="target_xy">Target XY</string>
     <string name="target_2lines">Target 2 Distances</string>
+    <string name="edit">EDIT</string>
+    <string name="map">MAP</string>
+    <string name="set">SET</string>
+    <string name="dontSwitchOffScreen">Don\'t switch off screen</string>
+    <string name="remove">Remove</string>
+    <string name="savepoint">Save Point</string>
+    <string name="removepoint">Remove Point</string>
 
 
 </resources>
