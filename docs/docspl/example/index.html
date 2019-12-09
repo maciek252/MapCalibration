@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Example - Hugo Whisper Theme</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="icon" href="https://maciek252.github.io/MapCalibration/favicon.png">
+
+  
+  
+  <link rel="stylesheet" href="/MapCalibration/css/style.min.d0149e46d37ed09a60f55899204505f757aeb152bb817cdb02a1a2bf5728bb6b.css">
+  
+
+  
+
+</head>
+
+<body class='page page-default-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  <ul>
+    
+    
+    <li class="menu-item-home">
+      <a href="/MapCalibration/">
+        <span>Home</span>
+      </a>
+    </li>
+    
+    <li class="menu-item-docs en">
+      <a href="/MapCalibration/docsen/">
+        <span>Docs EN</span>
+      </a>
+    </li>
+    
+    <li class="menu-item-docs pl">
+      <a href="/MapCalibration/docspl/">
+        <span>Docs PL</span>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+  <div class="wrapper">
+    <div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="https://maciek252.github.io/MapCalibration/"><img alt="Logo" src="/MapCalibration/images/logo.svg" /></a>
+    </div>
+    <div class="logo-mobile">
+      <a href="https://maciek252.github.io/MapCalibration/"><img alt="Logo" src="/MapCalibration/images/logo-mobile.svg" /></a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  <ul>
+    
+    
+    <li class="menu-item-home">
+      <a href="/MapCalibration/">
+        <span>Home</span>
+      </a>
+    </li>
+    
+    <li class="menu-item-docs en">
+      <a href="/MapCalibration/docsen/">
+        <span>Docs EN</span>
+      </a>
+    </li>
+    
+    <li class="menu-item-docs pl">
+      <a href="/MapCalibration/docspl/">
+        <span>Docs PL</span>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+    
+    
+    
+    
+    
+    
+
+    
+    <div class="container pt-2 pt-md-6 pb-3 pb-md-6">
+      <div class="row">
+        <div class="col-12 col-md-3 mb-3">
+          <div class="sidebar">
+            
+<div class="docs-menu">
+  <h4>Docs p l</h4>
+  <ul>
+    
+    <li class="">
+      <a href="https://maciek252.github.io/MapCalibration/docspl/overview/">Overview</a>
+    </li>
+    
+    <li class="">
+      <a href="https://maciek252.github.io/MapCalibration/docspl/configure/">Configuration</a>
+    </li>
+    
+    <li class="active ">
+      <a href="https://maciek252.github.io/MapCalibration/docspl/example/">Example</a>
+    </li>
+    
+  </ul>
+</div>
+
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          
+<h1 class="title">Example</h1>
+<div class="content ">
+  <h2 id="example">Example</h2>
+<ol>
+<li>The map we use</li>
+</ol>
+<p>Assume that we are given the following map.</p>
+<p align="center"> 
+<img src="/MapCalibration/images/map1.png" width="800"  />
+</p>
+<p>The units we use for measuging distances are relevant only for the scale
+(proportion of distance on the map and distance in the terrain). When we
+do not care about the scale, we can use any units (pixels, centimeters,
+milimeters, inches, etc).</p>
+<ol start="2">
+<li>The reference point</li>
+</ol>
+<p>We choose the first reference point at the crossroad (a location easy to
+identify both on the map and in the sat photo). First we set a marker:</p>
+<p align="center"> 
+<img src="/MapCalibration/images/pazinskiego_marker.png" width="400"  align="center"/>
+</p>
+<p>The corresponding point can be then defined:</p>
+<p align="center">
+<img src="/MapCalibration/images/pazinskiego_dialog.png" width="400"  />
+</p>
+<p>After setting the first point the displayed map looks as follows:</p>
+<p align="center">
+<img src="/MapCalibration/images/pazinskiego_punkt.png" width="400"  />
+</p>
+<p>The point is shown on the map and listed on the list of navigation
+points.</p>
+<ol start="3">
+<li>Reference scale marker</li>
+</ol>
+<p>Now we add a GPS point for establishing the map scale. We choose a
+corner of a pond by setting a marker and measuring on the map the
+distance from the reference point defined previously:</p>
+<p align="center">
+<img src="/MapCalibration/images/map1.png" width="800" /><img
+src="/MapCalibration/images/map0.png" width="800" />
+</p>
+<p>First we need to set a marker in the chosen location:</p>
+<p align="center">
+<img src="/MapCalibration/images/staw_marker.png" width="400"  />
+</p>
+<p>Then type the measured distance:</p>
+<p align="center">
+<img src="/MapCalibration/images/staw_dialog.png" width="400"  />
+</p>
+<p>After adding the point the scale of the map is computed and displayed:</p>
+<p align="center">
+<img src="/MapCalibration/images/staw_punkt.png" width="400"  />
+</p>
+<ol start="4">
+<li>Target point 2-line:</li>
+</ol>
+<p>Now, after establishing the map's scale, we want to find a location with
+respect to the reference points. Let it be one of the turns of a power
+line.</p>
+<p>The lines on the
+map show the distances measured from two reference points:</p>
+<p>koko</p>
+<p align="center">
+<img src="/MapCalibration/images/map2.png" width="800"  />
+</p>
+<p>A target point is defined with respect to this data:</p>
+<p align="center">
+<img src="/MapCalibration/images/slup_dialog.png" width="400"  />
+</p>
+<p>As we can see, the point is found with the accuracy of just few meters:</p>
+<p align="center">
+<img src="/MapCalibration/images/slup_punkt.png" width="400"  />
+</p>
+<ol start="5">
+<li>Selecting the target point - now the distance and heading to the
+currently selected point is displayed at the bottom of the screen:</li>
+</ol>
+<p align="center">
+<img src="/MapCalibration/images/slup_wybrany.png" width="400"  />
+</p>
+<p>Whisper is a minimal documentation theme built for Hugo. The design &amp; functionality is intentionally minimal.</p>
+<h2 id="quickstart">Quickstart</h2>
+<p>Copy or git clone this theme into the sites themes folder <code>mynewsite/themes</code></p>
+<pre><code>hugo new site whisper
+git clone https://github.com/jugglerx/hugo-whisper-theme.git
+</code></pre><h3 id="code-highlighting">Code Highlighting</h3>
+<p>Whisper uses Hugo's in-built code highlighting with a github style code highlighting theme. <a href="https://gohugo.io/content-management/syntax-highlighting/">https://gohugo.io/content-management/syntax-highlighting/</a></p>
+<p>You can insert code snippets in any markdown file by using standard code fences syntax ie:</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">myFunction</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;myDIV&#39;</span><span class="p">)</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">===</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">x</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s1">&#39;block&#39;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">x</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          <ul>
+            <li class="zerostatic"><a href="https://www.zerostatic.io">www.zerostatic.io</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/MapCalibration/js/scripts.min.1237ff71925bb8625c97a9af8db4c54525258bedfd7c47493daaff723bea755e.js"></script>
+  
+
+  
+  
+  
+    
+  
+
+
+</body>
+
+</html>

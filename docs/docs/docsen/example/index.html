@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Example - Hugo Whisper Theme</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="icon" href="https://maciek252.github.io/MapCalibration/favicon.png">
+
+  
+  
+  <link rel="stylesheet" href="/MapCalibration/css/style.min.d0149e46d37ed09a60f55899204505f757aeb152bb817cdb02a1a2bf5728bb6b.css">
+  
+
+  
+
+</head>
+
+<body class='page page-default-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  <ul>
+    
+    
+    <li class="menu-item-docsr">
+      <a href="/MapCalibration/docs/docsen/overview">
+        <span>Docsr</span>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+  <div class="wrapper">
+    <div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="https://maciek252.github.io/MapCalibration/"><img alt="Logo" src="/MapCalibration/images/logo.svg" /></a>
+    </div>
+    <div class="logo-mobile">
+      <a href="https://maciek252.github.io/MapCalibration/"><img alt="Logo" src="/MapCalibration/images/logo-mobile.svg" /></a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  <ul>
+    
+    
+    <li class="menu-item-docsr">
+      <a href="/MapCalibration/docs/docsen/overview">
+        <span>Docsr</span>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+    
+    
+    
+    
+    
+    
+
+    
+    <div class="container pt-2 pt-md-6 pb-3 pb-md-6">
+      <div class="row">
+        <div class="col-12 col-md-3 mb-3">
+          <div class="sidebar">
+            
+<div class="docs-menu">
+  <h4>Docs</h4>
+  <ul>
+    
+    <li class="">
+      <a href="https://maciek252.github.io/MapCalibration/docs/docsen/overview/">Overview</a>
+    </li>
+    
+    <li class="">
+      <a href="https://maciek252.github.io/MapCalibration/docs/docsen/configure/">Configuration</a>
+    </li>
+    
+    <li class="active ">
+      <a href="https://maciek252.github.io/MapCalibration/docs/docsen/example/">Example</a>
+    </li>
+    
+  </ul>
+</div>
+
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          
+<h1 class="title">Example</h1>
+<div class="content ">
+  <h2 id="example">Example</h2>
+<p>In the example we will show how a location in the terrain can be found on the basis of its identification on the map we are given. Below we present the steps to be performed:</p>
+<ol>
+<li>The map we use</li>
+</ol>
+<p>Assume that we are given the following map (either electronic or printed on the paper).</p>
+<p align="center"> 
+<img src="/MapCalibration/images/map1.png" width="800"  />
+</p>
+<p>The units we use for measuging distances are relevant only for the scale
+(proportion of distance on the map and distance in the terrain). When we
+do not care about the scale, we can use any units (pixels, centimeters,
+milimeters, inches, etc).</p>
+<ol start="2">
+<li>The reference point</li>
+</ol>
+<p>We choose the first reference point at the intersection (a location easy to
+identify both on the map and in the sat photo). First we set a marker (and call it pointIntersection):</p>
+<p align="center"> 
+<img src="/MapCalibration/images/pazinskiego_marker.png" width="400"  align="center"/>
+</p>
+<p>The corresponding point is then added:</p>
+<p align="center">
+<img src="/MapCalibration/images/pazinskiego_dialog.png" width="400"  />
+</p>
+<p>After setting the first point the displayed map looks as follows:</p>
+<p align="center">
+<img src="/MapCalibration/images/pazinskiego_punkt.png" width="400"  />
+</p>
+<p>The point is shown on the map and listed on the list of navigation
+points.</p>
+<ol start="3">
+<li>Reference scale marker</li>
+</ol>
+<p>Now we add a GPS point for establishing the map scale. We choose a
+corner of a pond by setting a marker and measuring on the map the
+distance from the reference point defined previously:</p>
+<p align="center">
+<img src="/MapCalibration/images/map1.png" width="800" /><img
+src="/MapCalibration/images/map0.png" width="800" />
+</p>
+<p>First we need to set a marker in the chosen location:</p>
+<p align="center">
+<img src="/MapCalibration/images/staw_marker.png" width="400"  />
+</p>
+<p>Then type the measured distance (let the name be pointPond):</p>
+<p align="center">
+<img src="/MapCalibration/images/staw_dialog.png" width="400"  />
+</p>
+<p>After adding the point the scale of the map is computed and displayed:</p>
+<p align="center">
+<img src="/MapCalibration/images/staw_punkt.png" width="400"  />
+</p>
+<ol start="4">
+<li>Target point 2-line:</li>
+</ol>
+<p>Now, after establishing the map's scale, we want to find a location with
+respect to the reference points. Let it be one of the turns of a power
+line. Let it denote by T on our map.</p>
+<p>We measure the distances to T from the reference points point1 and point2 defined above.
+The lines on the
+map show these distances:</p>
+<p align="center">
+<img src="/MapCalibration/images/map2.png" width="800"  />
+</p>
+<p>A target point is defined by using these distances. We also need to set the checkbox, as the point we are looking for is located to the left from the line connecting pointIntersection and pointPond. Let us call it pointTarget</p>
+<p align="center">
+<img src="/MapCalibration/images/slup_dialog.png" width="400"  />
+</p>
+<p>As we can see, the point is found with the accuracy of just few meters:</p>
+<p align="center">
+<img src="/MapCalibration/images/slup_punkt.png" width="400"  />
+</p>
+<ol start="5">
+<li>Selecting the target point (by pressing SET button for pointTarget). Now the distance and heading to pointTarget are displayed at the bottom of the screen:</li>
+</ol>
+<p align="center">
+<img src="/MapCalibration/images/slup_wybrany.png" width="400"  />
+</p>
+
+</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          <ul>
+            <li class="zerostatic"><a href="https://www.zerostatic.io">www.zerostatic.io</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/MapCalibration/js/scripts.min.1237ff71925bb8625c97a9af8db4c54525258bedfd7c47493daaff723bea755e.js"></script>
+  
+
+  
+  
+  
+    
+  
+
+
+</body>
+
+</html>

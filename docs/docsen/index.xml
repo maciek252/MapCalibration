@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Overview on Hugo Whisper Theme</title>
+    <link>https://maciek252.github.io/MapCalibration/docsen/</link>
+    <description>Recent content in Overview on Hugo Whisper Theme</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 28 Nov 2018 15:14:39 +1000</lastBuildDate>
+    
+	<atom:link href="https://maciek252.github.io/MapCalibration/docsen/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Overview</title>
+      <link>https://maciek252.github.io/MapCalibration/docsen/overview/</link>
+      <pubDate>Mon, 11 Feb 2019 19:27:37 +1000</pubDate>
+      
+      <guid>https://maciek252.github.io/MapCalibration/docsen/overview/</guid>
+      <description>MapCalibration The MapCalibration app&#39;s aim is to assist satnav-based navigation for maps without GPS coordinates. The main idea is to calibrate the map by setting reference markers on a satellite photo map, in locations easy to identify on both maps.</description>
+    </item>
+    
+    <item>
+      <title>Configuration</title>
+      <link>https://maciek252.github.io/MapCalibration/docsen/configure/</link>
+      <pubDate>Mon, 11 Feb 2019 19:30:08 +1000</pubDate>
+      
+      <guid>https://maciek252.github.io/MapCalibration/docsen/configure/</guid>
+      <description>Syntax highlighting and menus can be configured via &lt;code&gt;config.toml&lt;/code&gt;.</description>
+    </item>
+    
+    <item>
+      <title>Example</title>
+      <link>https://maciek252.github.io/MapCalibration/docsen/example/</link>
+      <pubDate>Mon, 11 Feb 2019 19:27:37 +1000</pubDate>
+      
+      <guid>https://maciek252.github.io/MapCalibration/docsen/example/</guid>
+      <description>&lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;The map we use&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Assume that we are given the following map.&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt; 
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/map1.png&#34; width=&#34;800&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;The units we use for measuging distances are relevant only for the scale
+(proportion of distance on the map and distance in the terrain). When we
+do not care about the scale, we can use any units (pixels, centimeters,
+milimeters, inches, etc).&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;The reference point&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We choose the first reference point at the crossroad (a location easy to
+identify both on the map and in the sat photo). First we set a marker:&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt; 
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/pazinskiego_marker.png&#34; width=&#34;400&#34;  align=&#34;center&#34;/&gt;
+&lt;/p&gt;
+&lt;p&gt;The corresponding point can be then defined:&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/pazinskiego_dialog.png&#34; width=&#34;400&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;After setting the first point the displayed map looks as follows:&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/pazinskiego_punkt.png&#34; width=&#34;400&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;The point is shown on the map and listed on the list of navigation
+points.&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Reference scale marker&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Now we add a GPS point for establishing the map scale. We choose a
+corner of a pond by setting a marker and measuring on the map the
+distance from the reference point defined previously:&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/map1.png&#34; width=&#34;800&#34; /&gt;&lt;img
+src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/map0.png&#34; width=&#34;800&#34; /&gt;
+&lt;/p&gt;
+&lt;p&gt;First we need to set a marker in the chosen location:&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/staw_marker.png&#34; width=&#34;400&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;Then type the measured distance:&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/staw_dialog.png&#34; width=&#34;400&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;After adding the point the scale of the map is computed and displayed:&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/staw_punkt.png&#34; width=&#34;400&#34;  /&gt;
+&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Target point 2-line:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Now, after establishing the map&#39;s scale, we want to find a location with
+respect to the reference points. Let it be one of the turns of a power
+line.&lt;/p&gt;
+&lt;p&gt;The lines on the
+map show the distances measured from two reference points:&lt;/p&gt;
+&lt;p&gt;koko&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/map2.png&#34; width=&#34;800&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;A target point is defined with respect to this data:&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/slup_dialog.png&#34; width=&#34;400&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;As we can see, the point is found with the accuracy of just few meters:&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/slup_punkt.png&#34; width=&#34;400&#34;  /&gt;
+&lt;/p&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Selecting the target point - now the distance and heading to the
+currently selected point is displayed at the bottom of the screen:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p align=&#34;center&#34;&gt;
+&lt;img src=&#34;https://maciek252.github.io/MapCalibration/MapCalibration/images/slup_wybrany.png&#34; width=&#34;400&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;Whisper is a minimal documentation theme built for Hugo. The design &amp;amp; functionality is intentionally minimal.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
