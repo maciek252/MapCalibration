@@ -120,7 +120,7 @@ identify both on the map and in the sat photo). First we set a marker (and call 
 <p align="center"> 
 <img src="/MapCalibration/images/pazinskiego_marker.png" width="400"  align="center"/>
 </p>
-<p>The corresponding point is then added:</p>
+<p>The corresponding point is then added (we call it <strong>intSect</strong>):</p>
 <p align="center">
 <img src="/MapCalibration/images/pazinskiego_dialog.png" width="400"  />
 </p>
@@ -137,18 +137,18 @@ points.</p>
 corner of a pond by setting a marker and measuring on the map the
 distance from the reference point defined previously:</p>
 <p align="center">
-<img src="/MapCalibration/images/map1.png" width="800" /><img
+<img
 src="/MapCalibration/images/map0.png" width="800" />
 </p>
 <p>First we need to set a marker in the chosen location:</p>
 <p align="center">
 <img src="/MapCalibration/images/staw_marker.png" width="400"  />
 </p>
-<p>Then type the measured distance (let the name be pointPond):</p>
+<p>Then type the measured distance from the previously added point <strong>intSect</strong>. Let the name be <strong>pointPond</strong>:</p>
 <p align="center">
 <img src="/MapCalibration/images/staw_dialog.png" width="400"  />
 </p>
-<p>After adding the point the scale of the map is computed and displayed:</p>
+<p>Note that after adding the second point the scale of the map is computed and displayed on the bottom of the main screen:</p>
 <p align="center">
 <img src="/MapCalibration/images/staw_punkt.png" width="400"  />
 </p>
@@ -157,23 +157,23 @@ src="/MapCalibration/images/map0.png" width="800" />
 </ol>
 <p>Now, after establishing the map's scale, we want to find a location with
 respect to the reference points. Let it be one of the turns of a power
-line. Let it denote by T on our map.</p>
-<p>We measure the distances to T from the reference points point1 and point2 defined above.
+line. Let it denote by <strong>target</strong> on our map.</p>
+<p>We measure the distances to <strong>target</strong> from the reference points <strong>intSect</strong> and <strong>pond</strong> defined above.
 The lines on the
 map show these distances:</p>
 <p align="center">
 <img src="/MapCalibration/images/map2.png" width="800"  />
 </p>
-<p>A target point is defined by using these distances. We also need to set the checkbox, as the point we are looking for is located to the left from the line connecting pointIntersection and pointPond. Let us call it pointTarget</p>
+<p>The target point is defined by using these distances. We also need to set the checkbox, as the point we are looking for is located to the left from the line connecting <strong>intSect</strong> and <strong>pond</strong>. Let us call it <strong>target</strong></p>
 <p align="center">
 <img src="/MapCalibration/images/slup_dialog.png" width="400"  />
 </p>
-<p>As we can see, the point is found with the accuracy of just few meters:</p>
+<p>As we can see, the location is marked with the accuracy of just few meters:</p>
 <p align="center">
 <img src="/MapCalibration/images/slup_punkt.png" width="400"  />
 </p>
 <ol start="5">
-<li>Selecting the target point (by pressing SET button for pointTarget). Now the distance and heading to pointTarget are displayed at the bottom of the screen:</li>
+<li>Selecting the target point (by pressing SET button for <strong>target</strong>). Now the distance and heading to <strong>target</strong> are displayed at the bottom of the screen:</li>
 </ol>
 <p align="center">
 <img src="/MapCalibration/images/slup_wybrany.png" width="400"  />
