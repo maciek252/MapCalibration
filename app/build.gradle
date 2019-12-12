@@ -9,8 +9,8 @@ android {
 
     defaultConfig {
         applicationId "com.mapcalibration.mvvm"
-        versionCode 4
-        versionName "1.0.4"
+        versionCode 11
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         minSdkVersion build_versions.min_sdk

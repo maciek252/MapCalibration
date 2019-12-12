@@ -20,6 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout5"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout12"
             app:layout_constraintTop_toTopOf="parent">
@@ -37,7 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -55,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name1"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name2"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewMarker1Name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -71,8 +75,12 @@
             android:id="@+id/textViewPointName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:background="#03A9F4"
             android:text="TextView"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,7 +134,7 @@
             android:id="@+id/constraintLayout12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout11"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -134,16 +142,37 @@
                 android:id="@+id/textViewMarker2Dist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="0"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/textViewPosLabel"
                 app:layout_constraintTop_toBottomOf="@+id/textViewMarker1Dist" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dist"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
             <TextView
                 android:id="@+id/textViewMarker1Dist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="0"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/textView15"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewPosLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dist"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -165,7 +194,7 @@
 
             <TextView
                 android:id="@+id/textView10"
-                android:layout_width="75dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:text="@string/marker2"
                 app:layout_constraintStart_toStartOf="parent"

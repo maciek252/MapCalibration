@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:background="#8BC34A"
             android:text="TextView"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +38,7 @@
                 android:id="@+id/textViewNameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="X="
+                android:text="X"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,6 +59,7 @@
             android:id="@+id/constraintLayout7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toEndOf="@+id/textViewPointName_MXY"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -65,7 +67,7 @@
                 android:id="@+id/textViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ref mk"
+                android:text="@string/refPoint"
                 app:layout_constraintBottom_toTopOf="@+id/textViewRefMarker"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,7 +94,7 @@
                 android:id="@+id/textViewType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Y="
+                android:text="Y"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView

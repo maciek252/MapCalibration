@@ -8,9 +8,9 @@
     <string name="polish">Polish</string>
     <string name="english">English</string>
     <string name="english3" tools:ignore="ExtraTranslation">marker on the map missing</string>
-    <string name="marker1">Ref. point 1</string>
-    <string name="marker2">Ref. point 2</string>
-    <string name="position1_2">Pos. 1->2</string>
+    <string name="marker1">Ref. 1</string>
+    <string name="marker2">Ref.  2</string>
+    <string name="position1_2">1->2</string>
     <string name="left">Left</string>
     <string name="right">Right</string>
     <string name="marker">Marker</string>
@@ -24,6 +24,20 @@
     <string name="remove">Remove</string>
     <string name="savepoint">Save Point</string>
     <string name="removepoint">Remove Point</string>
-
-
+    <string name="languageSelection">Language selection</string>
+    <string name="centerMapOnCurrentPos">Center map on current position</string>
+    <string name="configuration">Configuration</string>
+    <string name="currentCollection">Name of current point collection:</string>
+    <string name="save">Save</string>
+    <string name="askSwitchToCollection">Confirm switching to another collection</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="collections">Collections</string>
+    <string name="refPoint">Reference point</string>
+    <string name="distance">Distance</string>
+    <string name="dist">dst</string>
+    <string name="currentPoint">curr. pt</string>
+    <string name="heading">Heading</string>
+    <string name="addPoint">Add Point</string>
+    <string name="google_map_api_key" translatable="false">AIzaSyBU02BhkVI_WduFGCDTNB00ox56mbreqzU</string>
 </resources>

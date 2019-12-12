@@ -5,7 +5,9 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import com.mapcalibration.mvvm.util.Utility
 
 class NoticeDialogFragment : DialogFragment() {
     // Use this instance of the interface to deliver action events
@@ -24,13 +26,13 @@ class NoticeDialogFragment : DialogFragment() {
         return activity?.let {
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
-            builder.setMessage("koko")
-                .setPositiveButton("bii",
+            builder.setMessage(Utility.getStringFromResources(activity as AppCompatActivity, "askSwitchToCollection"))
+                .setPositiveButton(Utility.getStringFromResources(activity as AppCompatActivity, "yes"),
                     DialogInterface.OnClickListener { dialog, id ->
                         listener.onDialogPositiveClick(this)
                         // FIRE ZE MISSILES!
                     })
-                .setNegativeButton("nee",
+                .setNegativeButton(Utility.getStringFromResources(activity as AppCompatActivity, "cancel"),
                     DialogInterface.OnClickListener { dialog, id ->
                         // User cancelled the dialog
                         listener.onDialogNegativeClick(this)

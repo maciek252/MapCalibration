@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.google.android.gms.maps.model.LatLng
 import com.mapcalibration.mvvm.R
 
 import com.mapcalibration.mvvm.data.db.entity.Point
@@ -83,6 +84,10 @@ class PointDialog(val vm: MapViewModel, var p: Point?) : DialogFragment(),  Adap
                     //Toast.makeText(dialog.context,"DD", Toast.LENGTH_LONG).show()
                     dismiss()
                     return@setOnClickListener
+                } else if(vm?.latLngMarker.value == null){
+                    Log.d("PointDialog", "osnowa point edited but marker empty, setting from coordinates")
+                    val l = LatLng(p?.latitude!!, p?.longitude!!)
+                    vm?.latLngMarker.value = l
                 }
 
             p?.name = binding?.textViewPointName?.text.toString()

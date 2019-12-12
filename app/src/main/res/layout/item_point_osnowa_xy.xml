@@ -20,14 +20,16 @@
             android:layout_height="wrap_content"
             android:background="#FF5722"
             android:text="TextView"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout3"
             app:layout_constraintStart_toEndOf="@+id/textViewPointName_OXY">
 
@@ -36,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Ref. mrk"
+                android:text="@string/refPoint"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,7 +68,7 @@
                 android:duplicateParentState="false"
                 android:editable="false"
                 android:focusableInTouchMode="false"
-                android:text="X="
+                android:text="@string/distance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

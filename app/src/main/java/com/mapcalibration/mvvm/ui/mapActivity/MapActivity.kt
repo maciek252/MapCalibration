@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.View
 
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.mapcalibration.mvvm.data.db.entity.Point
 import com.mapcalibration.mvvm.util.Utils
@@ -45,6 +47,7 @@ import com.mapcalibration.mvvm.util.Utility
 class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,
     GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener {
 
+/*
 
     private val INITIAL_PERMS =
         arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS)
@@ -52,6 +55,7 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
     private val CONTACTS_PERMS = arrayOf<String>(Manifest.permission.READ_CONTACTS)
     private val LOCATION_PERMS = arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION)
     private val INITIAL_REQUEST = 1337
+*/
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(MVVMApp.localeManager?.setLocale(base))
@@ -114,15 +118,22 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        buttonV.setOnClickListener {
+        imageButton?.setOnClickListener {
 
             //setNewLocale(LANGUAGE_POLISH, false)
 
-            Log.d(TAG, "wcisniety")
+            Log.d(TAG, "pressed")
             if(viewForHolder.visibility == View.VISIBLE){
                 viewForHolder.visibility = View.GONE
-            } else
+                //buttonV?.setImageRe
+                    imageButton?.setImageResource(android.R.drawable.arrow_down_float)
+
+                //Utility.
+            } else {
                 viewForHolder.visibility = View.VISIBLE
+                imageButton?.setImageResource(android.R.drawable.arrow_up_float)
+
+            }
         }
 
         buttonAddPoint.setOnClickListener {
@@ -403,12 +414,7 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
             Point.PointType.TARGET_XY -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
         }
 
-        val icon = when (p.len1Ref) {
-            1 -> BitmapDescriptorFactory.fromBitmap(utils.getBitmap(R.drawable.ic_peru))
-            2 -> BitmapDescriptorFactory.fromBitmap(utils.getBitmap(R.drawable.ic_italy))
-            3 -> BitmapDescriptorFactory.fromBitmap(utils.getBitmap(R.drawable.ic_chile))
-            else -> null
-        }
+
 
         //snippet to distinguish markers within UiAutomator
         return MarkerOptions().position(point).title("" + p.id).snippet("" + p.id).icon(icon2)

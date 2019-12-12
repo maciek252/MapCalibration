@@ -7,9 +7,9 @@
     <string name="polish">polski</string>
     <string name="english">angielski</string>
     <string name="english3" tools:ignore="ExtraTranslation">Brak markera na mapie</string>
-    <string name="marker1">Ref. point 1</string>
-    <string name="marker2">Ref. point 2</string>
-    <string name="position1_2">Poz. 1->2</string>
+    <string name="marker1">Ref. 1</string>
+    <string name="marker2">Ref. 2</string>
+    <string name="position1_2">1->2</string>
     <string name="left">Lewo</string>
     <string name="right">Prawo</string>
     <string name="target_xy">Cel XY</string>
@@ -23,6 +23,20 @@
     <string name="remove">Usuń</string>
     <string name="savepoint">Zapisz punkt</string>
     <string name="removepoint">Usuń punkt</string>
-
+    <string name="languageSelection">Wybór języka</string>
+    <string name="centerMapOnCurrentPos">Centruj mapę na aktualnej pozycji</string>
+    <string name="configuration">Konfiguracja</string>
+    <string name="currentCollection">Nazwa aktualnej kolekcji punktów:</string>
+    <string name="save">Zapisz</string>
+    <string name="askSwitchToCollection">Potwierdź wczytanie kolekcji</string>
+    <string name="yes">Tak</string>
+    <string name="cancel">Odrzuć</string>
+    <string name="collections">Kolekcje</string>
+    <string name="refPoint">Punkt referencyjny</string>
+    <string name="distance">Odległość</string>
+    <string name="dist">odl.</string>
+    <string name="currentPoint">akt. pkt</string>
+    <string name="heading">Kierunek</string>
+    <string name="addPoint">Dodaj punkt</string>
 
 </resources>

@@ -24,12 +24,12 @@
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <Button
-                    android:id="@+id/buttonV"
+                <ImageButton
+                    android:id="@+id/imageButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="V" />
+                    app:srcCompat="@android:drawable/arrow_down_float" />
 
                 <Button
                     android:id="@+id/buttonMenu"
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="+" />
+                    android:text="@string/addPoint" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="CurrPoint"
+                    android:text="@string/currentPoint"
                     android:textSize="8sp" />
 
                 <TextView
@@ -137,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="100M=Cm"
+                    android:text="100m : cm"
                     android:textSize="8sp" />
 
                 <TextView
@@ -159,7 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="1Cm=M"
+                    android:text="1cm : m"
                     android:textSize="8sp" />
 
                 <TextView
@@ -181,7 +181,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Dist"
+                    android:text="@string/dist"
                     android:textSize="8sp" />
 
                 <TextView
@@ -203,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Hdg"
+                    android:text="@string/heading"
                     android:textSize="8sp" />
 
                 <TextView

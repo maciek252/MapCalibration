@@ -18,13 +18,15 @@
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/configuration"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-        <CheckBox
-            android:id="@+id/checkBoxSwitchOffScreen"
+        <TextView
+            android:id="@+id/textView13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dontSwitchOffScreen" />
+            android:text="@string/currentCollection" />
 
         <TextView
             android:id="@+id/textViewCollectionName"
@@ -38,13 +40,7 @@
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save" />
-
-        <Button
-            android:id="@+id/buttonRead"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Read" />
+            android:text="@string/save" />
 
         <Button
             android:id="@+id/buttonRemove"
@@ -56,7 +52,7 @@
             android:id="@+id/textViewCollections"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/collections" />
 
         <Spinner
             android:id="@+id/spinnerCollections"
@@ -67,23 +63,41 @@
             android:id="@+id/checkBoxCenterMapOnCurrentPosition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="center map on current pos" />
+            android:text="@string/centerMapOnCurrentPos" />
+
+        <CheckBox
+            android:id="@+id/checkBoxSwitchOffScreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dontSwitchOffScreen" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/languageSelection" />
 
         <RadioGroup
+            android:id="@+id/radioLanguageGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:checkedButton="@={vm.radio_checked}">
+            android:checkedButton="@={vm.radio_checked}"
+            android:clickable="true">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/radioButtonPolish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:editable="true"
                 android:text="@string/polish" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/radioButtonEnglish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:editable="true"
                 android:text="@string/english" />
         </RadioGroup>
     </LinearLayout>

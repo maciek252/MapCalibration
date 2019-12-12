@@ -19,34 +19,45 @@ import com.mapcalibration.mvvm.ui.mapActivity.MapViewModel
 import com.mapcalibration.mvvm.util.Configuration
 import com.mapcalibration.mvvm.util.LocaleManager.Companion.LANGUAGE_ENGLISH
 import com.mapcalibration.mvvm.util.LocaleManager.Companion.LANGUAGE_POLISH
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.RadioButton
 
 
 class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView.OnItemSelectedListener,
     AdapterView.OnItemClickListener, NoticeDialogFragment.NoticeDialogListener {
 
+    val cd = this
+
     val TAG = "konfa"
+    var userInteraction = false
 
      lateinit var aa: ArrayAdapter<String>
 
 
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        Toast.makeText(dialog.context, "positive", Toast.LENGTH_LONG).show()
+
+        //Toast.makeText(dialog.context, "positive", Toast.LENGTH_LONG).show()
+
+
+        val colName = binding?.spinnerCollections?.selectedItem.toString()
+        Configuration.lastName = colName
+        binding?.textViewCollectionName?.text = colName
+        vm.readAllPoints(colName)
+        //readAllCollectionNames()
+
         Log.d(TAG, "positive")
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        Toast.makeText(dialog.context, "negative", Toast.LENGTH_LONG).show()
+
+        //Toast.makeText(dialog.context, "negative", Toast.LENGTH_LONG).show()
         Log.d(TAG, "negative")
     }
 
     fun readAllCollectionNames(){
         val c = vm.getAllSavedCollections()
-        binding?.textViewCollections?.setText("" + c.toString())
-
-//        // Set layout to use when the list of choices appear
+        //binding?.textViewCollections?.setText("" + c.toString())
 
 //        // Set Adapter to Spinner
         aa.clear()
@@ -67,9 +78,6 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
     }
-
-
-
 
     public var binding : ConfigurationDialogBinding? = null
 
@@ -107,6 +115,10 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
             vm.saveAllPoints(collectionName)
             readAllCollectionNames()
         }
+
+
+
+
         binding?.spinnerCollections?.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener{
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -118,15 +130,15 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
                     val element = parent?.getItemAtPosition(position)
                     Log.d(TAG, "klikus=" + element)
 
-
-                    val colName = binding?.spinnerCollections?.selectedItem.toString()
-                    Configuration.lastName = colName
-                    binding?.textViewCollectionName?.text = colName
-                    vm.readAllPoints(colName)
-                    //readAllCollectionNames()
+                    if(userInteraction) {
+                        val newFragment = NoticeDialogFragment()
+                        newFragment.show(cd.childFragmentManager, "koty")
+                    } else
+                        userInteraction = true
                 }
 
             }
+
 
 
 
@@ -134,6 +146,7 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
 
         super.onViewCreated(view, savedInstanceState)
 
@@ -144,21 +157,49 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
 
         readAllCollectionNames()
 
-
-
         binding?.lifecycleOwner = this
 
         if(vm?.centerMapOnGps?.value != null)
             binding?.checkBoxCenterMapOnCurrentPosition?.isChecked =
                 vm?.centerMapOnGps?.value!!
 
-        binding?.radioButton?.setOnClickListener {
+        binding?.radioLanguageGroup?.clearCheck()
+
+        if(Configuration.languageEnglish) {
+//            binding?.radioButtonPolish?.isChecked = false
+//            binding?.radioButtonEnglish?.isChecked = true
+            //binding?.radioLanguageGroup?.check(binding?.radioLanguageGroup?.getChildAt(1)?.id!!)
+            //binding?.radioLanguageGroup?.check(binding?.radioButtonEnglish?.id!!)
+            binding?.radioButtonEnglish?.post {
+                binding?.radioButtonEnglish?.isChecked = true
+            }
+//            (binding?.radioLanguageGroup?.getChildAt(1) as RadioButton).isChecked = true
+
+        }else {
+            //binding?.radioLanguageGroup?.check(binding?.radioLanguageGroup?.getChildAt(0)?.id!!)
+            //binding?.radioLanguageGroup?.check(binding?.radioButtonPolish?.id!!)
+//            binding?.radioButtonEnglish?.isChecked = false
+//            binding?.radioButtonPolish?.isChecked = true
+
+  //          (binding?.radioLanguageGroup?.getChildAt(0) as RadioButton).isChecked = true
+            //binding?.radioLanguageGroup?.check(0)
+            binding?.radioButtonPolish?.post {
+                binding?.radioButtonPolish?.isChecked = true
+            }
+        }
+
+
+        binding?.radioButtonPolish?.setOnClickListener {
+            Configuration.languageEnglish = false
             val myActivity = context as MapActivity?
             myActivity?.setNewLocale(LANGUAGE_POLISH, false)
+
         }
-        binding?.radioButton2?.setOnClickListener {
+        binding?.radioButtonEnglish?.setOnClickListener {
+            Configuration.languageEnglish = true
             val myActivity = context as MapActivity?
             myActivity?.setNewLocale(LANGUAGE_ENGLISH, false)
+
         }
 
         binding?.buttonRemove?.setOnClickListener {
@@ -167,13 +208,14 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
             readAllCollectionNames()
         }
 
-        binding?.buttonRead?.setOnClickListener {
+//        binding?.spinnerCollections?.setSelection(0,false)
+//        binding?.spinnerCollections?.onItemSelectedListener =  object : AdapterView.OnItemSelectedListener{
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//            }
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//            }
+//        }
 
-            val newFragment = NoticeDialogFragment()
-            //newFragment.show(activity?.supportFragmentManager, "missiles")
-
-            newFragment.show(this.childFragmentManager, "missiles")
-        }
         val pos = aa?.getPosition(Configuration.lastName)
         binding?.spinnerCollections?.setSelection(pos)
 
