@@ -108,7 +108,7 @@ class PointDialog(val vm: MapViewModel, var p: Point?) : DialogFragment(),  Adap
 
 
                 // to nie wystarcza - adapter nie wykonuje odswiezenia
-                //binding?.vm?.points = binding?.vm?.points!!
+                //binding.vm?.points = binding.vm?.points!!
                 // DO POPRAWKI!!!! PASKUDNE!
 //            val m = vm.points.value
 //            vm.points.value += p!!

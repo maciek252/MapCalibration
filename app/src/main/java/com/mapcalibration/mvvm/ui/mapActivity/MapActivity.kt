@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
+
 import android.util.Log
 import android.view.View
 
@@ -24,21 +24,21 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+
 import androidx.lifecycle.Observer
 import com.mapcalibration.mvvm.data.db.entity.Point
 import com.mapcalibration.mvvm.util.Utils
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.ui.IconGenerator
 import com.google.android.gms.location.LocationRequest
-import com.jakewharton.rxbinding2.view.clicks
+
 import com.mapcalibration.mvvm.MVVMApp
 import com.mapcalibration.mvvm.ui.configurationDialog.ConfigurationDialog
 import com.mapcalibration.mvvm.util.Configuration
 import com.patloew.rxlocation.RxLocation
-import io.reactivex.android.schedulers.AndroidSchedulers
+
 import kotlinx.coroutines.*
-import java.util.concurrent.TimeUnit
+
 import androidx.core.app.ActivityCompat
 import com.mapcalibration.mvvm.R
 import com.mapcalibration.mvvm.util.Utility
@@ -62,39 +62,36 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
         Log.d(TAG, "attachBaseContext")
     }
 
-    var centeredOnInit: Boolean = false
-    var mapLoaded: Boolean = false
+    private var centeredOnInit: Boolean = false
+
 
     @LayoutRes
     override fun getLayoutResId() = R.layout.activity_mackowy
 
 
-    var markerAddedByClick : Marker? = null
+    private var markerAddedByClick : Marker? = null
 
-    val mapMarkerPoint: MutableMap<Marker,Point> = mutableMapOf()
+    private val mapMarkerPoint: MutableMap<Marker,Point> = mutableMapOf()
 
-    val TAG = "MackowyActivity"
+    private val TAG = "MackowyActivity"
 
     private lateinit var googleMap: GoogleMap
 
-    lateinit var utils: Utils
+    private lateinit var utils: Utils
     //lateinit var utils: Utils
 
-    var job : Job? = null
+    private var job : Job? = null
 
-    fun startTimeout() {
+    private fun startTimeout() {
         val uiScope = CoroutineScope(Dispatchers.Main)
         job = uiScope.launch{
             delay(2000)
-            binding.textViewHeadingToCurrent.setText("---")
-            binding.textViewMapDistanceToCurrent.setText("---")
+            binding.textViewHeadingToCurrent.text = "---"
+            binding.textViewMapDistanceToCurrent.text = "---"
 
         }
     }
 
-    fun refreshViewHolder(){
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,17 +99,21 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
         //ActivityCompat.requestPermissions(INITIAL_PERMS, INITIAL_REQUEST)
         //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-       val RECORD_REQUEST_CODE = 101
-        ActivityCompat.requestPermissions(this,
+        val recordRequestCode = 101
+        ActivityCompat.requestPermissions(
+            this,
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            RECORD_REQUEST_CODE)
+            recordRequestCode
+        )
 
         utils = Utils(applicationContext)
 
-        binding.vm = getViewModel()
-        binding.setLifecycleOwner(this)
 
-        (binding.vm?.centerMapOnGps)?.value = Configuration.isMapCentered
+        binding.vm = getViewModel()
+        //binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
+
+        (binding.vm)?.centerMapOnGps?.value = Configuration.isMapCentered
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -123,10 +124,10 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
             //setNewLocale(LANGUAGE_POLISH, false)
 
             Log.d(TAG, "pressed")
-            if(viewForHolder.visibility == View.VISIBLE){
+            if (viewForHolder.visibility == View.VISIBLE) {
                 viewForHolder.visibility = View.GONE
                 //buttonV?.setImageRe
-                    imageButton?.setImageResource(android.R.drawable.arrow_down_float)
+                imageButton?.setImageResource(android.R.drawable.arrow_down_float)
 
                 //Utility.
             } else {
@@ -141,13 +142,13 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
         }
         buttonShowAllMarkers.setOnClickListener {
 
-            if(!(binding?.vm?.points?.value)?.isEmpty()!!) {
+            if (binding.vm?.points?.value!!.isNotEmpty()) {
 
                 //applyLanguage(this, "en")
                 //setNewLocale(LANGUAGE_ENGLISH, false)
-                showMarkers((binding.vm?.points)?.value!!)
-                if (binding?.vm?.latLngMarker?.value != null) {
-                    addMarkerPin(binding?.vm?.latLngMarker?.value!!, false)
+                showMarkers(binding.vm?.points?.value!!)
+                binding.vm?.latLngMarker?.value.apply {
+                    addMarkerPin(this!!, false)
                 }
 
 
@@ -178,50 +179,48 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 */
 
 
-
 //        buttonSettings.setOnClickListener {
-//            //binding.vm?.saveAllPoints("aktualna")
+//            //binding.vm.saveAllPoints("aktualna")
 //            centerMapOnGpsLocation()
 //        }
         buttonMenu.setOnClickListener {
             showConfigurationDialog()
-            //binding.vm?.readAllPoints()
+            //binding.vm.readAllPoints()
 //            applicationContext.deleteDatabase("mvvm_demo.db")
         }
 
 
-        binding?.vm?.keepScreenOn?.observeForever {
+        binding.vm?.keepScreenOn?.observeForever {
 
-            Utility.setScreenStayOn(binding?.vm?.keepScreenOn?.value!!, this)
+            Utility.setScreenStayOn(binding.vm?.keepScreenOn?.value!!, this)
 
         }
 
-        binding?.vm?.keepScreenOn?.value = Configuration.keepScreenOn
+        binding.vm?.keepScreenOn?.value = Configuration.keepScreenOn
 
 
         binding.vm?.currentGpsPosition?.observeForever {
 
             job?.cancel("ee")
             startTimeout()
-            if(binding.vm?.currentPoint?.value == null) {
-                binding.textViewHeadingToCurrent.setText("====")
-                binding.textViewMapDistanceToCurrent.setText("====")
-            }
-            else {
+            if (binding.vm?.currentPoint?.value == null) {
+                binding.textViewHeadingToCurrent.text = "===="
+                binding.textViewMapDistanceToCurrent.text = "===="
+            } else {
                 val h = String.format("%.2f", binding.vm?.heading?.value)
-                binding.textViewHeadingToCurrent.setText("" + h)
+                binding.textViewHeadingToCurrent.text = h
                 val d = String.format("%.2f", binding.vm?.distance?.value)
-                binding.textViewMapDistanceToCurrent.setText("" + d)
+                binding.textViewMapDistanceToCurrent.text = d
             }
         }
 
         binding.vm?.scaleTerrainMetersToMapCm?.observeForever {
-            if(it == -1.0){
-                binding.textViewMapScaleCmToMeters.setText("---")
-                binding.textViewMapScaleMetersToCm.setText("---")
+            if (it == -1.0) {
+                binding.textViewMapScaleCmToMeters.text = "---"
+                binding.textViewMapScaleMetersToCm.text = "---"
             } else {
-                binding.textViewMapScaleCmToMeters.setText(String.format("%.0f", it))
-                binding.textViewMapScaleMetersToCm.setText(String.format("%.3f", 100 / it))
+                binding.textViewMapScaleCmToMeters.text = String.format("%.0f", it)
+                binding.textViewMapScaleMetersToCm.text = String.format("%.3f", 100 / it)
             }
 
 
@@ -229,23 +228,23 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
         binding.vm?.focusMapOnPoint?.observeForever {
             val p = it
-            p?.let{
-                mapMarkerPoint.filter { (key, value) -> value.id == p?.id }
-                    .map { (key, value) -> zoomToMarker(key) }
+            p.let {
+                mapMarkerPoint.filter { (_, value) -> value.id == p?.id }
+                    .map { (key, _) -> zoomToMarker(key) }
             }
         }
 
         binding.vm?.currentPoint?.observeForever {
 
             val p = it
-            //binding.vm?.currentPoint?.value
-            if(binding.textViewCurrentPoint == null)
-                binding.textViewCurrentPoint.setText("---")
+            //binding.vm.currentPoint?.value
+            if (binding.textViewCurrentPoint == null)
+                binding.textViewCurrentPoint.text = "---"
             else
-                binding.textViewCurrentPoint.setText("" + binding.vm?.currentPoint?.value?.name)
+                binding.textViewCurrentPoint.text = "" + binding.vm?.currentPoint?.value?.name
 
-            mapMarkerPoint.filter{ (key,value) ->value.id == p?.id}.map{(key,value)-> zoomToMarker(key)}
-
+            mapMarkerPoint.filter { (_, value) -> value.id == p?.id }
+                .map { (key, _) -> zoomToMarker(key) }
 
 
         }
@@ -268,19 +267,20 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
 
         rxLocation.location().updates(locationRequest)
-            .map{rxLocation -> // textViewGps.setText("" + rxLocation.latitude);
+            .map { rxLocationL ->
+                // textViewGps.setText("" + rxLocation.latitude);
 
 
-                binding?.vm?.currentGpsPosition?.value = rxLocation
+                binding.vm?.currentGpsPosition?.value = rxLocationL
 
 
                 //if(rxLocation.hasAccuracy() && rxLocation.accuracy < 2) {//&& !centeredOnInit){
-                    centeredOnInit = true
+                centeredOnInit = true
 
-                    if(binding?.vm?.centerMapOnGps?.value!!)
-                        centerMapOnGpsLocation()
+                if (binding.vm?.centerMapOnGps?.value!!)
+                    centerMapOnGpsLocation()
             }
-            .subscribe{rxLocation->
+            .subscribe { _ ->
                 ;
             }
 //            .flatMap<Address> { location ->
@@ -290,11 +290,12 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 //                /* do something */
 //            }
 
-        binding?.vm?.latLngMarker?.observeForever {
-
-            showMarkerPin()
-
+        binding.vm?.latLngMarker.let {
+            it?.observeForever {
+                showMarkerPin()
+            }
         }
+
 
     }
 
@@ -302,7 +303,6 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
 
     override fun onMapReady(googleMap: GoogleMap) {
-        Log.d(TAG, "onMapReady")
         Log.d(TAG, "onMapReady")
         this.googleMap = googleMap
         this.googleMap.setOnMapLoadedCallback(this)
@@ -321,10 +321,11 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
     }
 
-    fun showMarkerPin(){
+    private fun showMarkerPin(){
 
         if(markerAddedByClick == null || !markerAddedByClick?.isVisible!!){
-            addMarkerPin(binding?.vm?.latLngMarker?.value!!)
+            //addMarkerPin()
+            addMarkerPin(binding.vm?.latLngMarker?.value!!)
         }
     }
 
@@ -379,7 +380,7 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
         mapSettings?.isZoomControlsEnabled = true
         googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
 
-//        binding.vm?.points2?.observe(this, ResourceObserver("MackowaActivity",
+//        binding.vm.points2?.observe(this, ResourceObserver("MackowaActivity",
 //            hideLoading = ::none,
 //            showLoading = ::none,
 //            onSuccess = ::showMarkers,
@@ -424,7 +425,8 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
     private fun zoomToMarker(marker: Marker){
 
-        val zoom = googleMap.getCameraPosition().zoom
+        val zoom = googleMap.cameraPosition.zoom
+
 
         //Build camera position
         val cameraPosition = CameraPosition.Builder()
@@ -487,32 +489,32 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
 
     override fun onMarkerDrag(p0: Marker?) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onMarkerDragEnd(p0: Marker?) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onMarkerDragStart(p0: Marker?) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 
     override fun onMarkerClick(marker: Marker): Boolean {
 
         //binding.pointsRecyclerView?.
-        val pos = mapMarkerPoint.get(marker)?.id
+        val pos = mapMarkerPoint[marker]?.id
 
         pos?.let {
 
-//            for(i in 0..binding?.vm?.points?.value?.size!!){
-//                if(binding?.vm?.points?.value?.get(i)?.id == pos){
+//            for(i in 0..binding.vm.points?.value?.size!!){
+//                if(binding.vm.points?.value?.get(i)?.id == pos){
 //                    points_recycler_view?.scrollToPosition(i)
 //                    break
 //                }
 //            }
-            val i = binding?.vm?.points?.value?.indexOfFirst { it.id == pos }
+            val i = binding.vm?.points?.value?.indexOfFirst { it.id == pos }
             i.let{
                 //points_recycler_view?.scrollToPosition(i!!)
                 points_recycler_view?.smoothScrollToPosition(i!!)
@@ -520,7 +522,7 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
                 //points_recycler_view?.invalidateOutline()
 
             }
-            Log.d("T", "skroluje do i: ${i}")
+            Log.d("T", "skroluje do i: $i")
 
 
 
@@ -533,10 +535,10 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 //            }
             //
             //points_recycler_view?.scrollToPosition(pos!!)
-            Log.d("T", "skroluje do pkt: ${pos}")
+            Log.d("T", "skroluje do pkt: $pos")
         }
 
-        binding?.vm?.latLngMarker?.value = marker.position
+        binding.vm?.latLngMarker?.value = marker.position
 
         zoomToMarker(marker)
 
@@ -546,12 +548,12 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
     }
 
 
-    fun showConfigurationDialog(){
+    private fun showConfigurationDialog(){
 
         val d = ConfigurationDialog(binding.vm!!)
-        //d.binding?.item
+        //d.binding.item
         val s: String = "configuration"
-        d?.show(supportFragmentManager, s)
+        d.show(supportFragmentManager, s)
     }
 
     fun showAddPointDialog(){
@@ -559,8 +561,8 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
         val d =
             PointDialog(vm!!, null)
 
-        val s: String = "dialog"
-        d?.show(supportFragmentManager, s)
+        val s = "dialog"
+        d.show(supportFragmentManager, s)
     }
 
 
