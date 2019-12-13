@@ -27,7 +27,7 @@ class MVVMApp : Application() {
     }
 
     companion object{
-        open var localeManager: LocaleManager? = null
+        var localeManager: LocaleManager? = null
     }
 
 
@@ -42,6 +42,6 @@ class MVVMApp : Application() {
     override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
         super.onConfigurationChanged(newConfig)
         localeManager?.setLocale(this)
-        Log.d(TAG, "onConfigurationChanged: " + newConfig.locale.language)
+        //Log.d(TAG, "onConfigurationChanged: " + newConfig.locale.language)
     }
 }

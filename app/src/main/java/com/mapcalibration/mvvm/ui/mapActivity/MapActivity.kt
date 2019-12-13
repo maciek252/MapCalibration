@@ -27,7 +27,6 @@ import android.widget.Toast
 
 import androidx.lifecycle.Observer
 import com.mapcalibration.mvvm.data.db.entity.Point
-import com.mapcalibration.mvvm.util.Utils
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.ui.IconGenerator
 import com.google.android.gms.location.LocationRequest
@@ -77,9 +76,7 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
     private lateinit var googleMap: GoogleMap
 
-    private lateinit var utils: Utils
-    //lateinit var utils: Utils
-
+    
     private var job : Job? = null
 
     private fun startTimeout() {
@@ -106,7 +103,7 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
             recordRequestCode
         )
 
-        utils = Utils(applicationContext)
+
 
 
         binding.vm = getViewModel()

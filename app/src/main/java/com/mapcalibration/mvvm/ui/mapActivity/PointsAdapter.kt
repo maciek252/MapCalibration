@@ -46,9 +46,6 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MapViewModel) :
         }
 
 
-        fun selectItem(p: Point){
-
-        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):// PointsAdapter.PointViewHolder
             RecyclerView.ViewHolder {
@@ -102,7 +99,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MapViewModel) :
 
         viewHolder.itemView.setOnClickListener {
             //showPointEditDialog()
-        };
+        }
 
         //vm?.points.observeForever { notifyDataSetChanged() }
 
@@ -121,7 +118,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MapViewModel) :
 
         //val p = punkty[viewHolderek?.getAdapterPosition()!!]
         val d =
-            PointDialog(vm!!, p)
+            PointDialog(vm, p)
         val s: String = "dialog"
         val activity =  parencik?.context as? MapActivity
         d?.show(activity?.supportFragmentManager, s)
@@ -194,9 +191,9 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MapViewModel) :
 //
 //            Glide.with(itemView.context).load(movieModel.moviePicture!!).into(itemView.imageMovie)
             itemView.textViewPointName_OXY.text = p.name
-            itemView?.textViewYY.text = p.len1.toString()
+            itemView.textViewYY.text = p.len1.toString()
 
-            itemView?.textViewYY.requestFocus()
+            itemView.textViewYY.requestFocus()
 
             itemView.buttonSet_OSX.setOnClickListener{
                 vm.currentPoint.value = p
@@ -204,7 +201,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MapViewModel) :
 
             }
 
-            itemView.textViewRefMarker.text = vm?.points.value.filter { it.id == p.referenceId }.first().name
+            itemView.textViewRefMarker.text = vm.points.value.filter { it.id == p.referenceId }.first().name
 
 
             itemView.buttonMap_OXY.setOnClickListener {
@@ -263,7 +260,7 @@ class PointsAdapter(var punkty: List<Point> = listOf(), val vm: MapViewModel) :
 
                 itemView.textViewXX.requestFocus()
 
-                itemView.textViewRefMarker.text = vm?.points.value.filter { it.id == p.referenceId }.first().name
+                itemView.textViewRefMarker.text = vm.points.value.filter { it.id == p.referenceId }.first().name
 
 
                 itemView.button_M_XY_Edit.setOnClickListener {

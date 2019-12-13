@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 object Configuration{
 
     private var PRIVATE_MODE = 0
-    private val PREF_NAME = "mindorks-welcome"
+    private const val PREF_NAME = "mindorks-welcome"
 
     private val IS_MAP_CENTERED = Pair("is_map_centered", false)
     private val LAST_NAME = Pair("last_name", "pt1")
@@ -48,7 +48,7 @@ object Configuration{
         }
 
     var lastName: String
-        get() = preferences.getString(LAST_NAME.first, LAST_NAME.second)
+        get() = preferences.getString(LAST_NAME.first, LAST_NAME.second)!!
 
         set(value) = preferences.edit{
             it.putString(LAST_NAME.first, value)

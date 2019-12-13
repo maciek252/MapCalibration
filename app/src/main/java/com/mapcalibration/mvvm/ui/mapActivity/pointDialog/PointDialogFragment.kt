@@ -120,11 +120,6 @@ open  class PointDialogFragment() : DialogFragment(), AdapterView.OnItemSelected
         return this
     }
 
-    open fun setModel(): PointDialogFragment {
-        Log.d("ColorFragment", "setModel called")
-
-        return this
-    }
 
 //    fun bindColorId(colorId: RColor?) {
 //        colorId ?: return

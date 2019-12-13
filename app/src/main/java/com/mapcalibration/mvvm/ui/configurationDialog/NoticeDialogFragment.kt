@@ -28,12 +28,12 @@ class NoticeDialogFragment : DialogFragment() {
             val builder = AlertDialog.Builder(it)
             builder.setMessage(Utility.getStringFromResources(activity as AppCompatActivity, "askSwitchToCollection"))
                 .setPositiveButton(Utility.getStringFromResources(activity as AppCompatActivity, "yes"),
-                    DialogInterface.OnClickListener { dialog, id ->
+                    DialogInterface.OnClickListener { _, id ->
                         listener.onDialogPositiveClick(this)
                         // FIRE ZE MISSILES!
                     })
                 .setNegativeButton(Utility.getStringFromResources(activity as AppCompatActivity, "cancel"),
-                    DialogInterface.OnClickListener { dialog, id ->
+                    DialogInterface.OnClickListener { _, id ->
                         // User cancelled the dialog
                         listener.onDialogNegativeClick(this)
                     })

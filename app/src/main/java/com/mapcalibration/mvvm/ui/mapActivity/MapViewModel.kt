@@ -14,7 +14,6 @@ import com.mapcalibration.mvvm.data.db.entity.Point
 
 import com.mapcalibration.mvvm.util.*
 import kotlinx.coroutines.*
-import android.widget.CompoundButton
 
 
 
@@ -47,11 +46,8 @@ class MapViewModel(
 
     var latLngMarker: MutableLiveData<LatLng> = MutableLiveData()
 
-    val liczba: NotNullMutableLiveData<Int> = NotNullMutableLiveData(1)
 
-    private val _refreshing: NotNullMutableLiveData<Boolean> = NotNullMutableLiveData(false)
-    val refreshing: NotNullMutableLiveData<Boolean>
-        get() = _refreshing
+
 
 
     fun removeAllPointsFromCollectionAndCollectionIfIsNotTheLastOne(){
@@ -124,15 +120,11 @@ class MapViewModel(
 //    val points2: MutableLiveData<Resource<List<Point>>> = MutableLiveData()
 //      //  Transformations.map(punkty){it}
 
-    fun onCheckedChange(button: CompoundButton, check: Boolean) {
-        Log.d("Z1D1", "onCheckedChange: $check")
-    }
-
     fun addPoint(p: Point){
         //points.value += p!!
 
         val m = points.value
-        points.value += p!!
+        points.value += p
         points.value = m
 
 
@@ -154,7 +146,7 @@ class MapViewModel(
             if(currentPoint.value != null && it != null){
 
                 val pair =  computeDistanceAndHeadingToCurrentPoint(
-                    PointToLocation(currentPoint.value!!), it!!)
+                    PointToLocation(currentPoint.value!!), it)
                 distance.value = pair.first
                 heading.value = pair.second
 
@@ -177,7 +169,7 @@ class MapViewModel(
 
 
 
-    fun computeTargets(){
+    private fun computeTargets(){
 
 
         points.value.filter{it.pointType == Point.PointType.TARGET_XY}.map {
@@ -210,33 +202,23 @@ class MapViewModel(
         }
     }
 
-    fun computeScaleIfAvailable(){
+    private fun computeScaleIfAvailable(){
         val p1: Point? = points.value.filter{it.pointType == Point.PointType.OSNOWA_COORDINATES}.firstOrNull()
         val p2: Point? = points.value.filter{it.pointType == Point.PointType.OSNOWA_MARKER_XY}.firstOrNull()
 
 
         p1?.let{p2?.let{
-            val l1: Location = Location("p1")
+            val l1 = Location("p1")
             l1.latitude = p1.latitude
             l1.longitude = p1.longitude
-            val l2: Location = Location("p2")
+            val l2 = Location("p2")
             l2.latitude = p2.latitude
             l2.longitude = p2.longitude
             scaleTerrainMetersToMapCm.value = computeDistance(l1,l2, p2.len1, 0.0 )}}
 
     }
 
-    fun doSearchC(s: CharSequence?) {
 
-        val m: String = s.toString()
-        val params3 = mapOf("q" to m, "sort" to "stars")
-
-
-    }
-
-//    fun findPointByName(name: String) : Point? {
-//    }
-//
     fun removePoint(p: Point?){
 
         var kopia = points.value
@@ -256,7 +238,7 @@ class MapViewModel(
             kopia -= pp!!
 
 
-        } //while (!listToRemove.isEmpty())
+        }
 
         points.value = kopia
 
@@ -267,17 +249,7 @@ class MapViewModel(
 
 
 
-public fun onClickedCheckBox(){
-Log.d("klik", "klik")
-}
 
-
-
-    fun onQueryChange(query: CharSequence) {
-        this.query = query.toString()
-    }
-
-    //fun saveToBookmark(repository: Repository) = ioThread { dao.insert(Bookmark.to(repository)) }
 
     
 }

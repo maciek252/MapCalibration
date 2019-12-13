@@ -87,7 +87,7 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
         return v.rootView
     }
 
-    override open fun savePoint(): Boolean {
+    override fun savePoint(): Boolean {
         Log.d("savePoint", "txy")
 
         if(pointDialogModelView.mapViewModel.points.value.isEmpty())

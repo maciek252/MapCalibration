@@ -10,19 +10,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
-import com.google.android.gms.maps.model.LatLng
+
 import com.mapcalibration.mvvm.R
 import com.mapcalibration.mvvm.data.db.entity.Point
 import com.mapcalibration.mvvm.databinding.DialogFragmentOsnowaXyBinding
 
-open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.OnItemSelectedListener,
+open class PointDialogFragmentOsnowaXY : PointDialogFragment(), AdapterView.OnItemSelectedListener,
     AdapterView.OnItemClickListener{
 
 
-
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-
-    }
 
     var binding : DialogFragmentOsnowaXyBinding? = null
 
@@ -62,8 +58,6 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
 
 
 
-        val l = LatLng(punk.latitude, punk.longitude)
-        //pointDialogModelView?.mackowaViewModel?.latLngMarker.value = l // po co to ustawiac?
 
 
         binding?.textViewX?.text = "" + punk.len1
@@ -119,8 +113,8 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
 
         val refName = binding?.spinner?.selectedItem.toString()
         punk.referenceId = pointDialogModelView.mapViewModel.points.value.filter{it.name == refName}.first().id
-        punk.latitude = pointDialogModelView?.mapViewModel?.latLngMarker.value?.latitude!!
-        punk.longitude = pointDialogModelView?.mapViewModel?.latLngMarker.value?.longitude!!
+        punk.latitude = pointDialogModelView.mapViewModel.latLngMarker.value?.latitude!!
+        punk.longitude = pointDialogModelView.mapViewModel.latLngMarker.value?.longitude!!
 
         punk.pointType = Point.PointType.OSNOWA_MARKER_XY
         return true
@@ -135,7 +129,7 @@ open class PointDialogFragmentOsnowaXY() : PointDialogFragment(), AdapterView.On
     //
     // setups
     //
-    override open fun  setModel(model: PointDialogModelView): PointDialogFragmentOsnowaXY {
+     override fun  setModel(model: PointDialogModelView): PointDialogFragmentOsnowaXY {
         Log.d("ColorFragment", "setModel called")
         this.pointDialogModelView = model
 

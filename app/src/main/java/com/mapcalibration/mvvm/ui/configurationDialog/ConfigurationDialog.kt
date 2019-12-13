@@ -1,6 +1,7 @@
 package com.mapcalibration.mvvm.ui.configurationDialog
 
 import android.R
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
+
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 
@@ -19,8 +20,6 @@ import com.mapcalibration.mvvm.ui.mapActivity.MapViewModel
 import com.mapcalibration.mvvm.util.Configuration
 import com.mapcalibration.mvvm.util.LocaleManager.Companion.LANGUAGE_ENGLISH
 import com.mapcalibration.mvvm.util.LocaleManager.Companion.LANGUAGE_POLISH
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.RadioButton
 
 
 class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView.OnItemSelectedListener,
@@ -31,7 +30,7 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
     val TAG = "konfa"
     var userInteraction = false
 
-     lateinit var aa: ArrayAdapter<String>
+     private lateinit var aa: ArrayAdapter<String>
 
 
 
@@ -55,7 +54,7 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
         Log.d(TAG, "negative")
     }
 
-    fun readAllCollectionNames(){
+    private fun readAllCollectionNames(){
         val c = vm.getAllSavedCollections()
         //binding?.textViewCollections?.setText("" + c.toString())
 
@@ -63,7 +62,7 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
         aa.clear()
         aa.addAll(c)
         aa.notifyDataSetChanged()
-        Log.d(TAG,"kolekcja=" + c.toString())
+        Log.d(TAG,"kolekcja=$c.toString()")
 
         binding?.textViewCollectionName?.text = Configuration.lastName
 
@@ -79,7 +78,7 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
     }
 
-    public var binding : ConfigurationDialogBinding? = null
+    var binding : ConfigurationDialogBinding? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -91,7 +90,7 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
         binding?.checkBoxCenterMapOnCurrentPosition?.setOnClickListener {
             Configuration.isMapCentered = binding?.checkBoxCenterMapOnCurrentPosition?.isChecked!!
 
-            vm?.centerMapOnGps?.value = binding?.checkBoxCenterMapOnCurrentPosition?.isChecked
+            vm.centerMapOnGps.value = binding?.checkBoxCenterMapOnCurrentPosition?.isChecked
 
         }
 
@@ -99,14 +98,14 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
 
             if(binding?.checkBoxSwitchOffScreen?.isChecked!!){
                 Configuration.keepScreenOn = true
-                vm?.keepScreenOn?.value = true
+                vm.keepScreenOn.value = true
             } else {
                 Configuration.keepScreenOn = false
-                vm?.keepScreenOn?.value = false
+                vm.keepScreenOn.value = false
             }
         }
 
-        binding?.checkBoxSwitchOffScreen?.isChecked = vm?.keepScreenOn?.value!!
+        binding?.checkBoxSwitchOffScreen?.isChecked = vm.keepScreenOn.value!!
 
         binding?.buttonSave?.setOnClickListener {
             val collectionName = binding?.textViewCollectionName?.text.toString()
@@ -122,13 +121,13 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
         binding?.spinnerCollections?.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener{
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.d(TAG, "klikus=nothingSelected")
+                    Log.d(TAG, "klik=nothingSelected")
                 }
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val a = binding?.spinnerCollections?.adapter
+
                     val element = parent?.getItemAtPosition(position)
-                    Log.d(TAG, "klikus=" + element)
+                    Log.d(TAG, "klik$element")
 
                     if(userInteraction) {
                         val newFragment = NoticeDialogFragment()
@@ -151,17 +150,18 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
         super.onViewCreated(view, savedInstanceState)
 
         //aa = ArrayAdapter(activity, R.layout.simple_spinner_item, emptyList<String>())
-        aa = ArrayAdapter(activity, R.layout.simple_spinner_item, mutableListOf())
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding?.spinnerCollections?.setAdapter(aa)
+        aa = ArrayAdapter(activity as Context, R.layout.simple_spinner_item, mutableListOf())
+        aa.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        //binding?.spinnerCollections?.setAdapter(aa)
+        binding?.spinnerCollections?.adapter = aa
 
         readAllCollectionNames()
 
         binding?.lifecycleOwner = this
 
-        if(vm?.centerMapOnGps?.value != null)
+        if(vm.centerMapOnGps.value != null)
             binding?.checkBoxCenterMapOnCurrentPosition?.isChecked =
-                vm?.centerMapOnGps?.value!!
+                vm.centerMapOnGps.value!!
 
         binding?.radioLanguageGroup?.clearCheck()
 
@@ -204,7 +204,7 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
 
         binding?.buttonRemove?.setOnClickListener {
             Log.d(TAG, "removing...")
-            vm?.removeAllPointsFromCollectionAndCollectionIfIsNotTheLastOne()
+            vm.removeAllPointsFromCollectionAndCollectionIfIsNotTheLastOne()
             readAllCollectionNames()
         }
 
@@ -216,7 +216,7 @@ class ConfigurationDialog(val vm: MapViewModel) : DialogFragment(),  AdapterView
 //            }
 //        }
 
-        val pos = aa?.getPosition(Configuration.lastName)
+        val pos = aa.getPosition(Configuration.lastName)
         binding?.spinnerCollections?.setSelection(pos)
 
     }
