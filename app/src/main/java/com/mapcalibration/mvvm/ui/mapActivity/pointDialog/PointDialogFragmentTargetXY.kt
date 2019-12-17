@@ -15,14 +15,14 @@ import com.mapcalibration.mvvm.data.db.entity.Point
 
 import com.mapcalibration.mvvm.databinding.DialogFragmentTargetXyBinding
 
-open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.OnItemSelectedListener,
+open class PointDialogFragmentTargetXY() : PointDialogFragment(), //AdapterView.OnItemSelectedListener,
     AdapterView.OnItemClickListener{
 
 
 
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-
-    }
+//    override fun onNothingSelected(p0: AdapterView<*>?) {
+//
+//    }
 
     var binding : DialogFragmentTargetXyBinding? = null
 
@@ -55,13 +55,10 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
 
         val v = inflater.inflate(R.layout.dialog_fragment_target_xy, null)
         binding = DataBindingUtil.bind(v)!!
-        //binding.pointDialogModelView
-        //DataBindingUtil.setContentView<>()
-        //binding?.lifecycleOwner = this
-        //binding.setLifecycleOwner { this }
+
         binding?.pointDialogModelView = this.pointDialogModelView
 
-        binding?.spinner!!.onItemSelectedListener = this
+
 
 
 
@@ -111,15 +108,13 @@ open class PointDialogFragmentTargetXY() : PointDialogFragment(), AdapterView.On
         return true
     }
 
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//
+//    }
 
-    }
 
 
-    //
-    // setups
-    //
-    override open fun  setModel(model: PointDialogModelView): PointDialogFragmentTargetXY {
+    override fun  setModel(model: PointDialogModelView): PointDialogFragmentTargetXY {
         Log.d("ColorFragment", "setModel called")
         this.pointDialogModelView = model
 

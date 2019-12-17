@@ -10,8 +10,6 @@ import com.mapcalibration.mvvm.ui.mapActivity.MapViewModel
 
 class PointDialogModelView(val mapViewModel: MapViewModel) : ViewModel() {
 
-
-
     var punktyOsnowy = MutableLiveData<List<Point>>()
 
     var _punkt = MutableLiveData<Point>()
@@ -26,26 +24,5 @@ class PointDialogModelView(val mapViewModel: MapViewModel) : ViewModel() {
     }
 
 
-    private val colorNoData = MutableLiveData<Int>()
-
-//    val colorIdData = colorNoData.map {
-//        when(it) {
-//            0 -> R.color.colorPrimary
-//            1 -> R.color.colorPrimaryDark
-//            else -> R.color.colorAccent
-//        }
-//    }
-//
-//    val colorNameId = colorNoData.map {
-//        when(it) {
-//            0 -> R.string.color_primary
-//            1 -> R.string.color_primary_dark
-//            else -> R.string.color_accent
-//        }
-//    }
-//
-//    fun setColorNo(colorNo: Int) {
-//        this.colorNoData.value = colorNo
-//    }
 
 }

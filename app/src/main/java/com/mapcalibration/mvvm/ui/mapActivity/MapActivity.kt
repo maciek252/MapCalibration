@@ -16,9 +16,9 @@ import com.mapcalibration.mvvm.ui.BindingActivity
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 
-import com.mapcalibration.mvvm.databinding.ActivityMackowyBinding
+import com.mapcalibration.mvvm.databinding.ActivityMapBinding
 import com.mapcalibration.mvvm.ui.mapActivity.pointDialog.PointDialog
-import kotlinx.android.synthetic.main.activity_mackowy.*
+import kotlinx.android.synthetic.main.activity_map.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MarkerOptions
@@ -43,7 +43,7 @@ import com.mapcalibration.mvvm.R
 import com.mapcalibration.mvvm.util.Utility
 
 
-class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,
+class MapActivity : BindingActivity<ActivityMapBinding>(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,
     GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener {
 
 /*
@@ -65,18 +65,18 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
 
     @LayoutRes
-    override fun getLayoutResId() = R.layout.activity_mackowy
+    override fun getLayoutResId() = R.layout.activity_map
 
 
     private var markerAddedByClick : Marker? = null
 
     private val mapMarkerPoint: MutableMap<Marker,Point> = mutableMapOf()
 
-    private val TAG = "MackowyActivity"
+    private val TAG = "MapActivity"
 
     private lateinit var googleMap: GoogleMap
 
-    
+
     private var job : Job? = null
 
     private fun startTimeout() {
@@ -144,8 +144,10 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
                 //applyLanguage(this, "en")
                 //setNewLocale(LANGUAGE_ENGLISH, false)
                 showMarkers(binding.vm?.points?.value!!)
-                binding.vm?.latLngMarker?.value.apply {
-                    addMarkerPin(this!!, false)
+                binding.vm?.latLngMarker?.value.let {
+                    if(it != null)
+                        addMarkerPin(it!!, false)
+                    
                 }
 
 
@@ -201,20 +203,20 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
             job?.cancel("ee")
             startTimeout()
             if (binding.vm?.currentPoint?.value == null) {
-                binding.textViewHeadingToCurrent.text = "===="
-                binding.textViewMapDistanceToCurrent.text = "===="
+                binding.textViewHeadingToCurrent.text = "=="
+                binding.textViewMapDistanceToCurrent.text = "=="
             } else {
-                val h = String.format("%.2f", binding.vm?.heading?.value)
+                val h = String.format("%.0f", binding.vm?.heading?.value)
                 binding.textViewHeadingToCurrent.text = h
-                val d = String.format("%.2f", binding.vm?.distance?.value)
+                val d = String.format("%.0f", binding.vm?.distance?.value)
                 binding.textViewMapDistanceToCurrent.text = d
             }
         }
 
         binding.vm?.scaleTerrainMetersToMapCm?.observeForever {
             if (it == -1.0) {
-                binding.textViewMapScaleCmToMeters.text = "---"
-                binding.textViewMapScaleMetersToCm.text = "---"
+                binding.textViewMapScaleCmToMeters.text = "--"
+                binding.textViewMapScaleMetersToCm.text = "--"
             } else {
                 binding.textViewMapScaleCmToMeters.text = String.format("%.0f", it)
                 binding.textViewMapScaleMetersToCm.text = String.format("%.3f", 100 / it)
@@ -549,7 +551,7 @@ class MapActivity : BindingActivity<ActivityMackowyBinding>(), OnMapReadyCallbac
 
         val d = ConfigurationDialog(binding.vm!!)
         //d.binding.item
-        val s: String = "configuration"
+        val s = "configuration"
         d.show(supportFragmentManager, s)
     }
 

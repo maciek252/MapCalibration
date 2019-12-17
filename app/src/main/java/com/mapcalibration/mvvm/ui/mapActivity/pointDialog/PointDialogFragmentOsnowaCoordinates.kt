@@ -13,13 +13,11 @@ import com.mapcalibration.mvvm.R
 import com.mapcalibration.mvvm.data.db.entity.Point
 import com.mapcalibration.mvvm.databinding.DialogFragmentOsnowaCoordinatesBinding
 
-open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), AdapterView.OnItemSelectedListener,
-    AdapterView.OnItemClickListener{
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-        //pointDialogModelView.mackowaViewModel.latLngMarker.value.latitude
-    }
+open class PointDialogFragmentOsnowaCoordinates : PointDialogFragment()// AdapterView.OnItemSelectedListener,
+    //AdapterView.OnItemClickListener
+     {
 
-    public var binding : DialogFragmentOsnowaCoordinatesBinding? = null
+    var binding : DialogFragmentOsnowaCoordinatesBinding? = null
 
 
 
@@ -31,9 +29,9 @@ open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), Adapt
         }
     }
 
-    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-    }
+//    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +46,7 @@ open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), Adapt
 
         val v = inflater.inflate(R.layout.dialog_fragment_osnowa_coordinates, null)
         binding = DataBindingUtil.bind(v)!!
-        //binding.pointDialogModelView
-        //DataBindingUtil.setContentView<>()
-        //binding?.lifecycleOwner = this
-        //binding.setLifecycleOwner { this }
+
         binding?.pointDialogModelView = this.pointDialogModelView
 
 
@@ -59,9 +54,6 @@ open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), Adapt
         return v.rootView
     }
 
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-    }
 
     override fun savePoint(): Boolean {
         Log.d("savePoint", "oc")
@@ -73,15 +65,10 @@ open class PointDialogFragmentOsnowaCoordinates() : PointDialogFragment(), Adapt
         return true
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
 
-    //
-    // setups
-    //
-    override open fun  setModel(model: PointDialogModelView): PointDialogFragmentOsnowaCoordinates {
+
+    override fun  setModel(model: PointDialogModelView): PointDialogFragmentOsnowaCoordinates {
         Log.d("ColorFragment", "setModel called")
         this.pointDialogModelView = model
         return this

@@ -10,7 +10,7 @@
             type="com.mapcalibration.mvvm.ui.mapActivity.pointDialog.PointDialogModelView" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,28 +18,30 @@
         android:orientation="vertical">
 
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout13"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Spinner
                 android:id="@+id/spinner2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_conversion_absoluteHeight="24dp"
+                tools:layout_conversion_absoluteWidth="48dp" />
 
             <TextView
                 android:id="@+id/textViewDistanceToMarker2Label"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/distanceToMarker1" />
+                android:text="@string/distanceToMarker1"
+                app:layout_constraintStart_toEndOf="@+id/spinner2"
+                tools:layout_conversion_absoluteHeight="36dp"
+                tools:layout_conversion_absoluteWidth="100dp" />
 
             <TextView
                 android:id="@+id/textViewDistanceToMarker1"
@@ -51,33 +53,39 @@
                 android:focusable="auto"
                 android:focusableInTouchMode="true"
                 android:hint="0.0"
-                android:numeric="signed|decimal" />
+                android:numeric="signed|decimal"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_conversion_absoluteHeight="32dp"
+                tools:layout_conversion_absoluteWidth="33dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <CheckBox
-                android:id="@+id/checkBox2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Left From Line 1->2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_conversion_absoluteHeight="24dp"
+                tools:layout_conversion_absoluteWidth="48dp" />
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/distanceToMarker2" />
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="@string/distanceToMarker2"
+                app:layout_constraintStart_toEndOf="@+id/spinner"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="36dp"
+                tools:layout_conversion_absoluteWidth="100dp" />
 
             <TextView
                 android:id="@+id/textViewDistanceToMarker2"
@@ -89,12 +97,29 @@
                 android:focusable="auto"
                 android:focusableInTouchMode="true"
                 android:hint="0.0"
-                android:numeric="signed|decimal" />
+                android:numeric="signed|decimal"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="32dp"
+                tools:layout_conversion_absoluteWidth="33dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Left From Line 1->2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout14"
+            tools:layout_conversion_absoluteHeight="32dp"
+            tools:layout_conversion_absoluteWidth="230dp" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 <!--
 

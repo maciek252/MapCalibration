@@ -27,6 +27,8 @@ class MapViewModel(
     private var query: String = ""
         get() = if (field.isEmpty()) "MVVM" else field
 
+    val TAG = "MapViewModel"
+
     var radio_checked = MutableLiveData<Int>()
 
     val centerMapOnGps: MutableLiveData<Boolean> = MutableLiveData()
@@ -98,7 +100,7 @@ class MapViewModel(
 
 //val mm = items.value
              val m= dao.findAllPoints()
-            Log.d("koko", "m=" + m.size + "/" + m.toString())
+            Log.d(TAG, "m=" + m.size + "/" + m.toString())
                 //m.toList().map{points.value += it}
   //          dao.findAllPoints().map { points.value += it }
             points.postValue(m.toList().filter{it.collection == collectionName})
@@ -112,7 +114,7 @@ class MapViewModel(
     var points: NotNullMutableLiveData<List<Point>> = NotNullMutableLiveData(listOf())
 //        get() = points
 //        set(v) {
-//            Log.d("mackowaVM", "setting points")
+
 //            field = v
 //        }
   //      get() = _points
@@ -136,7 +138,7 @@ class MapViewModel(
 
         //centerMapOnGps.value = false
         points.observeForever {
-            Log.d("mackowaVM", "setting points")
+            Log.d(TAG, "setting points")
             computeScaleIfAvailable()
             computeTargets()
         }
@@ -146,7 +148,7 @@ class MapViewModel(
             if(currentPoint.value != null && it != null){
 
                 val pair =  computeDistanceAndHeadingToCurrentPoint(
-                    PointToLocation(currentPoint.value!!), it)
+                    pointToLocation(currentPoint.value!!), it)
                 distance.value = pair.first
                 heading.value = pair.second
 
@@ -157,7 +159,7 @@ class MapViewModel(
         }
 
         radio_checked.observeForever {
-            Log.d("mackowaVM", "radio")
+            Log.d(TAG, "radio")
         }
 
         val colName = Configuration.lastName

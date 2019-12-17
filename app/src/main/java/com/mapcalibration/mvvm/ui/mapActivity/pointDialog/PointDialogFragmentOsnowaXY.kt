@@ -15,9 +15,18 @@ import com.mapcalibration.mvvm.R
 import com.mapcalibration.mvvm.data.db.entity.Point
 import com.mapcalibration.mvvm.databinding.DialogFragmentOsnowaXyBinding
 
-open class PointDialogFragmentOsnowaXY : PointDialogFragment(), AdapterView.OnItemSelectedListener,
-    AdapterView.OnItemClickListener{
+open class PointDialogFragmentOsnowaXY : PointDialogFragment() //AdapterView.OnItemSelectedListener,
+    //AdapterView.OnItemClickListener
+    {
 
+
+//    override fun onNothingSelected(p0: AdapterView<*>?) {
+//
+//    }
+//
+//    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//
+//    }
 
 
     var binding : DialogFragmentOsnowaXyBinding? = null
@@ -30,15 +39,15 @@ open class PointDialogFragmentOsnowaXY : PointDialogFragment(), AdapterView.OnIt
         }
     }
 
-    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-    }
+//    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val arg = arguments ?: return
-        colorNo = arg.getInt("colorNo")
+
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -47,13 +56,10 @@ open class PointDialogFragmentOsnowaXY : PointDialogFragment(), AdapterView.OnIt
 
         val v = inflater.inflate(R.layout.dialog_fragment_osnowa_xy, null)
         binding = DataBindingUtil.bind(v)!!
-        //binding.pointDialogModelView
-        //DataBindingUtil.setContentView<>()
-        //binding?.lifecycleOwner = this
-        //binding.setLifecycleOwner { this }
+
         binding?.pointDialogModelView = this.pointDialogModelView
 
-        binding?.spinner!!.onItemSelectedListener = this
+        //binding?.spinner!!.onItemSelectedListener = this
 
 
 
@@ -90,9 +96,6 @@ open class PointDialogFragmentOsnowaXY : PointDialogFragment(), AdapterView.OnIt
         return v.rootView
     }
 
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-    }
 
     override fun savePoint(): Boolean {
         Log.d("savePoint", "osx")

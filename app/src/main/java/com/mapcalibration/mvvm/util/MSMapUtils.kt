@@ -12,22 +12,22 @@ val NOT_VALID_LATLON : Double = 400.0
 
 fun computeDistance(l1 : Location, l2: Location?, offsetX: Double, offsetY: Double) : Double {
 
-    ;
-    var result: String = "";
-    result += l1.toString() + "<->" + l2?.toString();
+
+    var result = ""
+    result += l1.toString() + "<->" + l2?.toString()
 
 
-    val pointDistanceTerrainMeters  = l1?.distanceTo(l2)
+    val pointDistanceTerrainMeters  = l1.distanceTo(l2)
 
     result += ":" + pointDistanceTerrainMeters.toString()
     result += "offsetX=" + offsetX + " offsetY=" + offsetY + "\n"
-    val kwadrat  = offsetY?.pow(2).plus( offsetX.pow(2));
+    val kwadrat  = offsetY.pow(2).plus( offsetX.pow(2))
     val pointDistanceCm= sqrt(kwadrat )
-    result += "dist[cm]=" + pointDistanceCm;
+    result += "dist[cm]=" + pointDistanceCm
 
 
-    result += "dist cm/m" + pointDistanceCm/pointDistanceTerrainMeters!!
-    val metersPerCm : Double = 1.0/(pointDistanceCm/pointDistanceTerrainMeters!!)
+    result += "dist cm/m" + pointDistanceCm/pointDistanceTerrainMeters
+    val metersPerCm : Double = 1.0/(pointDistanceCm/pointDistanceTerrainMeters)
     result += "dist m/cm" + metersPerCm
 
     println(result)
@@ -40,35 +40,35 @@ fun computeTargetXY(p: Point, refOsnowa: Point, metersPerCm: Double){
 
 
 
-    val l: Location = Location("p1")
+    val l = Location("p1")
     l.latitude = p.latitude
     l.longitude = p.longitude
-    val lBase: Location = Location("p2")
+    val lBase = Location("p2")
     lBase.latitude = refOsnowa.latitude
     lBase.longitude = refOsnowa.longitude
         Log.d("Utils", "computing lampion position for pkt:" + p.id + "offsetX=" + p.x)
-        var a = Location("dd")
+        val a = Location("dd")
         //a.latitude = 52.2;
         //a.longitude = 21.2;
-        a.latitude = lBase!!.latitude;
-        a.longitude = lBase!!.longitude;
+        a.latitude = lBase.latitude
+        a.longitude = lBase.longitude
 
-        var headingX = 90.0;
-        var offX = p.x;
+        var headingX = 90.0
+        var offX = p.x
         if(p.x < 0) {
-            offX = -offX;
-            headingX = -90.0;
+            offX = -offX
+            headingX = -90.0
         }
 
-        var headingY = 0.0;
-        var offY = p.y;
+        var headingY = 0.0
+        var offY = p.y
         if(offY < 0) {
-            offY = -offY;
-            headingY = -180.0;
+            offY = -offY
+            headingY = -180.0
         }
 
-        val ln : LatLng = SphericalUtil.computeOffset(LatLng(a.latitude, a.longitude), offX * metersPerCm, headingX);
-        val ln2 : LatLng = SphericalUtil.computeOffset(LatLng(ln.latitude, ln.longitude), offY * metersPerCm, headingY);
+        val ln : LatLng = SphericalUtil.computeOffset(LatLng(a.latitude, a.longitude), offX * metersPerCm, headingX)
+        val ln2 : LatLng = SphericalUtil.computeOffset(LatLng(ln.latitude, ln.longitude), offY * metersPerCm, headingY)
         //l.location = ln
         println("setting transformed lat" + ln.latitude)
         a.latitude = ln2.latitude
@@ -84,8 +84,8 @@ fun computeTargetXY(p: Point, refOsnowa: Point, metersPerCm: Double){
 
 }
 
-fun PointToLocation(p: Point) : Location  {
-    val l1: Location = Location("p1")
+fun pointToLocation(p: Point) : Location  {
+    val l1 = Location("p1")
     l1.latitude = p.latitude
     l1.longitude = p.longitude
     return l1
@@ -93,17 +93,17 @@ fun PointToLocation(p: Point) : Location  {
 
 fun computeDistanceAndHeadingToCurrentPoint(target: Location, current: Location): Pair<Double, Double>{
 
-    val dist = current.distanceTo(target);
-    val dir = current.bearingTo(target);
+    val dist = current.distanceTo(target)
+    val dir = current.bearingTo(target)
 
     return Pair(dist.toDouble(), dir.toDouble())
 
 }
 
 fun computeAngle(a : Double, b : Double, c: Double) : Double {
-    val m = (c*c - a*a - b*b)/(-2.0*a*b);
-    val mm = Math.acos(m) * 180/Math.PI;
-    return mm;
+    val m = (c*c - a*a - b*b)/(-2.0*a*b)
+    val mm = Math.acos(m) * 180/Math.PI
+    return mm
 }
 
 /*
@@ -149,23 +149,23 @@ fun computeTarget2Distances(p: Point, p1: Point,  p2: Point, metersPerCm: Double
     val leftUpper = p.rightFromLine
     val odl = 1.0/metersPerCm
 
-    val l1 = PointToLocation(p1)
-    val l2 = PointToLocation(p2)
+    val l1 = pointToLocation(p1)
+    val l2 = pointToLocation(p2)
 
     val dist = l1.distanceTo(l2)
     val dir = l1.bearingTo(l2)
 
-    val odlNaMapie = odl * dist;
+    val odlNaMapie = odl * dist
 
 
     val angle = computeAngle(p.len1, odlNaMapie, p.len2)
-    println("angle=" + angle);
+    println("angle=" + angle)
 
-    var angleResult = dir + angle;
+    var angleResult = dir + angle
     if(leftUpper)
-        angleResult = dir - angle;
+        angleResult = dir - angle
 
-    val l: LatLng = SphericalUtil.computeOffset(LatLng(l1.latitude, l1.longitude), p.len1*1000.0/(odl*1000.0), angleResult);
+    val l: LatLng = SphericalUtil.computeOffset(LatLng(l1.latitude, l1.longitude), p.len1*1000.0/(odl*1000.0), angleResult)
 
     p.longitude = l.longitude
     p.latitude = l.latitude

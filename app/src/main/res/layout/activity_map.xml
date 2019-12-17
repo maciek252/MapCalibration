@@ -29,6 +29,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
                     app:srcCompat="@android:drawable/arrow_down_float" />
 
                 <Button
@@ -85,6 +87,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/viewForHolder" />
 
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -97,25 +100,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <Button
+            <ImageButton
                 android:id="@+id/buttonShowAllMarkers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/show_all_markers" />
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/marker"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="138dp" />
+
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foregroundTint="#000000"
                 android:orientation="vertical">
+
 
                 <TextView
                     android:id="@+id/textViewCurrenPointLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:foregroundTint="#000000"
                     android:text="@string/currentPoint"
+                    android:textColor="#000000"
                     android:textSize="8sp" />
 
                 <TextView
@@ -123,7 +135,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -137,7 +150,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:foregroundTint="#000000"
                     android:text="100m : cm"
+                    android:textColor="#00089D"
                     android:textSize="8sp" />
 
                 <TextView
@@ -145,7 +160,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="" />
+                    android:foregroundTint="#000000"
+                    android:text=""
+                    android:textColor="#00089D" />
             </LinearLayout>
 
             <LinearLayout
@@ -159,7 +176,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:foregroundTint="#000000"
                     android:text="1cm : m"
+                    android:textColor="#00089D"
                     android:textSize="8sp" />
 
                 <TextView
@@ -167,7 +186,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="" />
+                    android:foregroundTint="#000000"
+                    android:text=""
+                    android:textColor="#00089D" />
             </LinearLayout>
 
             <LinearLayout
@@ -181,7 +202,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:foregroundTint="#000000"
                     android:text="@string/dist"
+                    android:textColor="#000000"
                     android:textSize="8sp" />
 
                 <TextView
@@ -189,7 +212,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="" />
+                    android:foregroundTint="#000000"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -203,16 +229,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:foregroundTint="#000000"
                     android:text="@string/heading"
+                    android:textColor="#000000"
                     android:textSize="8sp" />
 
                 <TextView
                     android:id="@+id/textViewHeadingToCurrent"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="" />
+                    android:foregroundTint="#000000"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
             </LinearLayout>
+
 
 
         </LinearLayout>

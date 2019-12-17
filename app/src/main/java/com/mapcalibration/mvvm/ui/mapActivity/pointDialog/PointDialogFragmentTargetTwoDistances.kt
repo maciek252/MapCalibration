@@ -16,14 +16,15 @@ import com.mapcalibration.mvvm.R
 import com.mapcalibration.mvvm.data.db.entity.Point
 import com.mapcalibration.mvvm.databinding.DialogFragmentTargetTwoLinesBinding
 
-open class PointDialogFragmentTargetTwoDistances() : PointDialogFragment(), AdapterView.OnItemSelectedListener,
-    AdapterView.OnItemClickListener{
+open class PointDialogFragmentTargetTwoDistances() : PointDialogFragment() //AdapterView.OnItemSelectedListener,
+    //AdapterView.OnItemClickListener
+{
 
 
 
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-
-    }
+//    override fun onNothingSelected(p0: AdapterView<*>?) {
+//
+//    }
 
     var binding : DialogFragmentTargetTwoLinesBinding? = null
 
@@ -35,9 +36,9 @@ open class PointDialogFragmentTargetTwoDistances() : PointDialogFragment(), Adap
         }
     }
 
-    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-    }
+//    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,9 +142,9 @@ open class PointDialogFragmentTargetTwoDistances() : PointDialogFragment(), Adap
         return true
     }
 
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-    }
+//    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
