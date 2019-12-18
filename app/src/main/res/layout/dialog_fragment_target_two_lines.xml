@@ -30,7 +30,9 @@
                 android:id="@+id/spinner2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:layout_conversion_absoluteHeight="24dp"
                 tools:layout_conversion_absoluteWidth="48dp" />
 
@@ -38,8 +40,11 @@
                 android:id="@+id/textViewDistanceToMarker2Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
                 android:text="@string/distanceToMarker1"
-                app:layout_constraintStart_toEndOf="@+id/spinner2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDistanceToMarker1"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:layout_conversion_absoluteHeight="36dp"
                 tools:layout_conversion_absoluteWidth="100dp" />
 
@@ -73,7 +78,9 @@
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:layout_conversion_absoluteHeight="24dp"
                 tools:layout_conversion_absoluteWidth="48dp" />
 
@@ -81,8 +88,10 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
+                android:layout_marginEnd="24dp"
                 android:text="@string/distanceToMarker2"
-                app:layout_constraintStart_toEndOf="@+id/spinner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDistanceToMarker2"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_conversion_absoluteHeight="36dp"
                 tools:layout_conversion_absoluteWidth="100dp" />

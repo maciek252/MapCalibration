@@ -147,7 +147,7 @@ class MapActivity : BindingActivity<ActivityMapBinding>(), OnMapReadyCallback, G
                 binding.vm?.latLngMarker?.value.let {
                     if(it != null)
                         addMarkerPin(it!!, false)
-                    
+
                 }
 
 
@@ -218,8 +218,8 @@ class MapActivity : BindingActivity<ActivityMapBinding>(), OnMapReadyCallback, G
                 binding.textViewMapScaleCmToMeters.text = "--"
                 binding.textViewMapScaleMetersToCm.text = "--"
             } else {
-                binding.textViewMapScaleCmToMeters.text = String.format("%.0f", it)
-                binding.textViewMapScaleMetersToCm.text = String.format("%.3f", 100 / it)
+                binding.textViewMapScaleCmToMeters.text = String.format("%.2f", it)
+                binding.textViewMapScaleMetersToCm.text = String.format("%.2f", 100 / it)
             }
 
 
